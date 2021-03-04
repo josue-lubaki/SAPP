@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gris">#A8A8A8</color>
+    <color name="BackgroundAnnonce">#434343</color>
+    <color name="BackgroungTitre">#212121</color>
+    <color name="BackgroundNavBar">#85C0F7</color>
+    <color name="BackgroundSplash">#232323</color>
 </resources>
