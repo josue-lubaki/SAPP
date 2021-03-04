@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SAPP</string>
+    <string name="home">Accueil</string>
+    <string name="favoris">Favoris</string>
+    <string name="addPost">Publier</string>
+    <string name="message">Message</string>
+    <string name="profil">Profil</string>
+    <string name="date">5 days ago</string>
+    <string name="titreAnnonce">Titre de l\'Annonce</string>
+    <string name="prixText">$ Prix</string>
+    <string name="welcome">--- Bienvenue ---</string>
 </resources>

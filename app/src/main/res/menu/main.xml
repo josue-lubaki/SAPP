@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/optionHome"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/optionFavoris"
+        android:title="@string/favoris"
+        android:icon="@drawable/ic_favoris"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/optionAddPost"
+        android:title="@string/addPost"
+        android:icon="@drawable/ic_addpost"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/optionMessage"
+        android:title="@string/message"
+        android:icon="@drawable/ic_message"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/optionProfil"
+        android:title="@string/profil"
+        android:icon="@drawable/ic_profil"
+        android:enabled="true"/>
+</menu>
