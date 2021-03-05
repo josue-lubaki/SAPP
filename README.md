@@ -3,7 +3,7 @@
 * Langage : Java
 * Dependances : Gradle
 * VersionSDK : 9.0 (lollipop)
-* 
+* Architecture MVVM
 
 # #To-do's
 * --> like (hide, show)+ add dans recyclerview dans liste des favoris 
