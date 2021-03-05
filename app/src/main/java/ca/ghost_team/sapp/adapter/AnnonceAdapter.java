@@ -37,10 +37,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
         Annonce uneAnnonce = listeAnnonces.get(position);
-        holder.imageAnnonce.setImageResource(uneAnnonce.getImageAnnonce());
-        holder.titre.setText(uneAnnonce.getTitre());
-        holder.prix.setText("$" + uneAnnonce.getPrix());
-        holder.date.setText(uneAnnonce.getDate());
+        holder.imageAnnonce.setImageResource(uneAnnonce.getAnnonce_image());
+        holder.titre.setText(uneAnnonce.getAnnonce_titre());
+        holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
+        holder.date.setText(uneAnnonce.getAnnonce_date());
         holder.likeBtn.setImageResource(R.drawable.ic_favoris);
     }
 

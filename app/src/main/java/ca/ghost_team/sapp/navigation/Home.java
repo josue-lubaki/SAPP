@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,12 +24,14 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.databinding.LayoutHomeBinding;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 
 public class Home extends Fragment {
     private LayoutHomeBinding binding;
     private RecyclerView recyclerViewAnnonce;
     private AnnonceAdapter adapter;
     private final String LOG_TAG = "Fragment_Home";
+    private AnnonceViewModel annonceViewModel;
 
     @Nullable
     @Override
@@ -56,10 +60,14 @@ public class Home extends Fragment {
         // Définition de l'Adapter
         adapter = new AnnonceAdapter(getActivity());
         recyclerViewAnnonce.setAdapter(adapter);
-        adapter.addAnnonce(getAnnoncesAleatoires());
+        annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
+        annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
 
-        adapter.notifyDataSetChanged();
-        Log.i(LOG_TAG, "RecyclerView correct");
+            adapter.addAnnonce(annonces);
+            //adapter.notifyDataSetChanged();
+            Log.i(LOG_TAG, "RecyclerView correct");
+        });
+
     }
 
     private List<Annonce> getAnnoncesAleatoires() {
