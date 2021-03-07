@@ -4,26 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/BackgroundSplash"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_splash"
     tools:context=".Splash">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
+    <!-- Circular progress indicator -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"
-        android:layout_centerVertical="true"
-        android:padding="100dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_below="@+id/logo"
-        android:gravity="center"/>
-
+        android:id="@+id/myProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        app:trackColor="@color/ProgressBarBackground"
+        app:indicatorColor="@color/progressBarIndicator"
+        android:max="100"
+        android:progress="0"/>
 
 </RelativeLayout>

@@ -9,4 +9,5 @@
     <string name="titreAnnonce">Titre de l\'Annonce</string>
     <string name="prixText">$ Prix</string>
     <string name="welcome">--- Bienvenue ---</string>
+    <string name="splash_screen">Splash Screen</string>
 </resources>
