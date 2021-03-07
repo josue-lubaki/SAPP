@@ -12,4 +12,6 @@
     <color name="BackgroungTitre">#212121</color>
     <color name="BackgroundNavBar">#85C0F7</color>
     <color name="BackgroundSplash">#232323</color>
+    <color name="ProgressBarBackground">#AFAFB0</color>
+    <color name="progressBarIndicator">#A13D49</color>
 </resources>
