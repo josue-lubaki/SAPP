@@ -6,7 +6,7 @@
         android:id="@+id/item_annonce"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/BackgroundAnnonce">
+        android:backgroundTint="@color/BackgroundSplash">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/BackgroungTitre"
+                android:background="@color/BackgroundAnnonce"
                 android:paddingHorizontal="5dp"
                 android:orientation="vertical">
 
@@ -64,7 +64,7 @@
                         android:textSize="14sp"
                         android:text="@string/prixText"
                         android:layout_marginTop="5dp"
-                        android:textColor="#EB57A1"
+                        android:textColor="#F0CA69"
                         android:layout_weight="1"
                         android:textStyle="bold"/>
 
