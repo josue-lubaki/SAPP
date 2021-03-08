@@ -20,6 +20,7 @@ import ca.ghost_team.sapp.model.Annonce;
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH>{
     Context context;
     List<Annonce> listeAnnonces;
+    public static int nbreElement;
 
     public AnnonceAdapter(Context context) {
         this.context = context;
@@ -46,8 +47,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
 
     @Override
     public int getItemCount() {
+        nbreElement = listeAnnonces.size();
         return listeAnnonces.size();
     }
+
 
     public void addAnnonce(List<Annonce> maListe){
         listeAnnonces = maListe;

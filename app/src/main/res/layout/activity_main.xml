@@ -4,33 +4,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gris"
+        android:orientation="vertical"
         tools:context=".MainActivity">
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black"
-            android:layout_marginBottom="60dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/BackgroundSplash"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.etebarian.meowbottomnavigation.MeowBottomNavigation
             android:id="@+id/navBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:theme="@style/Theme.MaterialComponents"
-            app:itemBackground="?android:attr/wallpaperOpenEnterAnimation"
-            app:layout_scrollFlags = "scroll|enterAlways"
-            app:backgroundTint="@color/BackgroungTitre"
-            app:itemIconTint="@color/BackgroundNavBar"
-            app:itemTextColor="@color/BackgroundNavBar"
-            app:itemIconSize="28dp"
-            app:labelVisibilityMode="auto"
+            app:mbn_circleColor="#F0CA69"
+            app:mbn_selectedIconColor="@color/BackgroundSplash"
+            app:mbn_countTextColor="@color/white"
+            app:mbn_countBackgroundColor="@color/progressBarIndicator"
+            app:mbn_defaultIconColor="@color/white"
+            app:mbn_backgroundBottomColor="@color/BackgroundSplash"
             app:menu = "@menu/main"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>
