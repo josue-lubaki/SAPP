@@ -31,6 +31,8 @@ public class AnnonceRepo {
         new InsertAnnonceAsyncTask(dao).execute(annonce);
     }
 
+    public void insertAllAnnonce(Annonce... annonce){ new InsertAllAnnonceAsyncTask(dao).execute(annonce);}
+
     public void updateAnnonce(Annonce annonce){
         new UpdateAnnonceAsyncTask(dao).execute(annonce);
     }
@@ -53,6 +55,20 @@ public class AnnonceRepo {
         @Override
         protected Void doInBackground(Annonce... annonces) {
             uneAnnonceDao.insertAnnonce(annonces[0]);
+            return null;
+        }
+    }
+
+    private static class InsertAllAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
+
+        private AnnonceDao uneAnnonceDao;
+        private InsertAllAnnonceAsyncTask(AnnonceDao dao) {
+            this.uneAnnonceDao= dao;
+        }
+
+        @Override
+        protected Void doInBackground(Annonce... annonces) {
+            uneAnnonceDao.insertAllAnnonces(annonces);
             return null;
         }
     }

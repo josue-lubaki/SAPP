@@ -1,6 +1,5 @@
 package ca.ghost_team.sapp.dao;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Dao;
@@ -26,10 +25,8 @@ public interface AnnonceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertAnnonce(Annonce annonce);
 
-
     @Query("SELECT * FROM annonceTable ORDER BY date_annonce")
     LiveData<List<Annonce>> AllAnnonces();
-
 
     @Delete
     void deleteAnnonce(Annonce annonce);
@@ -37,7 +34,7 @@ public interface AnnonceDao {
     @Update
     void updateAnnonce(Annonce annonce);
 
-    @Query("DELETE FROM annonceTable ")
+    @Query("DELETE FROM annonceTable")
     void deleteAllAnnonce();
 
 }

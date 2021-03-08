@@ -72,9 +72,10 @@ public class MainActivity extends AppCompatActivity{
             showFragment(fragment);
         });
 
-        navBar.setCount(1,"9");
+        navBar.setCount(1,"8");
         navBar.show(1,true);
 
+        // pour éviter les erreurs de Compilation
         navBar.setOnClickMenuListener(item -> {});
         navBar.setOnReselectListener(item -> {});
     }

@@ -61,13 +61,20 @@ public class Home extends Fragment {
         adapter = new AnnonceAdapter(getActivity());
         recyclerViewAnnonce.setAdapter(adapter);
         annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
-        annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
 
-            adapter.addAnnonce(annonces);
-            //adapter.notifyDataSetChanged();
+        // Supprimer tous les elements de la table avant d'en ajouter
+        annonceViewModel.deleteAllAnnonce();
+        // Ajout des Annonces par la methode Insert
+        for(int i=0;i<getAnnoncesAleatoires().size();i++){
+            annonceViewModel.insertAnnonce(getAnnoncesAleatoires().get(i));
+        }
+
+        annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
+            adapter.addAnnonce(annonces); // Pour DAO
+            //adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
+            adapter.notifyDataSetChanged();
             Log.i(LOG_TAG, "RecyclerView correct");
         });
-
     }
 
     private List<Annonce> getAnnoncesAleatoires() {
@@ -89,7 +96,7 @@ public class Home extends Fragment {
                 true
         ));
         maListe.add(new Annonce(
-                R.color.BackgroundNavBar,
+                R.drawable.culotte2,
                 "Ma Robe rouge",
                 "Je te vends ma plus belle robe soirée",
                 95,
@@ -97,7 +104,7 @@ public class Home extends Fragment {
                 false
         ));
         maListe.add(new Annonce(
-                R.color.BackgroundNavBar,
+                R.drawable.culotte1,
                 "Ceinture",
                 "Tu aimes les ceintures de marque ?",
                 120,
