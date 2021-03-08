@@ -1,13 +1,10 @@
 package ca.ghost_team.sapp.database;
 
-import android.content.AsyncQueryHandler;
 import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
-import androidx.loader.content.AsyncTaskLoader;
 import androidx.room.Database;
-import androidx.room.Entity;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -49,21 +46,43 @@ public abstract class sappDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            annonceDao.insertAnnonce(new Annonce(
-                    R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
+
+            /*annonceDao.insertAnnonce(new Annonce(
+                    R.drawable.collection,
+                    "Ma collection",
+                    "Je te vends mes plus beaux vetements",
+                    150,
+                    "2 days ago",
                     false));
 
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
+                    "Ma Chemise",
+                    "Ma chemise blue",
+                    50,
+                    "1 days ago",
+                    true));
+            annonceDao.insertAnnonce(new Annonce(
+                    R.drawable.img_splash2,
+                    "Ma Collection",
+                    "Je te vends mes plus belle robes de soirée",
+                    295,
+                    "3 days ago",
                     false));
+            annonceDao.insertAnnonce(new Annonce(
+                    R.drawable.chemise,
+                    "Ceinture",
+                    "Tu aimes les ceintures de marque ?",
+                    120,
+                    "2 days ago",
+                    false));
+            annonceDao.insertAnnonce(new Annonce(
+                    R.drawable.collection,
+                    "Jogging gris",
+                    "Pret pour le sport ?",
+                    45,
+                    "6 days ago",
+                    true));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "T-shirt",
@@ -72,47 +91,26 @@ public abstract class sappDatabase extends RoomDatabase {
                     "7 days ago",
                     false));
             annonceDao.insertAnnonce(new Annonce(
-                    R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
+                    R.drawable.culotte2,
+                    "Culotte",
+                    "je l'aime bien pour le BasketBall",
+                    55,
+                    "1 days ago",
                     false));
+            annonceDao.insertAnnonce(new Annonce(
+                    R.drawable.collection,
+                    "Veste",
+                    "Tu veux être présentable ?",
+                    350,
+                    "3 days ago",
+                    true));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
                     "7 days ago",
-                    false));
-            annonceDao.insertAnnonce(new Annonce(
-                    R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
-                    false));
-            annonceDao.insertAnnonce(new Annonce(
-                    R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
-                    false));
-            annonceDao.insertAnnonce(new Annonce(
-                    R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
-                    false));
-            annonceDao.insertAnnonce(new Annonce(
-                    R.drawable.chemise,
-                    "T-shirt",
-                    "Je te jure que tu vas l'adorer",
-                    25,
-                    "7 days ago",
-                    false));
+                    false));*/
             return null;
         }
     }

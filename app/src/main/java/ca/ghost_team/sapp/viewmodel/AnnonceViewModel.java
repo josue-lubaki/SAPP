@@ -26,6 +26,10 @@ public class AnnonceViewModel extends AndroidViewModel {
         annonceRepo.insertAnnonce(annonce);
     }
 
+    public void insertAllAnnonce(Annonce... annonce){
+        annonceRepo.insertAllAnnonce(annonce);
+    }
+
     public void updateAnnonce(Annonce annonce){
         annonceRepo.updateAnnonce(annonce);
     }

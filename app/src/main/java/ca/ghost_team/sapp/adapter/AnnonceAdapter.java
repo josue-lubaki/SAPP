@@ -2,25 +2,35 @@ package ca.ghost_team.sapp.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ghost_team.sapp.DetailAnnonce;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.model.Annonce;
 
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH>{
     Context context;
     List<Annonce> listeAnnonces;
-    public static int nbreElement;
+
+    // Constantes
+    public static String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
+    public static String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
+    public static String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
+    public static String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
+
 
     public AnnonceAdapter(Context context) {
         this.context = context;
@@ -43,11 +53,24 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
         holder.date.setText(uneAnnonce.getAnnonce_date());
         holder.likeBtn.setImageResource(R.drawable.ic_favoris);
+
+        // set OnClickListener
+        holder.cardView_detail_Article.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
+                Intent intent = new Intent(context, DetailAnnonce.class);
+                intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonce_image());
+                intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonce_titre());
+                intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnonce_prix());
+                intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonce_description());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        nbreElement = listeAnnonces.size();
         return listeAnnonces.size();
     }
 
@@ -64,6 +87,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         TextView date;
         ImageView likeBtn;
         ImageView imageAnnonce;
+        CardView cardView_detail_Article;
 
         public AnnonceVH(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +96,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             prix = itemView.findViewById(R.id.annoncePrix);
             date = itemView.findViewById(R.id.annonceDate);
             likeBtn = itemView.findViewById(R.id.annonceLiked);
+            cardView_detail_Article = itemView.findViewById(R.id.item_annonce);
         }
     }
 }
