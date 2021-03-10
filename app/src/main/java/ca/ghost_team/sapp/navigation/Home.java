@@ -70,19 +70,20 @@ public class Home extends Fragment {
         }
 
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
-            adapter.addAnnonce(annonces); // Pour DAO
-            //adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
+            //adapter.addAnnonce(annonces); // Pour DAO
+            adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
             adapter.notifyDataSetChanged();
             Log.i(LOG_TAG, "RecyclerView correct");
         });
     }
 
-    private List<Annonce> getAnnoncesAleatoires() {
+    public static List<Annonce> getAnnoncesAleatoires() {
         List<Annonce> maListe = new ArrayList<>();
         maListe.add(new Annonce(
                 R.drawable.collection,
                 "Ma collection",
-                "Je te vends mes plus beaux vetements",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 150,
                 "2 days ago",
                 false
@@ -90,7 +91,8 @@ public class Home extends Fragment {
         maListe.add(new Annonce(
                 R.drawable.chemise,
                 "Ma Chemise",
-                "Ma chemise blue",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 50,
                 "1 days ago",
                 true
@@ -98,15 +100,17 @@ public class Home extends Fragment {
         maListe.add(new Annonce(
                 R.drawable.culotte2,
                 "Ma Robe rouge",
-                "Je te vends ma plus belle robe soirée",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 95,
                 "3 days ago",
-                false
+                true
         ));
         maListe.add(new Annonce(
                 R.drawable.culotte1,
                 "Ceinture",
-                "Tu aimes les ceintures de marque ?",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 120,
                 "2 days ago",
                 false
@@ -114,7 +118,8 @@ public class Home extends Fragment {
         maListe.add(new Annonce(
                 R.drawable.collection,
                 "Jogging gris",
-                "Pret pour le sport ?",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 45,
                 "6 days ago",
                 true
@@ -122,7 +127,8 @@ public class Home extends Fragment {
         maListe.add(new Annonce(
                 R.drawable.chemise,
                 "T-shirt",
-                "Je te jure que tu vas l'adorer",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 25,
                 "7 days ago",
                 false
@@ -130,15 +136,17 @@ public class Home extends Fragment {
         maListe.add(new Annonce(
                 R.drawable.culotte2,
                 "Culotte",
-                "je l'aime bien pour le BasketBall",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 55,
                 "1 days ago",
-                false
+                true
         ));
         maListe.add(new Annonce(
                 R.drawable.collection,
                 "Veste",
-                "Tu veux être présentable ?",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
+                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 350,
                 "3 days ago",
                 true
