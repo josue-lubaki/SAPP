@@ -75,6 +75,14 @@
                         android:src="@drawable/ic_favoris"
                         android:layout_weight="0"/>
 
+                    <ImageView
+                        android:id="@+id/annonceLikedRed"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_favoris_red"
+                        android:visibility="gone"
+                        android:elevation="10dp"/>
+
                 </LinearLayout>
 
             </LinearLayout>

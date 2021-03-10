@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -52,20 +53,34 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.titre.setText(uneAnnonce.getAnnonce_titre());
         holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
         holder.date.setText(uneAnnonce.getAnnonce_date());
-        holder.likeBtn.setImageResource(R.drawable.ic_favoris);
+
+        // Donner les états initials du Boutton
+        if (!uneAnnonce.isAnnonce_liked())
+            holder.likeBtn.setImageResource(R.drawable.ic_favoris);
+        else
+            holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
+
+        // set OnClickListener pour liker l'Annonce par le button
+        holder.likeBtn.setOnClickListener(v -> {
+            if(!uneAnnonce.isAnnonce_liked()){
+                holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
+                uneAnnonce.setAnnonce_liked(true); // setter le changement
+            }
+            else{
+                holder.likeBtn.setImageResource(R.drawable.ic_favoris);
+                uneAnnonce.setAnnonce_liked(false); // setter le changement
+            }
+        });
 
         // set OnClickListener
-        holder.cardView_detail_Article.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
-                Intent intent = new Intent(context, DetailAnnonce.class);
-                intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonce_image());
-                intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonce_titre());
-                intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnonce_prix());
-                intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonce_description());
-                context.startActivity(intent);
-            }
+        holder.cardView_detail_Article.setOnClickListener(v -> {
+            // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
+            Intent intent = new Intent(context, DetailAnnonce.class);
+            intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonce_image());
+            intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonce_titre());
+            intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnonce_prix());
+            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonce_description());
+            context.startActivity(intent);
         });
     }
 
