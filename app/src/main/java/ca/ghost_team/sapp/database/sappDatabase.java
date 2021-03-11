@@ -11,12 +11,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.dao.AnnonceDao;
+import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.Utilisateur;
 
-@Database(entities = {Annonce.class}, version = 1, exportSchema = false)
+@Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
 public abstract class sappDatabase extends RoomDatabase {
     public static sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
+    //aj
+    public abstract UtilisateurDao utilisateurDao();
+
 
     public static synchronized sappDatabase getInstance(Context context){
 
@@ -39,9 +44,13 @@ public abstract class sappDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
         private AnnonceDao annonceDao;
+        //aj
+        private UtilisateurDao utilisateurDao;
 
         public PopulateDbAsyncTask(sappDatabase instance) {
-                annonceDao= instance.annonceDao();
+
+            utilisateurDao=instance.utilisateurDao();
+            annonceDao= instance.annonceDao();
         }
 
         @Override
@@ -111,6 +120,24 @@ public abstract class sappDatabase extends RoomDatabase {
                     25,
                     "7 days ago",
                     false));*/
+            // AJOUT Utilisateur
+            /*
+            utilisateurDao.insertallUtilisateur(new Utilisateur(
+                    0,
+                    "josue",
+                    "lubaki",
+                    "26-jouin",1));
+            utilisateurDao.insertallUtilisateur(new Utilisateur(
+                    2,
+                    "ismael",
+                    "koulibali",
+                    "4 mai",0));
+            utilisateurDao.insertallUtilisateur(new Utilisateur(
+                    1,
+                    "jonathan",
+                    "kanyinda",
+                    "",0));*/
+
             return null;
         }
     }
