@@ -20,13 +20,13 @@ import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.model.Annonce;
 
-public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisViewHolder>{
+public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisViewHolder> {
 
     // Constantes
     public static String ANNONCE_IMAGE_REQUEST_FAVORIS = "Annonce_Image";
-    public static String ANNONCE_TITRE_REQUEST_FAVORIS  = "Annonce_Titre";
-    public static String ANNONCE_PRICE_REQUEST_FAVORIS  = "Annonce_Prix";
-    public static String ANNONCE_DESCRIPTION_REQUEST_FAVORIS  = "Annonce_Description";
+    public static String ANNONCE_TITRE_REQUEST_FAVORIS = "Annonce_Titre";
+    public static String ANNONCE_PRICE_REQUEST_FAVORIS = "Annonce_Prix";
+    public static String ANNONCE_DESCRIPTION_REQUEST_FAVORIS = "Annonce_Description";
 
     Context context;
     List<Annonce> listeAnnoncesFavoris;
@@ -49,7 +49,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         Annonce annonce = listeAnnoncesFavoris.get(position);
         // TODO : pour le besoin de necessité, toutes les annonces viendront dans le Favoris, mais le transfret sera normalemnt fait par rapport un Utilisateur
         // On bind si le Like est à True
-        if(annonce.isAnnonce_liked()){
+        if (annonce.isAnnonce_liked()) {
             holder.imageAnnonce.setImageResource(annonce.getAnnonce_image());
             holder.titre.setText(annonce.getAnnonce_titre());
             holder.description.setText(annonce.getAnnonce_description());
@@ -73,12 +73,10 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         return listeAnnoncesFavoris.size();
     }
 
-    public void addAnnonceToFavoris(List<Annonce> listeAnnonceLiked){
-        // clear liste
-        listeAnnoncesFavoris.clear();
+    public void addAnnonceToFavoris(List<Annonce> listeAnnonceLiked) {
 
-        for (Annonce annonce :listeAnnonceLiked) {
-            if(annonce.isAnnonce_liked())
+        for (Annonce annonce : listeAnnonceLiked) {
+            if (annonce.isAnnonce_liked())
                 listeAnnoncesFavoris.add(annonce);
         }
     }

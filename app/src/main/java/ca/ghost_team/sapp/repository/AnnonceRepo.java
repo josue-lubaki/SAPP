@@ -45,6 +45,10 @@ public class AnnonceRepo {
         new DeleteAnnonceAsyncTask(dao).execute(annonce);
     }
 
+    public void updateLiked(int id, boolean etat){
+        new UpdateLikedAsyncTask(dao).execute(id, etat);
+    }
+
     private static class InsertAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
 
         private AnnonceDao uneAnnonceDao;
@@ -111,6 +115,20 @@ public class AnnonceRepo {
         @Override
         protected Void doInBackground(Annonce... annonces) {
             uneAnnonceDao.updateAnnonce(annonces[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateLikedAsyncTask extends AsyncTask<Object,Void,Void>{
+
+        private AnnonceDao uneAnnonceDao;
+        private UpdateLikedAsyncTask(AnnonceDao dao) {
+            this.uneAnnonceDao= dao;
+        }
+
+        @Override
+        protected Void doInBackground(Object... Objects) {
+            uneAnnonceDao.updateLiked((int)Objects[0], (boolean)Objects[1]);
             return null;
         }
     }

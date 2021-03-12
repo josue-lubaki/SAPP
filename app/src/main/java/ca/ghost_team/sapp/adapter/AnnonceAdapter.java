@@ -1,13 +1,17 @@
 package ca.ghost_team.sapp.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,20 +20,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.navigation.Favoris;
+import ca.ghost_team.sapp.repository.AnnonceRepo;
 
-public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH>{
+public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
     Context context;
     List<Annonce> listeAnnonces;
+    List<Object> maListeUpdate = new ArrayList<>();
 
     // Constantes
     public static String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
     public static String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
     public static String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
     public static String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
-
 
     public AnnonceAdapter(Context context) {
         this.context = context;
@@ -55,18 +63,25 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         // Donner les états initials du Boutton
         if (!uneAnnonce.isAnnonce_liked())
             holder.likeBtn.setImageResource(R.drawable.ic_favoris);
-        else
+        else {
             holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
+            //envoyeFavoris(uneAnnonce);
+        }
 
         // set OnClickListener pour liker l'Annonce par le button
         holder.likeBtn.setOnClickListener(v -> {
-            if(!uneAnnonce.isAnnonce_liked()){
+            if (!uneAnnonce.isAnnonce_liked()) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
-                uneAnnonce.setAnnonce_liked(true); // setter le changement
-            }
-            else{
+                uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
+
+                // Les éléments qui doivent mise à jour direcement avec la Base de données
+                maListeUpdate.add(uneAnnonce.getIdAnnonce());
+                maListeUpdate.add(true);
+            } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
                 uneAnnonce.setAnnonce_liked(false); // setter le changement
+                maListeUpdate.add(uneAnnonce.getIdAnnonce());
+                maListeUpdate.add(false);
             }
             notifyDataSetChanged();
         });
@@ -83,18 +98,22 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         });
     }
 
+    public List<Object> changeBoutonLike() {
+        return maListeUpdate;
+    }
+
     @Override
     public int getItemCount() {
         return listeAnnonces.size();
     }
 
 
-    public void addAnnonce(List<Annonce> maListe){
+    public void addAnnonce(List<Annonce> maListe) {
         listeAnnonces = maListe;
         notifyDataSetChanged();
     }
 
-    static class AnnonceVH extends RecyclerView.ViewHolder{
+    static class AnnonceVH extends RecyclerView.ViewHolder {
         /* On définit les Champs du model */
         TextView titre;
         TextView prix;

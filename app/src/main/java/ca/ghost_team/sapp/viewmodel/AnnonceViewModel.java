@@ -42,6 +42,10 @@ public class AnnonceViewModel extends AndroidViewModel {
         annonceRepo.deleteAllAnnonce();
     }
 
+    public void updateLiked(int idAnnonce, boolean etat){
+        annonceRepo.updateLiked(idAnnonce, etat);
+    }
+
     public LiveData<List<Annonce>> getAllAnnonces() {
         return AllAnnonces;
     }

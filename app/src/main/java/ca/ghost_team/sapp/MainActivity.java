@@ -1,6 +1,7 @@
 package ca.ghost_team.sapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
                     break;
                 case 2:
                     fragment = Favoris.class;
-                    Log.i(LOG_TAG,"show Favoris.class");
+                    Log.i(LOG_TAG,"show Home.class");
                     break;
                 case 3:
                     fragment = AddPost.class;

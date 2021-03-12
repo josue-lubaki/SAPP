@@ -2,6 +2,8 @@ package ca.ghost_team.sapp.navigation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +11,24 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.adapter.FavorisAdapter;
 import ca.ghost_team.sapp.databinding.LayoutFavorisBinding;
+import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 
 public class Favoris extends Fragment {
     private LayoutFavorisBinding binding;
@@ -42,7 +51,7 @@ public class Favoris extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         recyclerView = binding.recyclerViewFavoris;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -50,7 +59,20 @@ public class Favoris extends Fragment {
         // Définition de l'Adapter
         adapter = new FavorisAdapter(getActivity());
         recyclerView.setAdapter(adapter);
-        adapter.addAnnonceToFavoris(Home.getAnnoncesAleatoires());
-        adapter.notifyDataSetChanged();
+
+        AnnonceViewModel annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
+
+        annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
+            List<Annonce> maListeFavorite = new ArrayList<>();
+            for (Annonce annonce: annonces) {
+                if(annonce.isAnnonce_liked())
+                    maListeFavorite.add(annonce);
+            }
+            adapter.addAnnonceToFavoris(maListeFavorite);
+            adapter.notifyDataSetChanged();
+
+            Log.i("Favoris.class", "RecyclerView correct");
+        });
+
     }
 }
