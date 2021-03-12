@@ -1,5 +1,6 @@
 package ca.ghost_team.sapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ghost_team.sapp.DetailAnnonce;
+import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.model.Annonce;
 
@@ -42,6 +43,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         return new FavorisViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);

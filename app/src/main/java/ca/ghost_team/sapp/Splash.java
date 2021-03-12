@@ -1,12 +1,16 @@
 package ca.ghost_team.sapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+
+import ca.ghost_team.sapp.database.sappDatabase;
 
 import static java.lang.Thread.sleep;
 
@@ -43,4 +47,5 @@ public class Splash extends AppCompatActivity {
             }
         }).start();
  }
+
 }

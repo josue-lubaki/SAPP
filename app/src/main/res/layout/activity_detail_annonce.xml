@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/BackgroundSplash"
         android:orientation="vertical"
-        tools:context=".DetailAnnonce">
+        tools:context=".activity.DetailAnnonce">
 
         <ImageView
             android:id="@+id/vendeur_image_article"

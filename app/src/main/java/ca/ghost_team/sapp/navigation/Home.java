@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.multidex.MultiDex;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,6 @@ public class Home extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.layout_home, container, false);
         //set binding variables here
         return binding.getRoot();
-        //return inflater.inflate(R.layout.layout_home, container, false);
     }
 
     @Override
@@ -63,15 +63,15 @@ public class Home extends Fragment {
         annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
 
         // Supprimer tous les elements de la table avant d'en ajouter
-        annonceViewModel.deleteAllAnnonce();
+        // annonceViewModel.deleteAllAnnonce();
         // Ajout des Annonces par la methode Insert
-        for(int i=0;i<getAnnoncesAleatoires().size();i++){
+        /*for(int i=0;i<getAnnoncesAleatoires().size();i++){
             annonceViewModel.insertAnnonce(getAnnoncesAleatoires().get(i));
-        }
+        }*/
 
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
-            //adapter.addAnnonce(annonces); // Pour DAO
-            adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
+            adapter.addAnnonce(annonces); // Pour DAO
+            //adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
             adapter.notifyDataSetChanged();
             Log.i(LOG_TAG, "RecyclerView correct");
         });
@@ -154,4 +154,6 @@ public class Home extends Fragment {
 
         return maListe;
     }
+
+
 }
