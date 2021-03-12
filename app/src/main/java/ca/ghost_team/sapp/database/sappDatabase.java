@@ -19,7 +19,6 @@ import ca.ghost_team.sapp.model.Utilisateur;
 public abstract class sappDatabase extends RoomDatabase {
     public static sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
-    //aj
     public abstract UtilisateurDao utilisateurDao();
 
 
@@ -45,7 +44,6 @@ public abstract class sappDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
         private AnnonceDao annonceDao;
-        //aj
         private UtilisateurDao utilisateurDao;
 
         public PopulateDbAsyncTask(sappDatabase instance) {
@@ -120,6 +118,13 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Je te jure que tu vas l'adorer",
                     25,
                     "7 days ago",
+                    false));
+            annonceDao.insertAnnonce(new Annonce(
+                    R.drawable.chemise,
+                    "Chaussette",
+                    "Mes chaussettes de Noël",
+                    5,
+                    "4 days ago",
                     false));
             // AJOUT Utilisateur
 

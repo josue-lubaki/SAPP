@@ -37,4 +37,7 @@ public interface AnnonceDao {
     @Query("DELETE FROM annonceTable")
     void deleteAllAnnonce();
 
+    @Query("UPDATE annonceTable SET liked_annonce = :etat WHERE idAnnonce = :id")
+    void updateLiked(int id, boolean etat);
+
 }
