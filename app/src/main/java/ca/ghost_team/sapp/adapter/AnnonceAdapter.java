@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ghost_team.sapp.DetailAnnonce;
+import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.model.Annonce;
 
@@ -70,6 +68,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
                 uneAnnonce.setAnnonce_liked(false); // setter le changement
             }
+            notifyDataSetChanged();
         });
 
         // set OnClickListener

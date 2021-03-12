@@ -34,6 +34,7 @@ public abstract class sappDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -56,7 +57,7 @@ public abstract class sappDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            /*annonceDao.insertAnnonce(new Annonce(
+            annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Ma collection",
                     "Je te vends mes plus beaux vetements",
@@ -119,14 +120,14 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Je te jure que tu vas l'adorer",
                     25,
                     "7 days ago",
-                    false));*/
+                    false));
             // AJOUT Utilisateur
-            /*
+
             utilisateurDao.insertallUtilisateur(new Utilisateur(
                     0,
                     "josue",
                     "lubaki",
-                    "26-jouin",1));
+                    "26 juin",1));
             utilisateurDao.insertallUtilisateur(new Utilisateur(
                     2,
                     "ismael",
@@ -136,8 +137,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     1,
                     "jonathan",
                     "kanyinda",
-                    "",0));*/
-
+                    "",0));
             return null;
         }
     }

@@ -20,10 +20,10 @@ import ca.ghost_team.sapp.model.Annonce;
 public interface AnnonceDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertAllAnnonces(Annonce... annonce);
+    void insertAllAnnonces(Annonce... annonce);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertAnnonce(Annonce annonce);
+    void insertAnnonce(Annonce annonce);
 
     @Query("SELECT * FROM annonceTable ORDER BY date_annonce")
     LiveData<List<Annonce>> AllAnnonces();
