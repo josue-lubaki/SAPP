@@ -1,5 +1,6 @@
 package ca.ghost_team.sapp.navigation;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,7 +46,7 @@ public class Home extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((MainActivity)context).setTitle(R.string.home);
+        ((MainActivity) context).setTitle(R.string.home);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class Home extends Fragment {
         annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
 
         // Supprimer tous les elements de la table avant d'en ajouter
-        // annonceViewModel.deleteAllAnnonce();
+        // annonceViewModel.updateAnnonce();
         // Ajout des Annonces par la methode Insert
         /*for(int i=0;i<getAnnoncesAleatoires().size();i++){
             annonceViewModel.insertAnnonce(getAnnoncesAleatoires().get(i));
@@ -72,7 +73,20 @@ public class Home extends Fragment {
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
             adapter.addAnnonce(annonces); // Pour DAO
             //adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
-            adapter.notifyDataSetChanged();
+
+            if (adapter.changeBoutonLike().size() != 0 && adapter.changeBoutonLike().size() % 2 == 0) {
+                int nbre = adapter.changeBoutonLike().size();
+                for (int i = 0 ; i<nbre; i+=2){
+                    int a = (int) adapter.changeBoutonLike().get(i);
+                    boolean b = (boolean) adapter.changeBoutonLike().get(i+1);
+                    annonceViewModel.updateLiked(a, b);
+                    adapter.notifyDataSetChanged();
+                }
+
+                adapter.notifyDataSetChanged();
+                adapter.changeBoutonLike().clear();
+            }
+
             Log.i(LOG_TAG, "RecyclerView correct");
         });
     }
