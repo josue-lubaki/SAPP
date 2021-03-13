@@ -1,42 +1,80 @@
 package ca.ghost_team.sapp.model;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "annonceTable")
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "annonceTable",
+        foreignKeys = {
+                @ForeignKey(entity = Utilisateur.class,
+                        parentColumns = "idUtilisateur",
+                        childColumns = "utilisateurId",
+                        onDelete = CASCADE),
+
+//                @ForeignKey(entity = CategorieAnnonce.class,
+//                        parentColumns = "idCategorie",
+//                        childColumns = "categorieId",
+//                        onDelete = CASCADE)
+        }
+)
 public class Annonce {
 
     @PrimaryKey(autoGenerate = true)
     private int idAnnonce;
 
-    @ColumnInfo(name="image_annonce")
+    @ColumnInfo(name = "image_annonce")
     private int annonce_image;
 
     @ColumnInfo(name = "titre_annonce")
     private String annonce_titre;
 
-    @ColumnInfo(name="description_annonce")
+    @ColumnInfo(name = "description_annonce")
     private String annonce_description;
 
-    @ColumnInfo(name ="prix_annonce")
+    @ColumnInfo(name = "prix_annonce")
     private int annonce_prix;
 
-    @ColumnInfo(name= "date_annonce")
+    @ColumnInfo(name = "date_annonce")
     private String annonce_date;
 
     //cette variable permet de savoir si l'annonce est mise en favoris ou non
     @ColumnInfo(name = "liked_annonce")
     private boolean annonce_liked;
 
+    // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
+    private int utilisateurId;
 
-    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, String annonce_date, boolean annonce_liked) {
+    //private int categorieId;
+
+    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, String annonce_date, boolean annonce_liked, int utilisateurId) {
         this.annonce_titre = annonce_titre;
         this.annonce_description = annonce_description;
         this.annonce_prix = annonce_prix;
         this.annonce_date = annonce_date;
         this.annonce_liked = annonce_liked;
         this.annonce_image = annonce_image;
+        this.utilisateurId = utilisateurId;
+       // this.categorieId = categorieId;
+    }
+
+//    public int getCategorieId() {
+//        return categorieId;
+//    }
+//
+//    public void setCategorieId(int categorieId) {
+//        this.categorieId = categorieId;
+//    }
+
+    public int getUtilisateurId() {
+        return utilisateurId;
+    }
+
+    public void setUtilisateurId(int utilisateurId) {
+        this.utilisateurId = utilisateurId;
     }
 
     public int getIdAnnonce() {

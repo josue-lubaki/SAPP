@@ -55,13 +55,28 @@ public abstract class sappDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
+            utilisateurDao.insertallUtilisateur(new Utilisateur(
+                    "Josue",
+                    "Lubaki",
+                    "10 Mai"));
+            utilisateurDao.insertallUtilisateur(new Utilisateur(
+                    "Ismael",
+                    "Coulibaly",
+                    "24 Fevrier"));
+            utilisateurDao.insertallUtilisateur(new Utilisateur(
+                    "Jonathan",
+                    "Kanyinda",
+                    "12 Juillet"));
+
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Ma collection",
                     "Je te vends mes plus beaux vetements",
                     150,
                     "2 days ago",
-                    false));
+                    false,
+                    3
+                    ));
 
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
@@ -69,80 +84,75 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Ma chemise blue",
                     50,
                     "1 days ago",
-                    true));
+                    true,
+                    1));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.img_splash2,
                     "Ma Collection",
                     "Je te vends mes plus belle robes de soirée",
                     295,
                     "3 days ago",
-                    false));
+                    false,
+                    2));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Ceinture",
                     "Tu aimes les ceintures de marque ?",
                     120,
                     "2 days ago",
-                    false));
+                    false,
+                    3));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Jogging gris",
                     "Pret pour le sport ?",
                     45,
                     "6 days ago",
-                    true));
+                    true,
+                    1));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
                     "7 days ago",
-                    false));
+                    false,
+                    3));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.culotte2,
                     "Culotte",
                     "je l'aime bien pour le BasketBall",
                     55,
                     "1 days ago",
-                    false));
+                    false,
+                    2));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Veste",
                     "Tu veux être présentable ?",
                     350,
                     "3 days ago",
-                    true));
+                    true,
+                    2));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
                     "7 days ago",
-                    false));
+                    false,
+                    3));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Chaussette",
                     "Mes chaussettes de Noël",
                     5,
                     "4 days ago",
-                    false));
+                    false,
+                    1));
             // AJOUT Utilisateur
 
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    0,
-                    "josue",
-                    "lubaki",
-                    "26 juin",1));
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    2,
-                    "ismael",
-                    "koulibali",
-                    "4 mai",0));
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    1,
-                    "jonathan",
-                    "kanyinda",
-                    "",0));
+
             return null;
         }
     }

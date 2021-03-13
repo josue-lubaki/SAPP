@@ -16,13 +16,17 @@ public class Utilisateur {
     @ColumnInfo(name = "prenom_Utilisateur")
     private String utilisateur_prenom;
 
-
     @ColumnInfo(name = "dateNaissance_Utilisateur")
     private String utilisateur_dateNaissance;
 
-    @ColumnInfo(name = "nombreAnonce_Utilisateur")
-    private int utilisateur_nombreAnnonce;
+//    @ColumnInfo(name = "nombreAnonce_Utilisateur")
+//    private int utilisateur_nombreAnnonce;
 
+    public Utilisateur(String utilisateur_nom, String utilisateur_prenom, String utilisateur_dateNaissance) {
+        this.utilisateur_nom = utilisateur_nom;
+        this.utilisateur_prenom = utilisateur_prenom;
+        this.utilisateur_dateNaissance = utilisateur_dateNaissance;
+    }
 
     public int getIdUtilisateur() {
         return idUtilisateur;
@@ -56,19 +60,12 @@ public class Utilisateur {
         this.utilisateur_dateNaissance = utilisateur_dateNaissance;
     }
 
-    public int getUtilisateur_nombreAnnonce() {
-        return utilisateur_nombreAnnonce;
-    }
+//    public int getUtilisateur_nombreAnnonce() {
+//        return utilisateur_nombreAnnonce;
+//    }
+//
+//    public void setUtilisateur_nombreAnnonce(int utilisateur_nombreAnnonce) {
+//        this.utilisateur_nombreAnnonce = utilisateur_nombreAnnonce;
+//    }
 
-    public void setUtilisateur_nombreAnnonce(int utilisateur_nombreAnnonce) {
-        this.utilisateur_nombreAnnonce = utilisateur_nombreAnnonce;
-    }
-
-    public Utilisateur(int idUtilisateur, String utilisateur_nom, String utilisateur_prenom, String utilisateur_dateNaissance, int utilisateur_nombreAnnonce) {
-        this.idUtilisateur = idUtilisateur;
-        this.utilisateur_nom = utilisateur_nom;
-        this.utilisateur_prenom = utilisateur_prenom;
-        this.utilisateur_dateNaissance = utilisateur_dateNaissance;
-        this.utilisateur_nombreAnnonce = utilisateur_nombreAnnonce;
-    }
 }
