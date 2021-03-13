@@ -12,6 +12,7 @@ import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.database.sappDatabase;
 
+import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
 
 public class UtilisateurRepo {
@@ -31,7 +32,9 @@ public class UtilisateurRepo {
     public void inserUtilisiateur(Utilisateur x){ new InsertAsynchrone(dao).execute(x);}
     public void deleteUtilisateur(Utilisateur x){ new DeleteAsynchrone(dao).execute(x);}
     public void updateUtilisiateur(Utilisateur x){ new UpdateAsynchrone(dao).execute(x);}
-
+    public List<Annonce> findAnnonceByUtilisateur(int idUtilisateur){
+        return (List<Annonce>) new findAnnonceByUtilisateurAsyncTask(dao).execute(idUtilisateur);
+    }
 
 
     // Classe insert user's backTask
@@ -70,6 +73,21 @@ public class UtilisateurRepo {
         @Override
         protected Void doInBackground(Utilisateur... utilisateurs) {
             utilisateurDao.updateUtlisateur(utilisateurs[0]);
+            return null;
+        }
+
+    }
+
+    private static class findAnnonceByUtilisateurAsyncTask extends AsyncTask<Integer,Void,List<Annonce>>{
+
+        private UtilisateurDao utilisateurDao;
+        private findAnnonceByUtilisateurAsyncTask(UtilisateurDao dao) {
+            this.utilisateurDao= dao;
+        }
+
+        @Override
+        protected List<Annonce> doInBackground(Integer... id) {
+            utilisateurDao.findAnnonceByUser(id[0]);
             return null;
         }
 

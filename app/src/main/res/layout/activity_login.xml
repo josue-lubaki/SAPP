@@ -48,8 +48,7 @@
                     android:padding="5sp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="25sp"
-                    android:typeface="monospace" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,8 +80,7 @@
                     android:padding="5sp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="25sp"
-                    android:typeface="monospace" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
 

@@ -100,7 +100,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 150,
                 "2 days ago",
-                false
+                false,
+                1
         ));
         maListe.add(new Annonce(
                 R.drawable.chemise,
@@ -109,7 +110,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 50,
                 "1 days ago",
-                true
+                true,
+                2
         ));
         maListe.add(new Annonce(
                 R.drawable.culotte2,
@@ -118,7 +120,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 95,
                 "3 days ago",
-                true
+                true,
+                3
         ));
         maListe.add(new Annonce(
                 R.drawable.culotte1,
@@ -127,7 +130,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 120,
                 "2 days ago",
-                false
+                false,
+                2
         ));
         maListe.add(new Annonce(
                 R.drawable.collection,
@@ -136,7 +140,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 45,
                 "6 days ago",
-                true
+                true,
+                1
         ));
         maListe.add(new Annonce(
                 R.drawable.chemise,
@@ -145,7 +150,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 25,
                 "7 days ago",
-                false
+                false,
+                3
         ));
         maListe.add(new Annonce(
                 R.drawable.culotte2,
@@ -154,7 +160,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 55,
                 "1 days ago",
-                true
+                true,
+                2
         ));
         maListe.add(new Annonce(
                 R.drawable.collection,
@@ -163,7 +170,8 @@ public class Home extends Fragment {
                         " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
                 350,
                 "3 days ago",
-                true
+                true,
+                3
         ));
 
         return maListe;

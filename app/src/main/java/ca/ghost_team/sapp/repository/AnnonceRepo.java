@@ -49,6 +49,10 @@ public class AnnonceRepo {
         new UpdateLikedAsyncTask(dao).execute(id, etat);
     }
 
+    public List<Annonce> findAnnonceByUser(int idUtilisateur){
+        return (List<Annonce>) new findAnnonceByUserAsyncTask(dao).execute(idUtilisateur);
+    }
+
     private static class InsertAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
 
         private AnnonceDao uneAnnonceDao;
@@ -131,6 +135,21 @@ public class AnnonceRepo {
             uneAnnonceDao.updateLiked((int)Objects[0], (boolean)Objects[1]);
             return null;
         }
+    }
+
+    static class findAnnonceByUserAsyncTask extends AsyncTask<Integer,Void,List<Annonce>>{
+
+        private AnnonceDao uneAnnonceDao;
+        findAnnonceByUserAsyncTask(AnnonceDao dao) {
+            this.uneAnnonceDao= dao;
+        }
+
+        @Override
+        protected List<Annonce> doInBackground(Integer... id) {
+            uneAnnonceDao.findAnnonceByUser(id[0]);
+            return null;
+        }
+
     }
 
 }

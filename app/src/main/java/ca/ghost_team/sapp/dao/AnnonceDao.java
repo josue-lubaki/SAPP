@@ -28,6 +28,10 @@ public interface AnnonceDao {
     @Query("SELECT * FROM annonceTable ORDER BY date_annonce")
     LiveData<List<Annonce>> AllAnnonces();
 
+    // Requête qui permet de récuperer toutes les annonces par rapport à un Utilisateur
+    @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")
+    LiveData<List<Annonce>> findAnnonceByUser(final int utilisateurId);
+
     @Delete
     void deleteAnnonce(Annonce annonce);
 
@@ -39,5 +43,7 @@ public interface AnnonceDao {
 
     @Query("UPDATE annonceTable SET liked_annonce = :etat WHERE idAnnonce = :id")
     void updateLiked(int id, boolean etat);
+
+
 
 }
