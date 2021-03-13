@@ -10,6 +10,7 @@ import androidx.multidex.MultiDex;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.sappDatabase;
 
 import static java.lang.Thread.sleep;
@@ -24,6 +25,10 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        // Desactiver le ToolBar
+        getSupportActionBar().hide();
+
         myProgress = findViewById(R.id.myProgressBar);
 
         new Thread(() -> {
@@ -41,7 +46,7 @@ public class Splash extends AppCompatActivity {
 
             /* Lorsque la boucle s'arrête, on demarre l'Intent pour lancer l'activité principale */
             if(myProgress.getProgress() == 100){
-                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Intent intent = new Intent(Splash.this, Login.class);
                 startActivity(intent);
                 finish();
             }

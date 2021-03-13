@@ -16,4 +16,9 @@
         when an unknown printer took a galley of type and scrambled it to make a type specimen book.
     </string>
     <string name="_40">$40</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="dontaccount">Don\'t Have an account ?</string>
+    <string name="sign">Sign up</string>
 </resources>
