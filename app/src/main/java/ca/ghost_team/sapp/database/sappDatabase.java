@@ -14,18 +14,18 @@ import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
+import ca.ghost_team.sapp.BaseApplication;
 
 @Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
 public abstract class sappDatabase extends RoomDatabase {
-    public static sappDatabase INSTANCE;
+    public static volatile sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
     public abstract UtilisateurDao utilisateurDao();
-
 
     public static synchronized sappDatabase getInstance(Context context){
 
         if(INSTANCE == null){
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),sappDatabase.class,"sappDatabase")
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),sappDatabase.class, BaseApplication.NAME_DB)
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
@@ -150,8 +150,6 @@ public abstract class sappDatabase extends RoomDatabase {
                     "4 days ago",
                     false,
                     1));
-            // AJOUT Utilisateur
-
 
             return null;
         }

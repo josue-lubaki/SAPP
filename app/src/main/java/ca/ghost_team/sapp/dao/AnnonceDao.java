@@ -44,6 +44,8 @@ public interface AnnonceDao {
     @Query("UPDATE annonceTable SET liked_annonce = :etat WHERE idAnnonce = :id")
     void updateLiked(int id, boolean etat);
 
+    @Query("SELECT 1")
+    int start();
 
 
 }

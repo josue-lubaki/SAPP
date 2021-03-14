@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
+import androidx.room.Room;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
@@ -46,6 +47,11 @@ public class Splash extends AppCompatActivity {
 
             /* Lorsque la boucle s'arrête, on demarre l'Intent pour lancer l'activité principale */
             if(myProgress.getProgress() == 100){
+                // Forcer le demarrage de la Base de données
+                sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,"sappDatabase")
+                        .allowMainThreadQueries().build();
+                db.annonceDao().start();
+
                 Intent intent = new Intent(Splash.this, Login.class);
                 startActivity(intent);
                 finish();

@@ -4,9 +4,14 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
+import androidx.room.Room;
+
+import ca.ghost_team.sapp.database.sappDatabase;
 
 
 public class BaseApplication extends MultiDexApplication {
+
+    public static String NAME_DB = "sappDatabase";
 
     @Override
     public void onCreate() {
@@ -18,4 +23,5 @@ public class BaseApplication extends MultiDexApplication {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
 }
