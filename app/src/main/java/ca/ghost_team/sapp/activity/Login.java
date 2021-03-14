@@ -43,9 +43,17 @@ public class Login extends AppCompatActivity {
 
         btn_login.setOnClickListener(v -> {
             // Vérifier si le champs ne sont pas vide
-            if(TextUtils.isEmpty(username.getText()) && TextUtils.isEmpty(password.getText().toString())){
+            if(TextUtils.isEmpty(username.getText()) || TextUtils.isEmpty(password.getText().toString())){
+                if(TextUtils.isEmpty(username.getText()))
+                    username.setError("Username required");
+                if(TextUtils.isEmpty(password.getText()))
+                    password.setError("Password required");
+
                 Snackbar.make(v, "Please fill texts in the field", 5000)
                         .setAction("I understand", d ->{}).show();
+
+                // Mettre le Focus dur le champs Username
+                username.requestFocus();
             }
             else if(username.getText().toString().trim().equalsIgnoreCase(USERNAME) && password.getText().toString().trim().equals(PASSWORD) ){
                 // Lancer l'activity Main

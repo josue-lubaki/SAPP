@@ -1,6 +1,5 @@
 package ca.ghost_team.sapp.navigation;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,34 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.multidex.MultiDex;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.databinding.LayoutHomeBinding;
-import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 
 public class Home extends Fragment {
     private LayoutHomeBinding binding;
-    private RecyclerView recyclerViewAnnonce;
     private AnnonceAdapter adapter;
     private final String LOG_TAG = "Fragment_Home";
-    private AnnonceViewModel annonceViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.layout_home, container, false);
-        //set binding variables here
         return binding.getRoot();
     }
 
@@ -54,128 +44,18 @@ public class Home extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Définition du RecyclerView
-        recyclerViewAnnonce = binding.recyclerViewHome;
+        RecyclerView recyclerViewAnnonce = binding.recyclerViewHome;
         GridLayoutManager grid = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         recyclerViewAnnonce.setLayoutManager(grid);
 
-        // Définition de l'Adapter
+        // Définition de l'Adapter et ViewModel
         adapter = new AnnonceAdapter(getActivity());
         recyclerViewAnnonce.setAdapter(adapter);
-        annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
-
-        // Supprimer tous les elements de la table avant d'en ajouter
-        // annonceViewModel.updateAnnonce();
-        // Ajout des Annonces par la methode Insert
-        /*for(int i=0;i<getAnnoncesAleatoires().size();i++){
-            annonceViewModel.insertAnnonce(getAnnoncesAleatoires().get(i));
-        }*/
+        AnnonceViewModel annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
 
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
-            adapter.addAnnonce(annonces); // Pour DAO
-            //adapter.addAnnonce(getAnnoncesAleatoires()); // Pour la Liste
-
-            if (adapter.changeBoutonLike().size() != 0 && adapter.changeBoutonLike().size() % 2 == 0) {
-                int nbre = adapter.changeBoutonLike().size();
-                for (int i = 0 ; i<nbre; i+=2){
-                    int a = (int) adapter.changeBoutonLike().get(i);
-                    boolean b = (boolean) adapter.changeBoutonLike().get(i+1);
-                    annonceViewModel.updateLiked(a, b);
-                    adapter.notifyDataSetChanged();
-                }
-
-                adapter.notifyDataSetChanged();
-                adapter.changeBoutonLike().clear();
-            }
-
-            Log.i(LOG_TAG, "RecyclerView correct");
+            adapter.addAnnonce(annonces);
+            Log.i(LOG_TAG, "Finish put Annonces in RecyclerView");
         });
     }
-
-    public static List<Annonce> getAnnoncesAleatoires() {
-        List<Annonce> maListe = new ArrayList<>();
-        maListe.add(new Annonce(
-                R.drawable.collection,
-                "Ma collection",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                150,
-                "2 days ago",
-                false,
-                1
-        ));
-        maListe.add(new Annonce(
-                R.drawable.chemise,
-                "Ma Chemise",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                50,
-                "1 days ago",
-                true,
-                2
-        ));
-        maListe.add(new Annonce(
-                R.drawable.culotte2,
-                "Ma Robe rouge",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                95,
-                "3 days ago",
-                true,
-                3
-        ));
-        maListe.add(new Annonce(
-                R.drawable.culotte1,
-                "Ceinture",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                120,
-                "2 days ago",
-                false,
-                2
-        ));
-        maListe.add(new Annonce(
-                R.drawable.collection,
-                "Jogging gris",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                45,
-                "6 days ago",
-                true,
-                1
-        ));
-        maListe.add(new Annonce(
-                R.drawable.chemise,
-                "T-shirt",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                25,
-                "7 days ago",
-                false,
-                3
-        ));
-        maListe.add(new Annonce(
-                R.drawable.culotte2,
-                "Culotte",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                55,
-                "1 days ago",
-                true,
-                2
-        ));
-        maListe.add(new Annonce(
-                R.drawable.collection,
-                "Veste",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                        " Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s",
-                350,
-                "3 days ago",
-                true,
-                3
-        ));
-
-        return maListe;
-    }
-
-
 }

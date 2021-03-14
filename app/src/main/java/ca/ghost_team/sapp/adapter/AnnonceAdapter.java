@@ -4,34 +4,30 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ghost_team.sapp.MainActivity;
-import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.dao.AnnonceDao;
+import ca.ghost_team.sapp.activity.DetailAnnonce;
+import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
-import ca.ghost_team.sapp.navigation.Favoris;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
 
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
     Context context;
     List<Annonce> listeAnnonces;
-    List<Object> maListeUpdate = new ArrayList<>();
+    private sappDatabase db;
 
     // Constantes
     public static String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
@@ -42,6 +38,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public AnnonceAdapter(Context context) {
         this.context = context;
         this.listeAnnonces = new ArrayList<>();
+        this.db = Room.databaseBuilder(context,sappDatabase.class,"sappDatabase")
+                .allowMainThreadQueries().build();
     }
 
     @NonNull
@@ -65,23 +63,20 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             holder.likeBtn.setImageResource(R.drawable.ic_favoris);
         else {
             holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
-            //envoyeFavoris(uneAnnonce);
         }
 
-        // set OnClickListener pour liker l'Annonce par le button
         holder.likeBtn.setOnClickListener(v -> {
             if (!uneAnnonce.isAnnonce_liked()) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
                 uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
 
-                // Les éléments qui doivent mise à jour direcement avec la Base de données
-                maListeUpdate.add(uneAnnonce.getIdAnnonce());
-                maListeUpdate.add(true);
+                db.annonceDao().updateLiked(uneAnnonce.getIdAnnonce(), true);
+
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
                 uneAnnonce.setAnnonce_liked(false); // setter le changement
-                maListeUpdate.add(uneAnnonce.getIdAnnonce());
-                maListeUpdate.add(false);
+
+                db.annonceDao().updateLiked(uneAnnonce.getIdAnnonce(), false);
             }
             notifyDataSetChanged();
         });
@@ -98,9 +93,6 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         });
     }
 
-    public List<Object> changeBoutonLike() {
-        return maListeUpdate;
-    }
 
     @Override
     public int getItemCount() {
