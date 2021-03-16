@@ -7,7 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.dao.AnnonceDao;
@@ -15,8 +19,10 @@ import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.BaseApplication;
+import conv.Conversion;
 
 @Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
+@TypeConverters({Conversion.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
 public abstract class sappDatabase extends RoomDatabase {
     public static volatile sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
@@ -73,11 +79,11 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Ma collection",
                     "Je te vends mes plus beaux vetements",
                     150,
-                    "2 days ago",
+                      new Date(),
                     false,
                     3
                     ));
-
+                    /*
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Ma Chemise",
@@ -149,7 +155,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     5,
                     "4 days ago",
                     false,
-                    1));
+                    1));*/
 
             return null;
         }

@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
                 // Mettre le Focus dur le champs Username
                 username.requestFocus();
             }
-            else if(username.getText().toString().trim().equalsIgnoreCase(USERNAME) && password.getText().toString().trim().equals(PASSWORD) ){
+            else  if(username.getText().toString().trim().equalsIgnoreCase(USERNAME) && password.getText().toString().trim().equals(PASSWORD) ){
                 // Lancer l'activity Main
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);

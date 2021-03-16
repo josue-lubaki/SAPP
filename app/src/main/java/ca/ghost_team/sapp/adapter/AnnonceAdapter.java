@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ca.ghost_team.sapp.R;
@@ -48,6 +51,15 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         View view = LayoutInflater.from(context).inflate(R.layout.layout_annonce_item, parent, false);
         return new AnnonceVH(view);
     }
+    //Va aufinal renvoyer jour resant
+    public String format_Date(Date d){
+        DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
+                DateFormat.SHORT,
+                DateFormat.SHORT);
+                String x="";
+                x=""+shortDateFormat.format(d);
+                return x;
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -56,7 +68,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.imageAnnonce.setImageResource(uneAnnonce.getAnnonce_image());
         holder.titre.setText(uneAnnonce.getAnnonce_titre());
         holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
-        holder.date.setText(uneAnnonce.getAnnonce_date());
+        //apelle de la methode de formatage
+        holder.date.setText(""+format_Date(uneAnnonce.getAnnonce_date()));
 
         // Donner les états initials du Boutton
         if (!uneAnnonce.isAnnonce_liked())
@@ -69,7 +82,6 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             if (!uneAnnonce.isAnnonce_liked()) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
                 uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
-
                 db.annonceDao().updateLiked(uneAnnonce.getIdAnnonce(), true);
 
             } else {

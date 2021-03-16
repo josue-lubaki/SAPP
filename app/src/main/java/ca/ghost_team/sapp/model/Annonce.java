@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "annonceTable",
@@ -39,18 +41,19 @@ public class Annonce {
     private int annonce_prix;
 
     @ColumnInfo(name = "date_annonce")
-    private String annonce_date;
+    private Date annonce_date;
 
     //cette variable permet de savoir si l'annonce est mise en favoris ou non
     @ColumnInfo(name = "liked_annonce")
     private boolean annonce_liked;
 
     // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
+
     private int utilisateurId;
 
     //private int categorieId;
 
-    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, String annonce_date, boolean annonce_liked, int utilisateurId) {
+    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, Date annonce_date, boolean annonce_liked, int utilisateurId) {
         this.annonce_titre = annonce_titre;
         this.annonce_description = annonce_description;
         this.annonce_prix = annonce_prix;
@@ -117,11 +120,12 @@ public class Annonce {
         this.annonce_prix = annonce_prix;
     }
 
-    public String getAnnonce_date() {
+    public Date getAnnonce_date() {
+
         return annonce_date;
     }
 
-    public void setAnnonce_date(String annonce_date) {
+    public void setAnnonce_date(Date annonce_date) {
         this.annonce_date = annonce_date;
     }
 

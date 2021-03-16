@@ -1,12 +1,10 @@
 package ca.ghost_team.sapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
 import androidx.room.Room;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
