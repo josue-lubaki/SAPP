@@ -25,8 +25,13 @@ public interface AnnonceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAnnonce(Annonce annonce);
 
-    @Query("SELECT * FROM annonceTable ORDER BY date_annonce")
-    LiveData<List<Annonce>> AllAnnonces();
+    @Query("SELECT annonceTable.* FROM annonceTable WHERE liked_annonce = 0 UNION " +
+            "SELECT annonceTable.* " +
+            "FROM annonceTable " +
+            "INNER JOIN AnnonceFavoris " +
+            "ON annonceTable.idAnnonce = AnnonceFavoris.annonceId " +
+            "WHERE AnnonceFavoris.utilisateurId =:idUser")
+    LiveData<List<Annonce>> AllAnnonces(int idUser);
 
     // Requête qui permet de récuperer toutes les annonces par rapport à un Utilisateur
     @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")
@@ -41,8 +46,11 @@ public interface AnnonceDao {
     @Query("DELETE FROM annonceTable")
     void deleteAllAnnonce();
 
-    @Query("UPDATE annonceTable SET liked_annonce = :etat WHERE idAnnonce = :id")
-    void updateLiked(int id, boolean etat);
+    @Query("DELETE FROM annoncefavoris WHERE utilisateurId = :idUser AND annonceId = :idAnnonce")
+    void deleteAnnonceByID(int idUser, int idAnnonce);
+
+    @Query("INSERT INTO annonceFavoris(utilisateurId, annonceId) VALUES(:idUser, :idAnnonce)")
+    void insertLiked(int idUser, int idAnnonce);
 
     @Query("SELECT 1")
     int start();

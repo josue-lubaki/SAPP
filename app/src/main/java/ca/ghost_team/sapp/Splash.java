@@ -50,18 +50,16 @@ public class Splash extends AppCompatActivity {
             /* Lorsque la boucle s'arrête, on demarre l'Intent pour lancer l'activité principale */
             if(myProgress.getProgress() == 100){
                 // Forcer le demarrage de la Base de données
-                sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,"sappDatabase")
-                        .allowMainThreadQueries().build();
-                db.annonceDao().start();
-
-//                sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,"sappDatabase")
+//                sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,BaseApplication.NAME_DB)
 //                        .allowMainThreadQueries().build();
-//                db.utilisateurDao().insertallUtilisateur(new Utilisateur(
+//                db.annonceDao().start();
+//
+//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
 //                        "Josue Lubaki",
 //                        "Lubaki",
 //                        "Heroes",
 //                        "jojo@gmail.com"));
-//                db.utilisateurDao().insertallUtilisateur(new Utilisateur(
+//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
 //                        "Ismael Coulibaly",
 //                        "ismo",
 //                        "zoba",

@@ -1,5 +1,6 @@
 package ca.ghost_team.sapp.activity;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -74,7 +75,7 @@ public class Login extends AppCompatActivity {
             }
             else {
                 // Lancer la requête pour verifier si le Username et Password donné par le User est correct
-                ID_USER_CURRENT = connect_user(username.getText().toString(), password.getText().toString());
+                ID_USER_CURRENT = connect_user(getApplication(),username.getText().toString(), password.getText().toString());
 
                 // User trouvé
                 if (ID_USER_CURRENT != 0) {
@@ -93,8 +94,8 @@ public class Login extends AppCompatActivity {
     }
 
     // Faire la requête pour retrieve l'ID de l'Utilisateur courant
-    public int connect_user(String username_user, String password_user) {
-        sappDatabase db = Room.databaseBuilder(getApplication(), sappDatabase.class, BaseApplication.NAME_DB)
+    public static int connect_user(Application application, String username_user, String password_user) {
+        sappDatabase db = Room.databaseBuilder(application, sappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
 

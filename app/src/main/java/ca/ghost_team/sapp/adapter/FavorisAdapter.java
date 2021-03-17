@@ -48,7 +48,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
         // TODO : pour le besoin de necessité, toutes les annonces viendront dans le Favoris, mais le transfret sera normalemnt fait par rapport un Utilisateur
-        // On bind si le Like est à True
+
 
         holder.imageAnnonce.setImageResource(annonce.getAnnonce_image());
         holder.titre.setText(annonce.getAnnonce_titre());
