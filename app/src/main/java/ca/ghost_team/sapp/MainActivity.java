@@ -12,6 +12,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
 import java.util.Date;
 
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityMainBinding;
 import ca.ghost_team.sapp.model.Annonce;
@@ -75,62 +76,6 @@ public class MainActivity extends AppCompatActivity{
         // pour éviter les erreurs de Compilation
         navBar.setOnClickMenuListener(item -> {});
         navBar.setOnReselectListener(item -> {});
-
-//
-//
-//        sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,"sappDatabase")
-//                .allowMainThreadQueries().build();
-//        db.utilisateurDao().insertallUtilisateur(new Utilisateur(
-//                "Josue Lubaki",
-//                "Lubaki",
-//                "Heroes",
-//                "jojo@gmail.com"));
-//        db.utilisateurDao().insertallUtilisateur(new Utilisateur(
-//                "Ismael Coulibaly",
-//                "ismo",
-//                "zoba",
-//                "ismael@gmail.com"));
-//
-//        db.annonceDao().insertAnnonce(new Annonce(
-//                R.drawable.collection,
-//                "Ma collection",
-//                "Je te vends mes plus beaux vetements",
-//                150,
-//                new Date(),
-//                false,
-//                1
-//        ));
-//
-//        db.annonceDao().insertAnnonce(new Annonce(
-//                R.drawable.chemise,
-//                "Ma Chemise",
-//                "Je te vends mes plus beaux vetements",
-//                150,
-//                new Date(),
-//                false,
-//                2
-//        ));
-//
-//        db.annonceDao().insertAnnonce(new Annonce(
-//                R.drawable.culotte2,
-//                "Ma Culotte",
-//                "Je te vends mes plus beaux vetements",
-//                150,
-//                new Date(),
-//                false,
-//                2
-//        ));
-//
-//        db.annonceDao().insertAnnonce(new Annonce(
-//                R.drawable.culotte1,
-//                "Mon Jogging",
-//                "Je te vends mes plus beaux vetements",
-//                150,
-//                new Date(),
-//                false,
-//                1
-//        ));
-
 
     }
 

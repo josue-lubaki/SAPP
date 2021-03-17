@@ -18,33 +18,42 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.adapter.FavorisAdapter;
+import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutFavorisBinding;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.viewmodel.AnnonceFavorisViewModel;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 
 public class Favoris extends Fragment {
+    private static final String TAG = Favoris.class.getSimpleName();
     private LayoutFavorisBinding binding;
     private RecyclerView recyclerView;
     private FavorisAdapter adapter;
+    private sappDatabase db;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.layout_favoris, container, false);
+
         return binding.getRoot();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.db = Room.databaseBuilder(context,sappDatabase.class,"sappDatabase")
+                .allowMainThreadQueries().build();
         ((MainActivity)context).setTitle(R.string.favoris);
     }
 
@@ -60,19 +69,15 @@ public class Favoris extends Fragment {
         adapter = new FavorisAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
-        AnnonceViewModel annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
+        AnnonceFavorisViewModel annonceFavorisViewModel = new ViewModelProvider(this).get(AnnonceFavorisViewModel.class);
 
-        annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
-            List<Annonce> maListeFavorite = new ArrayList<>();
-            for (Annonce annonce: annonces) {
-                if(annonce.isAnnonce_liked())
-                    maListeFavorite.add(annonce);
-            }
-            adapter.addAnnonceToFavoris(maListeFavorite);
+        annonceFavorisViewModel.getAllAnnonceFavoriteByUser().observe(getViewLifecycleOwner(), annonces -> {
+            adapter.addAnnonceToFavoris(annonces);
             adapter.notifyDataSetChanged();
 
-            Log.i("Favoris.class", "RecyclerView correct");
+            Log.i(TAG, "RecyclerView correct");
         });
 
     }
 }
+
