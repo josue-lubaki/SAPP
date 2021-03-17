@@ -15,17 +15,20 @@ import java.util.Date;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.dao.AnnonceDao;
+import ca.ghost_team.sapp.dao.AnnonceFavorisDao;
 import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceFavoris;
 import ca.ghost_team.sapp.model.Utilisateur;
 import conv.Conversion;
 
 @TypeConverters({Conversion.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
-@Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
+@Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class}, version = 1, exportSchema = false)
 public abstract class sappDatabase extends RoomDatabase {
     public static sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
     public abstract UtilisateurDao utilisateurDao();
+    public abstract AnnonceFavorisDao AnnonceFavorisDao();
 
     public static synchronized sappDatabase getInstance(Context context){
 
@@ -46,6 +49,7 @@ public abstract class sappDatabase extends RoomDatabase {
             new PopulateDbAsyncTask(INSTANCE).execute();
         }
     };
+
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
         private AnnonceDao annonceDao;

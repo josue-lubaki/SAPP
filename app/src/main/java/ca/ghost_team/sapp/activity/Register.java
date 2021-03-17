@@ -91,7 +91,7 @@ public class Register extends AppCompatActivity {
                 new UtilisateurRepo(getApplication()).inserUtilisiateur(utilisateur);
 
                 // Lancer l'activity Login
-                Intent intent = new Intent(Register.this, Login.class);
+                Intent intent = new Intent(Register.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
