@@ -3,8 +3,10 @@ package ca.ghost_team.sapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -25,6 +27,7 @@ public class Login extends AppCompatActivity {
     // Recréation des liens avec la view
     private EditText username;
     private EditText password;
+    private TextView sign_up;
     private ImageButton btn_login;
 
 
@@ -39,7 +42,15 @@ public class Login extends AppCompatActivity {
         // Assigner les champs
         username = binding.tvLoginUsername;
         password = binding.tvLoginPassword;
+        sign_up = binding.btnSignUp;
         btn_login = binding.btnLogin;
+
+        sign_up.setOnClickListener(v -> {
+            // Lancer l'activity Main
+            Intent intent = new Intent(Login.this, Register.class);
+            startActivity(intent);
+            finish();
+        });
 
         btn_login.setOnClickListener(v -> {
             // Vérifier si le champs ne sont pas vide

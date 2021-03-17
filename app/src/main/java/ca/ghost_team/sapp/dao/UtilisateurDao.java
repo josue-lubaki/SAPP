@@ -21,7 +21,7 @@ public interface UtilisateurDao  {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insertUtilisateur(Utilisateur x);
 
-    @Query("SELECT * FROM Utilisateur ORDER BY nom_Utilisateur")
+    @Query("SELECT * FROM Utilisateur ORDER BY Utilisateur_nom")
     LiveData< List<Utilisateur> > allUtilisateur();
 
     @Delete

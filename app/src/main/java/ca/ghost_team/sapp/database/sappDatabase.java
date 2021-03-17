@@ -10,21 +10,20 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.time.LocalDate;
 import java.util.Date;
 
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
-import ca.ghost_team.sapp.BaseApplication;
 import conv.Conversion;
 
-@Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
 @TypeConverters({Conversion.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
+@Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
 public abstract class sappDatabase extends RoomDatabase {
-    public static volatile sappDatabase INSTANCE;
+    public static sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
     public abstract UtilisateurDao utilisateurDao();
 
@@ -62,34 +61,37 @@ public abstract class sappDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
 
             utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    "Josue",
+                    "Josue Lubaki",
                     "Lubaki",
-                    "10 Mai"));
+                    "Heroes",
+                    "jojo@gmail.com"));
             utilisateurDao.insertallUtilisateur(new Utilisateur(
                     "Ismael",
                     "Coulibaly",
-                    "24 Fevrier"));
+                    "hybs",
+                    "ismael@gmail.com"));
             utilisateurDao.insertallUtilisateur(new Utilisateur(
                     "Jonathan",
                     "Kanyinda",
-                    "12 Juillet"));
+                    "PC JO",
+                    "jonathan@gmail.com"));
 
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Ma collection",
                     "Je te vends mes plus beaux vetements",
                     150,
-                      new Date(),
+                    new Date(),
                     false,
                     3
                     ));
-                    /*
+
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Ma Chemise",
                     "Ma chemise blue",
                     50,
-                    "1 days ago",
+                    new Date(),
                     true,
                     1));
             annonceDao.insertAnnonce(new Annonce(
@@ -97,7 +99,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Ma Collection",
                     "Je te vends mes plus belle robes de soirée",
                     295,
-                    "3 days ago",
+                    new Date(),
                     false,
                     2));
             annonceDao.insertAnnonce(new Annonce(
@@ -105,7 +107,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Ceinture",
                     "Tu aimes les ceintures de marque ?",
                     120,
-                    "2 days ago",
+                    new Date(),
                     false,
                     3));
             annonceDao.insertAnnonce(new Annonce(
@@ -113,7 +115,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Jogging gris",
                     "Pret pour le sport ?",
                     45,
-                    "6 days ago",
+                    new Date(),
                     true,
                     1));
             annonceDao.insertAnnonce(new Annonce(
@@ -121,7 +123,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
-                    "7 days ago",
+                    new Date(),
                     false,
                     3));
             annonceDao.insertAnnonce(new Annonce(
@@ -129,7 +131,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Culotte",
                     "je l'aime bien pour le BasketBall",
                     55,
-                    "1 days ago",
+                    new Date(),
                     false,
                     2));
             annonceDao.insertAnnonce(new Annonce(
@@ -137,7 +139,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Veste",
                     "Tu veux être présentable ?",
                     350,
-                    "3 days ago",
+                    new Date(),
                     true,
                     2));
             annonceDao.insertAnnonce(new Annonce(
@@ -145,7 +147,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
-                    "7 days ago",
+                    new Date(),
                     false,
                     3));
             annonceDao.insertAnnonce(new Annonce(
@@ -153,9 +155,9 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Chaussette",
                     "Mes chaussettes de Noël",
                     5,
-                    "4 days ago",
+                    new Date(),
                     false,
-                    1));*/
+                    1));
 
             return null;
         }
