@@ -1,46 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/fond_login"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        tools:context=".activity.Login">
+        tools:context=".activity.Register">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="2.5">
 
             <LinearLayout
-                android:id="@+id/bloc_username"
+                android:id="@+id/register_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_white_login"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="0"
                     android:src="@drawable/ic_profil" />
 
                 <EditText
-                    android:id="@+id/tv_login_username"
+                    android:id="@+id/tv_register_name"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/names"
+                    android:inputType="textAutoComplete"
+                    android:padding="5sp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/register_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/register_name"
+                android:background="@drawable/bg_white_login"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_username" />
+
+                <EditText
+                    android:id="@+id/tv_register_username"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="@string/username"
@@ -48,30 +81,31 @@
                     android:padding="5sp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/block_password"
+                android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/bloc_username"
+                android:layout_below="@+id/register_username"
                 android:layout_marginHorizontal="25dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_white_login"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_weight="0"
                     android:src="@drawable/ic_lock" />
 
                 <EditText
-                    android:id="@+id/tv_login_password"
+                    android:id="@+id/tv_register_password"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
@@ -80,14 +114,44 @@
                     android:padding="5sp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/register_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_password"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_white_login"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_email" />
+
+                <EditText
+                    android:id="@+id/tv_register_email"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:padding="5sp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
         </RelativeLayout>
 
-
-        <!-- Boutton login -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -95,7 +159,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/btn_login_in"
+                android:id="@+id/bloc_register"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
@@ -104,7 +168,7 @@
                 android:gravity="center_vertical">
 
                 <ImageButton
-                    android:id="@+id/btn_login"
+                    android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:src="@drawable/bg_bouton_login" />
@@ -114,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/log_in"
+                    android:text="@string/register"
                     android:textColor="@color/BackgroundSplash"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -130,7 +194,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/gris_clair"
                 android:gravity="center"
@@ -142,18 +206,18 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:gravity="fill_vertical"
-                    android:text="@string/dontaccount"
+                    android:text="@string/IhaveAccount"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/btn_sign_up"
+                    android:id="@+id/sign_in"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/not_account"
                     android:gravity="center"
-                    android:text="@string/sign"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

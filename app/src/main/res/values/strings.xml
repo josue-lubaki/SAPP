@@ -21,4 +21,9 @@
     <string name="log_in">LOG IN</string>
     <string name="dontaccount">Don\'t Have an account ?</string>
     <string name="sign">Sign up</string>
+    <string name="email">your_email@domain.com</string>
+    <string name="register">S\'enregistrer</string>
+    <string name="IhaveAccount">I already have an account</string>
+    <string name="sign_in">Sign in</string>
+    <string name="names">Name</string>
 </resources>

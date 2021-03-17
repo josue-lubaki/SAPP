@@ -6,7 +6,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -47,6 +49,9 @@ public class Annonce {
     @ColumnInfo(name = "liked_annonce")
     private boolean annonce_liked;
 
+    // Cette liste nous permettra de connaître le nombre total des Annonces
+    public static List<Annonce> listeTotalAnnonce =  new ArrayList<>();
+
     // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
 
     private int utilisateurId;
@@ -61,6 +66,7 @@ public class Annonce {
         this.annonce_liked = annonce_liked;
         this.annonce_image = annonce_image;
         this.utilisateurId = utilisateurId;
+        listeTotalAnnonce.add(this);
        // this.categorieId = categorieId;
     }
 

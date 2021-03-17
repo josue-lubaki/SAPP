@@ -18,7 +18,7 @@ public class AnnonceRepo {
 
     public AnnonceRepo(Application app){
         sappDatabase database = sappDatabase.getInstance(app);
-        dao= database.annonceDao();
+        dao = database.annonceDao();
         AllAnnonces = dao.AllAnnonces();
     }
 

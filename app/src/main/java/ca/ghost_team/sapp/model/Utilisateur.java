@@ -10,22 +10,42 @@ public class Utilisateur {
     @PrimaryKey(autoGenerate = true)
     private int idUtilisateur;
 
-    @ColumnInfo(name = "nom_Utilisateur")
+    @ColumnInfo(name = "Utilisateur_nom")
     private String utilisateur_nom;
 
-    @ColumnInfo(name = "prenom_Utilisateur")
-    private String utilisateur_prenom;
+    @ColumnInfo(name = "Utilisateur_username")
+    private String username;
+    
+    @ColumnInfo(name = "Utilisateur_password")
+    private String password;
 
-    @ColumnInfo(name = "dateNaissance_Utilisateur")
-    private String utilisateur_dateNaissance;
+    @ColumnInfo(name = "Utilisateur_email")
+    private String email;
 
 //    @ColumnInfo(name = "nombreAnonce_Utilisateur")
 //    private int utilisateur_nombreAnnonce;
 
-    public Utilisateur(String utilisateur_nom, String utilisateur_prenom, String utilisateur_dateNaissance) {
+    public Utilisateur(String utilisateur_nom, String username, String password, String email) {
         this.utilisateur_nom = utilisateur_nom;
-        this.utilisateur_prenom = utilisateur_prenom;
-        this.utilisateur_dateNaissance = utilisateur_dateNaissance;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getIdUtilisateur() {
@@ -44,20 +64,12 @@ public class Utilisateur {
         this.utilisateur_nom = utilisateur_nom;
     }
 
-    public String getUtilisateur_prenom() {
-        return utilisateur_prenom;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUtilisateur_prenom(String utilisateur_prenom) {
-        this.utilisateur_prenom = utilisateur_prenom;
-    }
-
-    public String getUtilisateur_dateNaissance() {
-        return utilisateur_dateNaissance;
-    }
-
-    public void setUtilisateur_dateNaissance(String utilisateur_dateNaissance) {
-        this.utilisateur_dateNaissance = utilisateur_dateNaissance;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 //    public int getUtilisateur_nombreAnnonce() {
