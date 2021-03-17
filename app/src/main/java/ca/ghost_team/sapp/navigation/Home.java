@@ -37,7 +37,6 @@ public class Home extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ((MainActivity) context).setTitle(R.string.home);
-
     }
 
     @Override

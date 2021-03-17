@@ -23,6 +23,7 @@ import java.util.List;
 
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
@@ -51,13 +52,13 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         View view = LayoutInflater.from(context).inflate(R.layout.layout_annonce_item, parent, false);
         return new AnnonceVH(view);
     }
-    //Va aufinal renvoyer jour resant
+
+    //Va au final renvoyer jour resant
     public String format_Date(Date d){
         DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT,
                 DateFormat.SHORT);
-                String x="";
-                x=""+shortDateFormat.format(d);
+                String x = "" + shortDateFormat.format(d);
                 return x;
     }
 
@@ -82,13 +83,16 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             if (!uneAnnonce.isAnnonce_liked()) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
                 uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
-                db.annonceDao().updateLiked(uneAnnonce.getIdAnnonce(), true);
+
+                // Ajouter (ou insérer l'enregistrement dans la Table des Annonces Favories)
+                db.annonceDao().insertLiked(Login.ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
 
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
                 uneAnnonce.setAnnonce_liked(false); // setter le changement
 
-                db.annonceDao().updateLiked(uneAnnonce.getIdAnnonce(), false);
+                // Supprimer l'enregitrement dans la Table des Annonces Favoris
+                db.annonceDao().deleteAnnonceByID(Login.ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
             }
             notifyDataSetChanged();
         });
@@ -105,12 +109,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         });
     }
 
-
     @Override
     public int getItemCount() {
         return listeAnnonces.size();
     }
-
 
     public void addAnnonce(List<Annonce> maListe) {
         listeAnnonces = maListe;

@@ -52,29 +52,33 @@ public abstract class sappDatabase extends RoomDatabase {
 
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
-        private AnnonceDao annonceDao;
-        private UtilisateurDao utilisateurDao;
+        private final AnnonceDao annonceDao;
+        private final UtilisateurDao utilisateurDao;
+        private AnnonceFavorisDao annonceFavorisDao;
 
         public PopulateDbAsyncTask(sappDatabase instance) {
 
-            utilisateurDao=instance.utilisateurDao();
-            annonceDao= instance.annonceDao();
+            utilisateurDao = instance.utilisateurDao();
+            annonceDao = instance.annonceDao();
+            annonceFavorisDao = instance.AnnonceFavorisDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
 
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
+            utilisateurDao.insertUtilisateur(new Utilisateur(
                     "Josue Lubaki",
                     "Lubaki",
                     "Heroes",
                     "jojo@gmail.com"));
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
+
+            utilisateurDao.insertUtilisateur(new Utilisateur(
                     "Ismael",
                     "Coulibaly",
                     "hybs",
                     "ismael@gmail.com"));
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
+
+            utilisateurDao.insertUtilisateur(new Utilisateur(
                     "Jonathan",
                     "Kanyinda",
                     "PC JO",
@@ -96,7 +100,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Ma chemise blue",
                     50,
                     new Date(),
-                    true,
+                    false,
                     1));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.img_splash2,
@@ -120,7 +124,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Pret pour le sport ?",
                     45,
                     new Date(),
-                    true,
+                    false,
                     1));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
@@ -144,7 +148,7 @@ public abstract class sappDatabase extends RoomDatabase {
                     "Tu veux être présentable ?",
                     350,
                     new Date(),
-                    true,
+                    false,
                     2));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,

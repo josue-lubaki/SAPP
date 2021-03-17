@@ -37,7 +37,5 @@ public interface UtilisateurDao  {
     @Query("SELECT idUtilisateur FROM Utilisateur WHERE Utilisateur_username = :username AND Utilisateur_password = :password")
     int retrieve_ID_User(String username, String password);
 
-
-
 }
 

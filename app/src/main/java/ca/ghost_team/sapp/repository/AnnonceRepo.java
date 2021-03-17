@@ -8,6 +8,7 @@ import androidx.room.Insert;
 
 import java.util.List;
 
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
@@ -19,7 +20,7 @@ public class AnnonceRepo {
     public AnnonceRepo(Application app){
         sappDatabase database = sappDatabase.getInstance(app);
         dao = database.annonceDao();
-        AllAnnonces = dao.AllAnnonces();
+        AllAnnonces = dao.AllAnnonces(Login.ID_USER_CURRENT);
     }
 
     public LiveData<List<Annonce>> getAllAnnonces() {

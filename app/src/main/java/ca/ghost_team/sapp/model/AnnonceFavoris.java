@@ -16,9 +16,9 @@ public class AnnonceFavoris {
     public int annonceId;
     public int utilisateurId;
 
-    public AnnonceFavoris(int annonceId, int utilisateurId) {
-        this.annonceId = annonceId;
+    public AnnonceFavoris(int utilisateurId, int annonceId) {
         this.utilisateurId = utilisateurId;
+        this.annonceId = annonceId;
     }
 
     public int getAnnonceId() {
