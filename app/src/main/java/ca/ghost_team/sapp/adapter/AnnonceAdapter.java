@@ -28,6 +28,8 @@ import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
 
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
     Context context;
     List<Annonce> listeAnnonces;
@@ -85,14 +87,14 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
                 uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
 
                 // Ajouter (ou insérer l'enregistrement dans la Table des Annonces Favories)
-                db.annonceDao().insertLiked(Login.ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
+                db.annonceDao().insertLiked(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
 
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
                 uneAnnonce.setAnnonce_liked(false); // setter le changement
 
                 // Supprimer l'enregitrement dans la Table des Annonces Favoris
-                db.annonceDao().deleteAnnonceByID(Login.ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
+                db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
             }
             notifyDataSetChanged();
         });
