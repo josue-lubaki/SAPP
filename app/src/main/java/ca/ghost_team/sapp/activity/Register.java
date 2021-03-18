@@ -20,6 +20,8 @@ import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
 
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+
 public class Register extends AppCompatActivity {
 
     private static final String TAG = Register.class.getSimpleName();
@@ -92,10 +94,10 @@ public class Register extends AppCompatActivity {
                 new UtilisateurRepo(getApplication()).inserUtilisiateur(utilisateur);
 
                 // Auto Login
-                Login.ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUsername(), utilisateur.getPassword());
+                ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUsername(), utilisateur.getPassword());
 
                 // User trouvé
-                if (Login.ID_USER_CURRENT != 0) {
+                if (ID_USER_CURRENT != 0) {
                     //Lancer l'activity Main
                     Intent intent = new Intent(Register.this, MainActivity.class);
                     startActivity(intent);

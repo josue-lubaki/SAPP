@@ -21,6 +21,8 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
 
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+
 public class Login extends AppCompatActivity {
 
     private static final String TAG = Login.class.getSimpleName();
@@ -28,7 +30,7 @@ public class Login extends AppCompatActivity {
 
     private final String USERNAME = "ghost";
     private final String PASSWORD = "1234";
-    public static int ID_USER_CURRENT;
+
 
     // Recréation des liens avec la view
     private EditText username;

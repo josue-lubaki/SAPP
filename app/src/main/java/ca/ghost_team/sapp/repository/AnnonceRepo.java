@@ -13,6 +13,8 @@ import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+
 public class AnnonceRepo {
     private final AnnonceDao dao;
     private final LiveData<List<Annonce>> AllAnnonces;
@@ -20,7 +22,7 @@ public class AnnonceRepo {
     public AnnonceRepo(Application app){
         sappDatabase database = sappDatabase.getInstance(app);
         dao = database.annonceDao();
-        AllAnnonces = dao.AllAnnonces(Login.ID_USER_CURRENT);
+        AllAnnonces = dao.AllAnnonces(ID_USER_CURRENT);
     }
 
     public LiveData<List<Annonce>> getAllAnnonces() {
