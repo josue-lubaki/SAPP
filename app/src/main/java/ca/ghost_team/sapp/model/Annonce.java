@@ -1,7 +1,6 @@
 package ca.ghost_team.sapp.model;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -19,10 +18,10 @@ import static androidx.room.ForeignKey.CASCADE;
                         childColumns = "utilisateurId",
                         onDelete = CASCADE),
 
-//                @ForeignKey(entity = CategorieAnnonce.class,
-//                        parentColumns = "idCategorie",
-//                        childColumns = "categorieId",
-//                        onDelete = CASCADE)
+                @ForeignKey(entity = CategorieAnnonce.class,
+                        parentColumns = "idCategorie",
+                        childColumns = "categorieId",
+                        onDelete = CASCADE)
         }
 )
 public class Annonce {
@@ -56,9 +55,9 @@ public class Annonce {
 
     private int utilisateurId;
 
-    //private int categorieId;
+    private int categorieId;
 
-    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, Date annonce_date, boolean annonce_liked, int utilisateurId) {
+    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, Date annonce_date, boolean annonce_liked, int utilisateurId, int categorieId) {
         this.annonce_titre = annonce_titre;
         this.annonce_description = annonce_description;
         this.annonce_prix = annonce_prix;
@@ -67,16 +66,16 @@ public class Annonce {
         this.annonce_image = annonce_image;
         this.utilisateurId = utilisateurId;
         listeTotalAnnonce.add(this);
-       // this.categorieId = categorieId;
+        this.categorieId = categorieId;
     }
 
-//    public int getCategorieId() {
-//        return categorieId;
-//    }
-//
-//    public void setCategorieId(int categorieId) {
-//        this.categorieId = categorieId;
-//    }
+    public int getCategorieId() {
+        return categorieId;
+    }
+
+    public void setCategorieId(int categorieId) {
+        this.categorieId = categorieId;
+    }
 
     public int getUtilisateurId() {
         return utilisateurId;
