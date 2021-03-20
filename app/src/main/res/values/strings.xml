@@ -26,6 +26,7 @@
     <string name="IhaveAccount">I already have an account</string>
     <string name="sign_in">Sign in</string>
     <string name="names">Name</string>
+    <string name="description">Description</string>
 
 
 </resources>
