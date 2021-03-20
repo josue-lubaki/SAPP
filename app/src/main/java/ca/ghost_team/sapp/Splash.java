@@ -54,127 +54,127 @@ public class Splash extends AppCompatActivity {
                 sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,BaseApplication.NAME_DB)
                         .allowMainThreadQueries().build();
                 db.annonceDao().start();
-
 //
-                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-                        "Josue Lubaki",
-                        "Lubaki",
-                        "Heroes",
-                        "jojo@gmail.com"));
-
-                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-                        "Ismael",
-                        "Coulibaly",
-                        "hybs",
-                        "ismael@gmail.com"));
-
-                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-                        "Jonathan",
-                        "Kanyinda",
-                        "PC JO",
-                        "jonathan@gmail.com"));
-
-                CategorieAnnonce[]categories ={new CategorieAnnonce(1,"chandail"),
-                        new CategorieAnnonce(2,"chaussettes"),
-                        new CategorieAnnonce(3,"shorts"),
-                        new CategorieAnnonce(4,"t-shirt"),
-                        new CategorieAnnonce(5,"casquette"),
-                        new CategorieAnnonce(6,"pantalon")
-                } ;
-
-                db.categorieAnnonceDao().insertCategorie(categories);
-
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.collection,
-                        "Ma collection",
-                        "Je te vends mes plus beaux vetements",
-                        150,
-                        new Date(),
-                        false,
-                        3,
-                        1
-                ));
-
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.chemise,
-                        "Ma Chemise",
-                        "Ma chemise blue",
-                        50,
-                        new Date(),
-                        false,
-                        1,
-                        2));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.img_splash2,
-                        "Ma Collection",
-                        "Je te vends mes plus belle robes de soirée",
-                        295,
-                        new Date(),
-                        false,
-                        2,
-                        3));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.chemise,
-                        "Ceinture",
-                        "Tu aimes les ceintures de marque ?",
-                        120,
-                        new Date(),
-                        false,
-                        3,
-                        4));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.collection,
-                        "Jogging gris",
-                        "Pret pour le sport ?",
-                        45,
-                        new Date(),
-                        false,
-                        1,
-                        5));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.chemise,
-                        "T-shirt",
-                        "Je te jure que tu vas l'adorer",
-                        25,
-                        new Date(),
-                        false,
-                        3,
-                        6));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.culotte2,
-                        "Culotte",
-                        "je l'aime bien pour le BasketBall",
-                        55,
-                        new Date(),
-                        false,
-                        2,
-                        4));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.collection,
-                        "Veste",
-                        "Tu veux être présentable ?",
-                        350,
-                        new Date(),
-                        false,
-                        2,
-                        3));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.chemise,
-                        "T-shirt",
-                        "Je te jure que tu vas l'adorer",
-                        25,
-                        new Date(),
-                        false,
-                        3,
-                        2));
-                db.annonceDao().insertAnnonce(new Annonce(
-                        R.drawable.chemise,
-                        "Chaussette",
-                        "Mes chaussettes de Noël",
-                        5,
-                        new Date(),
-                        false,
-                        1,1));
+////
+//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
+//                        "Josue Lubaki",
+//                        "Lubaki",
+//                        "Heroes",
+//                        "jojo@gmail.com"));
+//
+//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
+//                        "Ismael",
+//                        "Coulibaly",
+//                        "hybs",
+//                        "ismael@gmail.com"));
+//
+//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
+//                        "Jonathan",
+//                        "Kanyinda",
+//                        "PC JO",
+//                        "jonathan@gmail.com"));
+//
+//                CategorieAnnonce[]categories ={new CategorieAnnonce(1,"chandail"),
+//                        new CategorieAnnonce(2,"chaussettes"),
+//                        new CategorieAnnonce(3,"shorts"),
+//                        new CategorieAnnonce(4,"t-shirt"),
+//                        new CategorieAnnonce(5,"casquette"),
+//                        new CategorieAnnonce(6,"pantalon")
+//                } ;
+//
+//                db.categorieAnnonceDao().insertCategorie(categories);
+//
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.collection,
+//                        "Ma collection",
+//                        "Je te vends mes plus beaux vetements",
+//                        150,
+//                        new Date(),
+//                        false,
+//                        3,
+//                        1
+//                ));
+//
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.chemise,
+//                        "Ma Chemise",
+//                        "Ma chemise blue",
+//                        50,
+//                        new Date(),
+//                        false,
+//                        1,
+//                        2));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.img_splash2,
+//                        "Ma Collection",
+//                        "Je te vends mes plus belle robes de soirée",
+//                        295,
+//                        new Date(),
+//                        false,
+//                        2,
+//                        3));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.chemise,
+//                        "Ceinture",
+//                        "Tu aimes les ceintures de marque ?",
+//                        120,
+//                        new Date(),
+//                        false,
+//                        3,
+//                        4));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.collection,
+//                        "Jogging gris",
+//                        "Pret pour le sport ?",
+//                        45,
+//                        new Date(),
+//                        false,
+//                        1,
+//                        5));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.chemise,
+//                        "T-shirt",
+//                        "Je te jure que tu vas l'adorer",
+//                        25,
+//                        new Date(),
+//                        false,
+//                        3,
+//                        6));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.culotte2,
+//                        "Culotte",
+//                        "je l'aime bien pour le BasketBall",
+//                        55,
+//                        new Date(),
+//                        false,
+//                        2,
+//                        4));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.collection,
+//                        "Veste",
+//                        "Tu veux être présentable ?",
+//                        350,
+//                        new Date(),
+//                        false,
+//                        2,
+//                        3));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.chemise,
+//                        "T-shirt",
+//                        "Je te jure que tu vas l'adorer",
+//                        25,
+//                        new Date(),
+//                        false,
+//                        3,
+//                        2));
+//                db.annonceDao().insertAnnonce(new Annonce(
+//                        R.drawable.chemise,
+//                        "Chaussette",
+//                        "Mes chaussettes de Noël",
+//                        5,
+//                        new Date(),
+//                        false,
+//                        1,1));
 
 
                 Intent intent = new Intent(Splash.this, Login.class);

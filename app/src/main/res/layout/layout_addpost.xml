@@ -8,12 +8,12 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="30dp"
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="90dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_weight="1"
                 android:src="@drawable/chemise"/>
 
@@ -23,6 +23,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Prendre une photo"
+                android:backgroundTint="@color/green"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="20dp"
                 android:textColor="@color/white"
                 />
 
@@ -43,10 +46,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="Titre de l'annonce"
-                android:background="@color/BackgroundAnnonce"
+                android:background="@drawable/bg_white_rounded"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:gravity="center"/>
 
             <EditText
@@ -54,8 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:hint="@string/remplissage"
-                android:background="@color/BackgroundAnnonce"
+                android:hint="@string/description"
+                android:background="@drawable/bg_white_rounded"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:padding="5dp"
@@ -67,19 +70,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="@string/prixText"
-                android:background="@color/BackgroundAnnonce"
+                android:background="@drawable/bg_white_rounded"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:gravity="center"/>
 
             <Spinner
                 android:id="@+id/addpost_categorie"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/BackgroundAnnonce"
-                android:layout_margin="10dp"
-                />
+                android:background="@drawable/bg_white_rounded"
+                android:layout_margin="10dp"/>
 
             <EditText
                 android:id="@+id/addpost_codepostal"
@@ -87,10 +89,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="Code postal"
-                android:background="@color/BackgroundAnnonce"
+                android:background="@drawable/bg_white_rounded_medium"
+                android:backgroundTint="@color/BackgroundSplash"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:gravity="center"/>
 
             <Button
@@ -99,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:text="Publier"
                 android:layout_marginHorizontal="20dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/green"/>
 
 
 

@@ -31,26 +31,18 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     LayoutAddpostBinding binder;
-
     Spinner spinner;
-
-
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binder= DataBindingUtil.inflate(inflater, R.layout.layout_addpost, container, false);
         return binder.getRoot();
-
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         List<String> categories = new ArrayList<>();
         categories.add(0,"Choisir une catégorie: ");
@@ -61,6 +53,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         categories.add("casquette");
         categories.add("chandail");
         spinner = binder.addpostCategorie;
+        spinner.setBackgroundColor(getResources().getColor(R.color.white));
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1
                 ,categories);
@@ -68,11 +61,6 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
-
-
-
-
     }
 
     @Override
