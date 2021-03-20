@@ -6,17 +6,11 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.room.Room;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
-import java.util.Date;
-
-import ca.ghost_team.sapp.activity.Login;
-import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityMainBinding;
 import ca.ghost_team.sapp.model.Annonce;
-import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.navigation.AddPost;
 import ca.ghost_team.sapp.navigation.Favoris;
 import ca.ghost_team.sapp.navigation.Home;
@@ -81,7 +75,6 @@ public class MainActivity extends AppCompatActivity{
 
     // TODO : Créer les Frames de connexion
 
-    // TODO : Rajouter code de la barre de Recherche
     // ICI
 
 
