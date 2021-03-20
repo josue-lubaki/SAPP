@@ -9,18 +9,19 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
 
 @Dao
 public interface UtilisateurDao  {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insertallUtilisateur(Utilisateur ... Utilisateur);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE )
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insertUtilisateur(Utilisateur x);
 
-    @Query("SELECT * FROM Utilisateur ORDER BY nom_Utilisateur")
+    @Query("SELECT * FROM Utilisateur ORDER BY Utilisateur_nom")
     LiveData< List<Utilisateur> > allUtilisateur();
 
     @Delete
@@ -29,7 +30,12 @@ public interface UtilisateurDao  {
     @Update
     void updateUtlisateur ( Utilisateur x);
 
+    // Requête qui permet de récuperer toutes les annonces par rapport à un Utilisateur
+    @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")
+    LiveData<List<Annonce>> findAnnonceByUser(final int utilisateurId);
 
+    @Query("SELECT idUtilisateur FROM Utilisateur WHERE Utilisateur_username = :username AND Utilisateur_password = :password")
+    int retrieve_ID_User(String username, String password);
 
 }
 

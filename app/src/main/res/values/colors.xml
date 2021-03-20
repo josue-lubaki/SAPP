@@ -15,4 +15,5 @@
     <color name="ProgressBarBackground">#AFAFB0</color>
     <color name="progressBarIndicator">#A13D49</color>
     <color name="yellow">#F0CA69</color>
+    <color name="gris_clair">#838383</color>
 </resources>

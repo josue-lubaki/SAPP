@@ -4,34 +4,36 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Parcelable;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import ca.ghost_team.sapp.MainActivity;
-import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.dao.AnnonceDao;
+import ca.ghost_team.sapp.activity.DetailAnnonce;
+import ca.ghost_team.sapp.activity.Login;
+import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
-import ca.ghost_team.sapp.navigation.Favoris;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
+
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
     Context context;
     List<Annonce> listeAnnonces;
-    List<Object> maListeUpdate = new ArrayList<>();
+    private sappDatabase db;
 
     // Constantes
     public static String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
@@ -42,6 +44,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public AnnonceAdapter(Context context) {
         this.context = context;
         this.listeAnnonces = new ArrayList<>();
+        this.db = Room.databaseBuilder(context,sappDatabase.class,"sappDatabase")
+                .allowMainThreadQueries().build();
     }
 
     @NonNull
@@ -51,6 +55,15 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         return new AnnonceVH(view);
     }
 
+    //Va au final renvoyer jour resant
+    public String format_Date(Date d){
+        DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
+                DateFormat.SHORT,
+                DateFormat.SHORT);
+                String x = "" + shortDateFormat.format(d);
+                return x;
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
@@ -58,30 +71,30 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.imageAnnonce.setImageResource(uneAnnonce.getAnnonce_image());
         holder.titre.setText(uneAnnonce.getAnnonce_titre());
         holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
-        holder.date.setText(uneAnnonce.getAnnonce_date());
+        //apelle de la methode de formatage
+        holder.date.setText(""+format_Date(uneAnnonce.getAnnonce_date()));
 
         // Donner les états initials du Boutton
         if (!uneAnnonce.isAnnonce_liked())
             holder.likeBtn.setImageResource(R.drawable.ic_favoris);
         else {
             holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
-            //envoyeFavoris(uneAnnonce);
         }
 
-        // set OnClickListener pour liker l'Annonce par le button
         holder.likeBtn.setOnClickListener(v -> {
             if (!uneAnnonce.isAnnonce_liked()) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
                 uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
 
-                // Les éléments qui doivent mise à jour direcement avec la Base de données
-                maListeUpdate.add(uneAnnonce.getIdAnnonce());
-                maListeUpdate.add(true);
+                // Ajouter (ou insérer l'enregistrement dans la Table des Annonces Favories)
+                db.annonceDao().insertLiked(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
+
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
                 uneAnnonce.setAnnonce_liked(false); // setter le changement
-                maListeUpdate.add(uneAnnonce.getIdAnnonce());
-                maListeUpdate.add(false);
+
+                // Supprimer l'enregitrement dans la Table des Annonces Favoris
+                db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
             }
             notifyDataSetChanged();
         });
@@ -98,15 +111,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         });
     }
 
-    public List<Object> changeBoutonLike() {
-        return maListeUpdate;
-    }
-
     @Override
     public int getItemCount() {
         return listeAnnonces.size();
     }
-
 
     public void addAnnonce(List<Annonce> maListe) {
         listeAnnonces = maListe;

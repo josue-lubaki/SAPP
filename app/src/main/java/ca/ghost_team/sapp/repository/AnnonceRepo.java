@@ -8,19 +8,21 @@ import androidx.room.Insert;
 
 import java.util.List;
 
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
+
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceRepo {
     private final AnnonceDao dao;
     private final LiveData<List<Annonce>> AllAnnonces;
 
-
     public AnnonceRepo(Application app){
         sappDatabase database = sappDatabase.getInstance(app);
-        dao= database.annonceDao();
-        AllAnnonces = dao.AllAnnonces();
+        dao = database.annonceDao();
+        AllAnnonces = dao.AllAnnonces(ID_USER_CURRENT);
     }
 
     public LiveData<List<Annonce>> getAllAnnonces() {
@@ -45,13 +47,13 @@ public class AnnonceRepo {
         new DeleteAnnonceAsyncTask(dao).execute(annonce);
     }
 
-    public void updateLiked(int id, boolean etat){
-        new UpdateLikedAsyncTask(dao).execute(id, etat);
+    public List<Annonce> findAnnonceByUser(int idUtilisateur){
+        return (List<Annonce>) new findAnnonceByUserAsyncTask(dao).execute(idUtilisateur);
     }
 
     private static class InsertAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
 
-        private AnnonceDao uneAnnonceDao;
+        private final AnnonceDao uneAnnonceDao;
         private InsertAnnonceAsyncTask(AnnonceDao dao) {
             this.uneAnnonceDao= dao;
         }
@@ -65,7 +67,7 @@ public class AnnonceRepo {
 
     private static class InsertAllAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
 
-        private AnnonceDao uneAnnonceDao;
+        private final AnnonceDao uneAnnonceDao;
         private InsertAllAnnonceAsyncTask(AnnonceDao dao) {
             this.uneAnnonceDao= dao;
         }
@@ -79,7 +81,7 @@ public class AnnonceRepo {
 
     private static class DeleteAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
 
-        private AnnonceDao uneAnnonceDao;
+        private final AnnonceDao uneAnnonceDao;
         private DeleteAnnonceAsyncTask(AnnonceDao dao) {
             this.uneAnnonceDao= dao;
         }
@@ -93,7 +95,7 @@ public class AnnonceRepo {
 
     private static class DeleteAllAnnoncesAsyncTask extends AsyncTask<Void,Void,Void>{
 
-        private AnnonceDao uneAnnonceDao;
+        private final AnnonceDao uneAnnonceDao;
         private DeleteAllAnnoncesAsyncTask(AnnonceDao dao) {
             this.uneAnnonceDao= dao;
         }
@@ -107,7 +109,7 @@ public class AnnonceRepo {
 
     private static class UpdateAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
 
-        private AnnonceDao uneAnnonceDao;
+        private final AnnonceDao uneAnnonceDao;
         private UpdateAnnonceAsyncTask(AnnonceDao dao) {
             this.uneAnnonceDao= dao;
         }
@@ -119,18 +121,19 @@ public class AnnonceRepo {
         }
     }
 
-    private static class UpdateLikedAsyncTask extends AsyncTask<Object,Void,Void>{
+    static class findAnnonceByUserAsyncTask extends AsyncTask<Integer,Void,List<Annonce>>{
 
-        private AnnonceDao uneAnnonceDao;
-        private UpdateLikedAsyncTask(AnnonceDao dao) {
+        private final AnnonceDao uneAnnonceDao;
+        findAnnonceByUserAsyncTask(AnnonceDao dao) {
             this.uneAnnonceDao= dao;
         }
 
         @Override
-        protected Void doInBackground(Object... Objects) {
-            uneAnnonceDao.updateLiked((int)Objects[0], (boolean)Objects[1]);
+        protected List<Annonce> doInBackground(Integer... id) {
+            uneAnnonceDao.findAnnonceByUser(id[0]);
             return null;
         }
+
     }
 
 }

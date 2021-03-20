@@ -1,24 +1,16 @@
 package ca.ghost_team.sapp;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ca.ghost_team.sapp.databinding.ActivityMainBinding;
+import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.navigation.AddPost;
 import ca.ghost_team.sapp.navigation.Favoris;
 import ca.ghost_team.sapp.navigation.Home;
@@ -29,7 +21,6 @@ public class MainActivity extends AppCompatActivity{
 
     private final String LOG_TAG = "mainActivity";
     private ActivityMainBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,17 +64,17 @@ public class MainActivity extends AppCompatActivity{
             showFragment(fragment);
         });
 
-        navBar.setCount(1,"8");
+        navBar.setCount(1, String.valueOf(Annonce.listeTotalAnnonce.size()));
         navBar.show(1,true);
 
         // pour éviter les erreurs de Compilation
         navBar.setOnClickMenuListener(item -> {});
         navBar.setOnReselectListener(item -> {});
+
     }
 
     // TODO : Créer les Frames de connexion
 
-    // TODO : Rajouter code de la barre de Recherche
     // ICI
 
 
@@ -104,5 +95,8 @@ public class MainActivity extends AppCompatActivity{
             Log.d(LOG_TAG,"erreur au moment d'instancier fragment");
         }
     }
+
+
+
 
 }

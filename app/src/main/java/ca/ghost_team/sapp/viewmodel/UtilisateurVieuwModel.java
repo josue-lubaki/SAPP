@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
 
@@ -27,5 +28,8 @@ public class UtilisateurVieuwModel extends AndroidViewModel {
 
     public void deleteUtilisateurs(Utilisateur x){userRepo.deleteUtilisateur(x);}
     public void updteUtilisateurs(Utilisateur x){userRepo.updateUtilisiateur(x);}
+    public List<Annonce> findAnnonceByUtilisateur(int idUtilisateur){
+        return userRepo.findAnnonceByUtilisateur(idUtilisateur);
+    }
 }
 

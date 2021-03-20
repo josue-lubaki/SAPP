@@ -1,9 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    </RelativeLayout>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:layout_weight="1"
+                android:src="@drawable/chemise"/>
+
+            <Button
+                android:id="@+id/btn_add_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Prendre une photo"
+                android:textColor="@color/white"
+                />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+            <EditText
+                android:id="@+id/addpost_titre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Titre de l'annonce"
+                android:background="@color/BackgroundAnnonce"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:padding="5dp"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/addpost_description"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:hint="@string/remplissage"
+                android:background="@color/BackgroundAnnonce"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:padding="5dp"
+                android:gravity="center" />
+
+            <EditText
+                android:id="@+id/addpost_prix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/prixText"
+                android:background="@color/BackgroundAnnonce"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:padding="5dp"
+                android:gravity="center"/>
+
+            <Spinner
+                android:id="@+id/addpost_categorie"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/BackgroundAnnonce"
+                android:layout_margin="10dp"
+                />
+
+            <EditText
+                android:id="@+id/addpost_codepostal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Code postal"
+                android:background="@color/BackgroundAnnonce"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:padding="5dp"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/addpost_btnPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Publier"
+                android:layout_marginHorizontal="20dp"
+                android:layout_margin="10dp" />
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 </layout>

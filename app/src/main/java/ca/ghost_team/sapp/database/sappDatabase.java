@@ -7,25 +7,36 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.Date;
+
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.dao.AnnonceDao;
+import ca.ghost_team.sapp.dao.AnnonceFavorisDao;
+import ca.ghost_team.sapp.dao.CategorieAnnonceDao;
 import ca.ghost_team.sapp.dao.UtilisateurDao;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceFavoris;
+import ca.ghost_team.sapp.model.CategorieAnnonce;
 import ca.ghost_team.sapp.model.Utilisateur;
+import conv.Conversion;
 
-@Database(entities = {Annonce.class, Utilisateur.class}, version = 1, exportSchema = false)
+@TypeConverters({Conversion.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
+@Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class, CategorieAnnonce.class}, version = 1, exportSchema = false)
 public abstract class sappDatabase extends RoomDatabase {
     public static sappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
     public abstract UtilisateurDao utilisateurDao();
-
+    public abstract AnnonceFavorisDao AnnonceFavorisDao();
+    public abstract CategorieAnnonceDao categorieAnnonceDao();
 
     public static synchronized sappDatabase getInstance(Context context){
 
         if(INSTANCE == null){
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),sappDatabase.class,"sappDatabase")
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),sappDatabase.class, BaseApplication.NAME_DB)
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
@@ -42,107 +53,144 @@ public abstract class sappDatabase extends RoomDatabase {
         }
     };
 
+
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
-        private AnnonceDao annonceDao;
-        private UtilisateurDao utilisateurDao;
+        private final AnnonceDao annonceDao;
+        private final UtilisateurDao utilisateurDao;
+        private AnnonceFavorisDao annonceFavorisDao;
+        private CategorieAnnonceDao categorieAnnonceDao;
 
         public PopulateDbAsyncTask(sappDatabase instance) {
 
-            utilisateurDao=instance.utilisateurDao();
-            annonceDao= instance.annonceDao();
+            utilisateurDao = instance.utilisateurDao();
+            annonceDao = instance.annonceDao();
+            annonceFavorisDao = instance.AnnonceFavorisDao();
+            categorieAnnonceDao = instance.categorieAnnonceDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+
+            utilisateurDao.insertUtilisateur(new Utilisateur(
+                    "Josue Lubaki",
+                    "Lubaki",
+                    "Heroes",
+                    "jojo@gmail.com"));
+
+            utilisateurDao.insertUtilisateur(new Utilisateur(
+                    "Ismael",
+                    "Coulibaly",
+                    "hybs",
+                    "ismael@gmail.com"));
+
+            utilisateurDao.insertUtilisateur(new Utilisateur(
+                    "Jonathan",
+                    "Kanyinda",
+                    "PC JO",
+                    "jonathan@gmail.com"));
+
+            CategorieAnnonce []categories ={new CategorieAnnonce(1,"chandail"),
+                    new CategorieAnnonce(2,"chaussettes"),
+                    new CategorieAnnonce(3,"shorts"),
+                    new CategorieAnnonce(4,"t-shirt"),
+                    new CategorieAnnonce(5,"casquette"),
+                    new CategorieAnnonce(6,"pantalon")
+            } ;
+
+            categorieAnnonceDao.insertCategorie(categories);
 
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Ma collection",
                     "Je te vends mes plus beaux vetements",
                     150,
-                    "2 days ago",
-                    false));
+                    new Date(),
+                    false,
+                    3,
+                    1
+                    ));
 
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Ma Chemise",
                     "Ma chemise blue",
                     50,
-                    "1 days ago",
-                    true));
+                    new Date(),
+                    false,
+                    1,
+                    2));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.img_splash2,
                     "Ma Collection",
                     "Je te vends mes plus belle robes de soirée",
                     295,
-                    "3 days ago",
-                    false));
+                    new Date(),
+                    false,
+                    2,
+                    3));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Ceinture",
                     "Tu aimes les ceintures de marque ?",
                     120,
-                    "2 days ago",
-                    false));
+                    new Date(),
+                    false,
+                    3,
+                    4));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Jogging gris",
                     "Pret pour le sport ?",
                     45,
-                    "6 days ago",
-                    true));
+                    new Date(),
+                    false,
+                    1,
+                    5));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
-                    "7 days ago",
-                    false));
+                    new Date(),
+                    false,
+                    3,
+                    6));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.culotte2,
                     "Culotte",
                     "je l'aime bien pour le BasketBall",
                     55,
-                    "1 days ago",
-                    false));
+                    new Date(),
+                    false,
+                    2,
+                    4));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.collection,
                     "Veste",
                     "Tu veux être présentable ?",
                     350,
-                    "3 days ago",
-                    true));
+                    new Date(),
+                    false,
+                    2,
+                    3));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "T-shirt",
                     "Je te jure que tu vas l'adorer",
                     25,
-                    "7 days ago",
-                    false));
+                    new Date(),
+                    false,
+                    3,
+                    2));
             annonceDao.insertAnnonce(new Annonce(
                     R.drawable.chemise,
                     "Chaussette",
                     "Mes chaussettes de Noël",
                     5,
-                    "4 days ago",
-                    false));
-            // AJOUT Utilisateur
+                    new Date(),
+                    false,
+                    1,1));
 
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    0,
-                    "josue",
-                    "lubaki",
-                    "26 juin",1));
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    2,
-                    "ismael",
-                    "koulibali",
-                    "4 mai",0));
-            utilisateurDao.insertallUtilisateur(new Utilisateur(
-                    1,
-                    "jonathan",
-                    "kanyinda",
-                    "",0));
             return null;
         }
     }
