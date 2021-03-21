@@ -27,6 +27,9 @@
     <string name="sign_in">Sign in</string>
     <string name="names">Name</string>
     <string name="description">Description</string>
+    <string name="takePicture">Prendre une photo</string>
+    <string name="codePostal">Code postal</string>
+    <string name="publier">Publier</string>
 
 
 </resources>

@@ -1,114 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:src="@drawable/chemise"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.75"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_add_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Prendre une photo"
-                android:backgroundTint="@color/green"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="20dp"
-                android:textColor="@color/white"
-                />
+                <ImageView
+                    android:id="@+id/addPost_capture"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/chemise"
+                    android:contentDescription="imagePrise" />
 
+                <Button
+                    android:id="@+id/btn_add_img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="3"
+                    android:textSize="12sp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/takePicture"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="490dp"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/addpost_titre"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_rounded"
+                    android:gravity="center"
+                    android:hint="@string/titreAnnonce"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+
+                <EditText
+                    android:id="@+id/addpost_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/bg_white_rounded"
+                    android:gravity="center"
+                    android:hint="@string/description"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+
+                <EditText
+                    android:id="@+id/addpost_prix"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_rounded"
+                    android:gravity="center"
+                    android:hint="@string/prixText"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+
+                <Spinner
+                    android:id="@+id/addpost_categorie"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.75"
+                    android:background="@color/BackgroundAnnonce"
+                    android:backgroundTint="@color/gris_clair"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/addpost_codepostal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_rounded"
+                    android:gravity="center"
+                    android:hint="@string/codePostal"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+
+                <Button
+                    android:id="@+id/addpost_btnPost"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin = "10dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/green"
+                    android:padding="10dp"
+                    android:text="@string/publier" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
+    </androidx.core.widget.NestedScrollView>
 
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5">
-
-            <EditText
-                android:id="@+id/addpost_titre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Titre de l'annonce"
-                android:background="@drawable/bg_white_rounded"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:padding="10dp"
-                android:gravity="center"/>
-
-            <EditText
-                android:id="@+id/addpost_description"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:hint="@string/description"
-                android:background="@drawable/bg_white_rounded"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:padding="5dp"
-                android:gravity="center" />
-
-            <EditText
-                android:id="@+id/addpost_prix"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/prixText"
-                android:background="@drawable/bg_white_rounded"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:padding="10dp"
-                android:gravity="center"/>
-
-            <Spinner
-                android:id="@+id/addpost_categorie"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_white_rounded"
-                android:layout_margin="10dp"/>
-
-            <EditText
-                android:id="@+id/addpost_codepostal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Code postal"
-                android:background="@drawable/bg_white_rounded_medium"
-                android:backgroundTint="@color/BackgroundSplash"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:padding="10dp"
-                android:gravity="center"/>
-
-            <Button
-                android:id="@+id/addpost_btnPost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Publier"
-                android:layout_marginHorizontal="20dp"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/green"/>
-
-
-
-
-        </LinearLayout>
-
-    </LinearLayout>
 </layout>
