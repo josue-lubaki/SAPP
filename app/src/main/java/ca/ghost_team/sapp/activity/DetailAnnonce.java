@@ -3,23 +3,36 @@ package ca.ghost_team.sapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.room.Room;
 
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
+import ca.ghost_team.sapp.database.sappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityDetailAnnonceBinding;
+import ca.ghost_team.sapp.model.Utilisateur;
 
 public class DetailAnnonce extends AppCompatActivity {
     private ActivityDetailAnnonceBinding binding;
 
     // initialiser les variables
-    ImageView detail_image_annonce;
-    TextView detail_tv_titre;
-    TextView detail_tv_prix;
-    TextView detail_tv_description;
+    private ImageView detail_image_annonce;
+    private TextView detail_tv_titre;
+    private TextView detail_tv_prix;
+    private TextView detail_tv_description;
+    private TextView detail_tv_vendeur;
+    private Button detail_btn_contacter;
+    private sappDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +44,36 @@ public class DetailAnnonce extends AppCompatActivity {
         detail_tv_titre = binding.vendeurTitre;
         detail_tv_prix = binding.vendeurPrix;
         detail_tv_description = binding.vendeurDescription;
+        detail_tv_vendeur = binding.vendeurName;
+        detail_btn_contacter = binding.vendeurContacter;
 
         // Create Bundle
         Bundle bundle = getIntent().getExtras();
-        int annonce_image = bundle.getInt(AnnonceAdapter.ANNONCE_IMAGE_REQUEST);
+        String annonce_image = bundle.getString(AnnonceAdapter.ANNONCE_IMAGE_REQUEST);
         String annonce_titre = bundle.getString(AnnonceAdapter.ANNONCE_TITRE_REQUEST);
-        String annonce_prix = bundle.getString(AnnonceAdapter.ANNONCE_PRICE_REQUEST);
+        int annonce_prix = bundle.getInt(AnnonceAdapter.ANNONCE_PRICE_REQUEST);
         String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
 
+        // envoyer une requête pour aller chercher le Nom du vendeur
+        db = Room.databaseBuilder(getApplication(), sappDatabase.class, BaseApplication.NAME_DB)
+                .allowMainThreadQueries()
+                .build();
+
+        System.out.println("Valeur de Annonce Prix : " + annonce_prix);
+        Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description);
+        System.out.println("Info vendeur : " + vendeur.toString());
         // Set Information to Fields
-        detail_image_annonce.setImageResource(annonce_image);
+        detail_tv_vendeur.setText(vendeur.getUtilisateur_nom());
+        detail_image_annonce.setImageURI(Uri.parse(annonce_image));
         detail_tv_titre.setText(annonce_titre);
-        detail_tv_prix.setText(annonce_prix);
+        detail_tv_prix.setText("$" + annonce_prix);
         detail_tv_description.setText(annonce_description);
+
+        detail_btn_contacter.setOnClickListener(v -> {
+            Snackbar.make(v, "Email vendeur : " + vendeur.getEmail(), 5000)
+                    .setActionTextColor(Color.WHITE)
+                    .setAction("Merci", d -> {
+                    }).setBackgroundTint(Color.parseColor("#266127")).show();
+        });
     }
 }
