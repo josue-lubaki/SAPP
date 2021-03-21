@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
         Annonce uneAnnonce = listeAnnonces.get(position);
-        holder.imageAnnonce.setImageResource(uneAnnonce.getAnnonce_image());
+        holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonce_image()));
         holder.titre.setText(uneAnnonce.getAnnonce_titre());
         holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
         //apelle de la methode de formatage
@@ -103,10 +104,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.cardView_detail_Article.setOnClickListener(v -> {
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
-            intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonce_image());
-            intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonce_titre());
+            intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonce_image().trim());
+            intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonce_titre().trim());
             intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnonce_prix());
-            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonce_description());
+            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonce_description().trim());
             context.startActivity(intent);
         });
     }

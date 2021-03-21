@@ -54,8 +54,8 @@ public class Splash extends AppCompatActivity {
                 sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,BaseApplication.NAME_DB)
                         .allowMainThreadQueries().build();
                 db.annonceDao().start();
+
 //
-////
 //                db.utilisateurDao().insertUtilisateur(new Utilisateur(
 //                        "Josue Lubaki",
 //                        "Lubaki",
@@ -74,16 +74,18 @@ public class Splash extends AppCompatActivity {
 //                        "PC JO",
 //                        "jonathan@gmail.com"));
 //
-//                CategorieAnnonce[]categories ={new CategorieAnnonce(1,"chandail"),
-//                        new CategorieAnnonce(2,"chaussettes"),
-//                        new CategorieAnnonce(3,"shorts"),
-//                        new CategorieAnnonce(4,"t-shirt"),
-//                        new CategorieAnnonce(5,"casquette"),
-//                        new CategorieAnnonce(6,"pantalon")
-//                } ;
+//                CategorieAnnonce[] categories = {
+//                        new CategorieAnnonce(1,"Chandail"),
+//                        new CategorieAnnonce(2,"Chaussettes"),
+//                        new CategorieAnnonce(3,"Short"),
+//                        new CategorieAnnonce(4,"T-shirt"),
+//                        new CategorieAnnonce(5,"Casquette"),
+//                        new CategorieAnnonce(6,"Pantalon"),
+//                        new CategorieAnnonce(7,"Autres")
+//                };
 //
 //                db.categorieAnnonceDao().insertCategorie(categories);
-//
+
 //                db.annonceDao().insertAnnonce(new Annonce(
 //                        R.drawable.collection,
 //                        "Ma collection",

@@ -72,12 +72,14 @@ public class Utilisateur {
         this.password = password;
     }
 
-//    public int getUtilisateur_nombreAnnonce() {
-//        return utilisateur_nombreAnnonce;
-//    }
-//
-//    public void setUtilisateur_nombreAnnonce(int utilisateur_nombreAnnonce) {
-//        this.utilisateur_nombreAnnonce = utilisateur_nombreAnnonce;
-//    }
-
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+                "idUtilisateur=" + idUtilisateur +
+                ", utilisateur_nom='" + utilisateur_nom + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

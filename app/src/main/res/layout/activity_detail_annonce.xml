@@ -39,12 +39,12 @@
                 android:id="@+id/vendeur_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="9dp"
                 android:layout_marginTop="30dp"
                 android:layout_toEndOf="@id/vendeur_image"
                 android:text="Diary Diallo"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/vendeur_contacter"
@@ -53,7 +53,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                app:backgroundTint="#266127"
+                app:backgroundTint="@color/vert"
                 android:background="@drawable/bg_white_rounded_large"
                 android:text="Contacter" />
 

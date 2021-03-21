@@ -1,5 +1,7 @@
 package ca.ghost_team.sapp.model;
 
+import android.net.Uri;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -30,7 +32,7 @@ public class Annonce {
     private int idAnnonce;
 
     @ColumnInfo(name = "image_annonce")
-    private int annonce_image;
+    private String annonce_image;
 
     @ColumnInfo(name = "titre_annonce")
     private String annonce_titre;
@@ -57,7 +59,7 @@ public class Annonce {
 
     private int categorieId;
 
-    public Annonce(int annonce_image, String annonce_titre, String annonce_description, int annonce_prix, Date annonce_date, boolean annonce_liked, int utilisateurId, int categorieId) {
+    public Annonce(String annonce_image, String annonce_titre, String annonce_description, int annonce_prix, Date annonce_date, boolean annonce_liked, int utilisateurId, int categorieId) {
         this.annonce_titre = annonce_titre;
         this.annonce_description = annonce_description;
         this.annonce_prix = annonce_prix;
@@ -93,11 +95,11 @@ public class Annonce {
         this.idAnnonce = idAnnonce;
     }
 
-    public int getAnnonce_image() {
+    public String getAnnonce_image() {
         return annonce_image;
     }
 
-    public void setAnnonce_image(int annonce_image) {
+    public void setAnnonce_image(String annonce_image) {
         this.annonce_image = annonce_image;
     }
 
@@ -140,5 +142,20 @@ public class Annonce {
 
     public void setAnnonce_liked(boolean annonce_liked) {
         this.annonce_liked = annonce_liked;
+    }
+
+    @Override
+    public String toString() {
+        return "Annonce{" +
+                "idAnnonce=" + idAnnonce +
+                ", annonce_image=" + annonce_image +
+                ", annonce_titre='" + annonce_titre + '\'' +
+                ", annonce_description='" + annonce_description + '\'' +
+                ", annonce_prix=" + annonce_prix +
+                ", annonce_date=" + annonce_date +
+                ", annonce_liked=" + annonce_liked +
+                ", utilisateurId=" + utilisateurId +
+                ", categorieId=" + categorieId +
+                '}';
     }
 }
