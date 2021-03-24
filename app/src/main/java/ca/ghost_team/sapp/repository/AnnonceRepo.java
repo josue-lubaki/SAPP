@@ -4,13 +4,11 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Insert;
 
 import java.util.List;
 
-import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.dao.AnnonceDao;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
@@ -20,7 +18,7 @@ public class AnnonceRepo {
     private final LiveData<List<Annonce>> AllAnnonces;
 
     public AnnonceRepo(Application app){
-        sappDatabase database = sappDatabase.getInstance(app);
+        SappDatabase database = SappDatabase.getInstance(app);
         dao = database.annonceDao();
         AllAnnonces = dao.AllAnnonces(ID_USER_CURRENT);
     }

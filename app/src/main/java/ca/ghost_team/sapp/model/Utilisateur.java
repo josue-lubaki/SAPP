@@ -11,7 +11,7 @@ public class Utilisateur {
     private int idUtilisateur;
 
     @ColumnInfo(name = "Utilisateur_nom")
-    private String utilisateur_nom;
+    private String utilisateurNom;
 
     @ColumnInfo(name = "Utilisateur_username")
     private String username;
@@ -25,8 +25,8 @@ public class Utilisateur {
 //    @ColumnInfo(name = "nombreAnonce_Utilisateur")
 //    private int utilisateur_nombreAnnonce;
 
-    public Utilisateur(String utilisateur_nom, String username, String password, String email) {
-        this.utilisateur_nom = utilisateur_nom;
+    public Utilisateur(String utilisateurNom, String username, String password, String email) {
+        this.utilisateurNom = utilisateurNom;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -56,12 +56,12 @@ public class Utilisateur {
         this.idUtilisateur = idUtilisateur;
     }
 
-    public String getUtilisateur_nom() {
-        return utilisateur_nom;
+    public String getUtilisateurNom() {
+        return utilisateurNom;
     }
 
-    public void setUtilisateur_nom(String utilisateur_nom) {
-        this.utilisateur_nom = utilisateur_nom;
+    public void setUtilisateurNom(String utilisateur_nom) {
+        this.utilisateurNom = utilisateur_nom;
     }
 
     public String getPassword() {
@@ -76,7 +76,7 @@ public class Utilisateur {
     public String toString() {
         return "Utilisateur{" +
                 "idUtilisateur=" + idUtilisateur +
-                ", utilisateur_nom='" + utilisateur_nom + '\'' +
+                ", utilisateur_nom='" + utilisateurNom + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

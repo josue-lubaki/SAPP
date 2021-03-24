@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity {
 
     // Faire la requête pour retrieve l'ID de l'Utilisateur courant
     public static int connect_user(Application application, String username_user, String password_user) {
-        sappDatabase db = Room.databaseBuilder(application, sappDatabase.class, BaseApplication.NAME_DB)
+        SappDatabase db = Room.databaseBuilder(application, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
 

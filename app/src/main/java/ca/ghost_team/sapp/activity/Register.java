@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
     private EditText register_email;
     private TextView sign_in;
     private ImageButton btn_register;
-    private sappDatabase db;
+    private SappDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -36,7 +36,7 @@ import java.util.List;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutAddpostBinding;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
@@ -57,7 +57,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     private EditText prix;
     private EditText codePostal;
     private int idCategorie;
-    private sappDatabase db;
+    private SappDatabase db;
     private final String TAG = AddPost.class.getSimpleName();
 
     @Nullable
@@ -234,7 +234,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String nomCategorie = parent.getItemAtPosition(position).toString();
-        db = Room.databaseBuilder(getContext(), sappDatabase.class, BaseApplication.NAME_DB)
+        db = Room.databaseBuilder(getContext(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
 
         idCategorie = db.categorieAnnonceDao().findIndexCategorieByName(nomCategorie);
