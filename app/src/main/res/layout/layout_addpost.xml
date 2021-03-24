@@ -32,9 +32,10 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_weight="3"
                     android:textSize="12sp"
-                    android:backgroundTint="@color/green"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/yellow"
                     android:text="@string/takePicture"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/BackgroundSplash" />
 
 
             </LinearLayout>
@@ -115,8 +116,8 @@
                     android:layout_margin = "10dp"
                     android:layout_weight="1"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/green"
+                    android:textColor="@color/BackgroundSplash"
+                    android:backgroundTint="@color/yellow"
                     android:padding="10dp"
                     android:text="@string/publier" />
 
