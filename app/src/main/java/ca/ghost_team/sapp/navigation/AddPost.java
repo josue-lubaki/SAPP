@@ -81,12 +81,11 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         List<String> categories = new ArrayList<>();
         categories.add(0, "Choisir une catégorie: ");
         categories.add(1, "Pantalon");
-        categories.add(2, "T-shirt");
-        categories.add(3, "Short");
-        categories.add(4, "Chaussettes");
+        categories.add(2, "T-Shirt");
+        categories.add(3, "Hoodie");
+        categories.add(4, "Short");
         categories.add(5, "Casquette");
-        categories.add(6, "Chandail");
-        categories.add(7, "Autres");
+        categories.add(6, "Autres");
 
         // Take the instance of Spinner
         spinner = binder.addpostCategorie;
@@ -211,6 +210,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         }
 
         System.out.println("VALEUR TEMPS : " + temp);
+
         // Instancier l'annonce
         Annonce newAnnonce = new Annonce(String.valueOf(temp),
                 titre.getText().toString(),

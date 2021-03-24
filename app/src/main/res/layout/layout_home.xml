@@ -4,13 +4,98 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:id="@+id/iconContainer"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/filterAll"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:text="ALL"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_rounded"
+                android:backgroundTint="@color/black"
+                />
+
+            <ImageButton
+                android:id="@+id/filterPant"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_rounded_dark"
+                android:src="@drawable/jeans" />
+
+            <ImageButton
+                android:id="@+id/filterTshirt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_rounded_dark"
+                android:src="@drawable/tshirt"/>
+
+            <ImageButton
+                android:id="@+id/filterHoodie"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_rounded_dark"
+                android:src="@drawable/hoodie"/>
+
+            <ImageButton
+                android:id="@+id/filterShort"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_rounded_dark"
+                android:src="@drawable/shorts"/>
+
+            <ImageButton
+                android:id="@+id/filterCap"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_rounded_dark"
+                android:src="@drawable/cap"/>
+
+            <ImageButton
+                android:id="@+id/filterMore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_rounded_dark"
+                android:src="@drawable/more"/>
+
+        </LinearLayout>
         
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewHome"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/iconContainer"
             tools:listitem="@layout/layout_annonce_item"/>
 
     </RelativeLayout>

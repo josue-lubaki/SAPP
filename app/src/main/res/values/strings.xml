@@ -30,6 +30,11 @@
     <string name="takePicture">Prendre une photo</string>
     <string name="codePostal">Code postal</string>
     <string name="publier">Publier</string>
+    <string name="MesInformations">Mes Informations</string>
+    <string name="emails">Email</string>
+    <string name="myAnnonce">Mes Annonces</string>
+    <string name="quit">Log out</string>
+    <string name="copyrigth">Copyrigth © 2020-2021 ghost-team.ca. All rigths reserved </string>
 
 
 </resources>
