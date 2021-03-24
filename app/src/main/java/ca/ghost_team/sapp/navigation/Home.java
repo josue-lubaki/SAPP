@@ -94,6 +94,13 @@ public class Home extends Fragment {
         recyclerViewAnnonce.setAdapter(adapter);
     }
 
+    /**
+     * Methode FilterList
+     *
+     * Methode générique qui permet de filter les Annonces selon le ID Categorie passée ne paramètre
+     * @param categorie : La categorie ciblée
+     * @return void
+     * */
     public void filterList(int categorie) {
 
         List<Annonce> annonceFilteredList = new ArrayList<>();
