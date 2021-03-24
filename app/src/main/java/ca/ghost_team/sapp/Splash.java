@@ -9,11 +9,8 @@ import androidx.room.Room;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
-import java.util.Date;
-
 import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.sappDatabase;
-import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.CategorieAnnonce;
 import ca.ghost_team.sapp.model.Utilisateur;
 
@@ -49,42 +46,41 @@ public class Splash extends AppCompatActivity {
             }
 
             /* Lorsque la boucle s'arrête, on demarre l'Intent pour lancer l'activité principale */
-            if(myProgress.getProgress() == 100){
+            if (myProgress.getProgress() == 100) {
                 // Forcer le demarrage de la Base de données
-                sappDatabase db = Room.databaseBuilder(getApplication(),sappDatabase.class,BaseApplication.NAME_DB)
+                sappDatabase db = Room.databaseBuilder(getApplication(), sappDatabase.class, BaseApplication.NAME_DB)
                         .allowMainThreadQueries().build();
                 db.annonceDao().start();
 
-//
-//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-//                        "Josue Lubaki",
-//                        "Lubaki",
-//                        "Heroes",
-//                        "jojo@gmail.com"));
-//
-//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-//                        "Ismael",
-//                        "Coulibaly",
-//                        "hybs",
-//                        "ismael@gmail.com"));
-//
-//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-//                        "Jonathan",
-//                        "Kanyinda",
-//                        "PC JO",
-//                        "jonathan@gmail.com"));
-//
-//                CategorieAnnonce[] categories = {
-//                        new CategorieAnnonce(1,"Chandail"),
-//                        new CategorieAnnonce(2,"Chaussettes"),
-//                        new CategorieAnnonce(3,"Short"),
-//                        new CategorieAnnonce(4,"T-shirt"),
-//                        new CategorieAnnonce(5,"Casquette"),
-//                        new CategorieAnnonce(6,"Pantalon"),
-//                        new CategorieAnnonce(7,"Autres")
-//                };
-//
-//                db.categorieAnnonceDao().insertCategorie(categories);
+
+                db.utilisateurDao().insertUtilisateur(new Utilisateur(
+                        "Josue Lubaki",
+                        "Lubaki",
+                        "Heroes",
+                        "jojo@gmail.com"));
+
+                db.utilisateurDao().insertUtilisateur(new Utilisateur(
+                        "Ismael",
+                        "Coulibaly",
+                        "hybs",
+                        "ismael@gmail.com"));
+
+                db.utilisateurDao().insertUtilisateur(new Utilisateur(
+                        "Jonathan",
+                        "Kanyinda",
+                        "PC JO",
+                        "jonathan@gmail.com"));
+
+                CategorieAnnonce[] categories = {
+                        new CategorieAnnonce(1, "Pantalon"),
+                        new CategorieAnnonce(2, "T-Shirt"),
+                        new CategorieAnnonce(3, "Hoodie"),
+                        new CategorieAnnonce(4, "Short"),
+                        new CategorieAnnonce(5, "Casquette"),
+                        new CategorieAnnonce(6, "Autres")
+                };
+
+                db.categorieAnnonceDao().insertCategorie(categories);
 
 //                db.annonceDao().insertAnnonce(new Annonce(
 //                        R.drawable.collection,
@@ -184,6 +180,6 @@ public class Splash extends AppCompatActivity {
                 finish();
             }
         }).start();
- }
+    }
 
 }
