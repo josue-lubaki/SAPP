@@ -1,7 +1,5 @@
 package ca.ghost_team.sapp.model;
 
-import android.net.Uri;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -32,23 +30,23 @@ public class Annonce {
     private int idAnnonce;
 
     @ColumnInfo(name = "image_annonce")
-    private String annonce_image;
+    private String annonceImage;
 
     @ColumnInfo(name = "titre_annonce")
-    private String annonce_titre;
+    private String annonceTitre;
 
     @ColumnInfo(name = "description_annonce")
-    private String annonce_description;
+    private String annonceDescription;
 
     @ColumnInfo(name = "prix_annonce")
-    private int annonce_prix;
+    private int annoncePrix;
 
     @ColumnInfo(name = "date_annonce")
-    private Date annonce_date;
+    private Date annonceDate;
 
     //cette variable permet de savoir si l'annonce est mise en favoris ou non
     @ColumnInfo(name = "liked_annonce")
-    private boolean annonce_liked;
+    private boolean annonceLiked;
 
     // Cette liste nous permettra de connaître le nombre total des Annonces
     public static List<Annonce> listeTotalAnnonce =  new ArrayList<>();
@@ -59,13 +57,14 @@ public class Annonce {
 
     private int categorieId;
 
-    public Annonce(String annonce_image, String annonce_titre, String annonce_description, int annonce_prix, Date annonce_date, boolean annonce_liked, int utilisateurId, int categorieId) {
-        this.annonce_titre = annonce_titre;
-        this.annonce_description = annonce_description;
-        this.annonce_prix = annonce_prix;
-        this.annonce_date = annonce_date;
-        this.annonce_liked = annonce_liked;
-        this.annonce_image = annonce_image;
+
+    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, Date annonceDate, boolean annonceLiked, int utilisateurId, int categorieId) {
+        this.annonceTitre = annonceTitre;
+        this.annonceDescription = annonceDescription;
+        this.annoncePrix = annoncePrix;
+        this.annonceDate = annonceDate;
+        this.annonceLiked = annonceLiked;
+        this.annonceImage = annonceImage;
         this.utilisateurId = utilisateurId;
         listeTotalAnnonce.add(this);
         this.categorieId = categorieId;
@@ -95,65 +94,65 @@ public class Annonce {
         this.idAnnonce = idAnnonce;
     }
 
-    public String getAnnonce_image() {
-        return annonce_image;
+    public String getAnnonceImage() {
+        return annonceImage;
     }
 
-    public void setAnnonce_image(String annonce_image) {
-        this.annonce_image = annonce_image;
+    public void setAnnonceImage(String annonceImage) {
+        this.annonceImage = annonceImage;
     }
 
-    public String getAnnonce_titre() {
-        return annonce_titre;
+    public String getAnnonceTitre() {
+        return annonceTitre;
     }
 
-    public void setAnnonce_titre(String annonce_titre) {
-        this.annonce_titre = annonce_titre;
+    public void setAnnonceTitre(String annonceTitre) {
+        this.annonceTitre = annonceTitre;
     }
 
-    public String getAnnonce_description() {
-        return annonce_description;
+    public String getAnnonceDescription() {
+        return annonceDescription;
     }
 
-    public void setAnnonce_description(String annonce_description) {
-        this.annonce_description = annonce_description;
+    public void setAnnonceDescription(String annonceDescription) {
+        this.annonceDescription = annonceDescription;
     }
 
-    public int getAnnonce_prix() {
-        return annonce_prix;
+    public int getAnnoncePrix() {
+        return annoncePrix;
     }
 
-    public void setAnnonce_prix(int annonce_prix) {
-        this.annonce_prix = annonce_prix;
+    public void setAnnoncePrix(int annoncePrix) {
+        this.annoncePrix = annoncePrix;
     }
 
-    public Date getAnnonce_date() {
+    public Date getAnnonceDate() {
 
-        return annonce_date;
+        return annonceDate;
     }
 
-    public void setAnnonce_date(Date annonce_date) {
-        this.annonce_date = annonce_date;
+    public void setAnnonceDate(Date annonce_date) {
+        this.annonceDate = annonce_date;
     }
 
-    public boolean isAnnonce_liked() {
-        return annonce_liked;
+    public boolean isAnnonceLiked() {
+        return annonceLiked;
     }
 
-    public void setAnnonce_liked(boolean annonce_liked) {
-        this.annonce_liked = annonce_liked;
+    public void setAnnonceLiked(boolean annonceLiked) {
+        this.annonceLiked = annonceLiked;
     }
 
     @Override
     public String toString() {
         return "Annonce{" +
                 "idAnnonce=" + idAnnonce +
-                ", annonce_image=" + annonce_image +
-                ", annonce_titre='" + annonce_titre + '\'' +
-                ", annonce_description='" + annonce_description + '\'' +
-                ", annonce_prix=" + annonce_prix +
-                ", annonce_date=" + annonce_date +
-                ", annonce_liked=" + annonce_liked +
+                ", annonce_image=" + annonceImage +
+                ", annonce_titre='" + annonceTitre + '\'' +
+                ", annonce_description='" + annonceDescription + '\'' +
+                ", annonce_prix=" + annoncePrix +
+                ", annonce_date=" + annonceDate +
+                ", annonce_liked=" + annonceLiked +
                 ", utilisateurId=" + utilisateurId +
                 ", categorieId=" + categorieId +
                 '}';

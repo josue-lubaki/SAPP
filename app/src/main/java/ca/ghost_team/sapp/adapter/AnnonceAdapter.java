@@ -1,10 +1,8 @@
 package ca.ghost_team.sapp.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +22,15 @@ import java.util.List;
 
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
-import ca.ghost_team.sapp.activity.Login;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
-import ca.ghost_team.sapp.repository.AnnonceRepo;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
     Context context;
     List<Annonce> listeAnnonces;
-    private sappDatabase db;
+    private SappDatabase db;
 
     // Constantes
     public static String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
@@ -45,7 +41,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public AnnonceAdapter(Context context) {
         this.context = context;
         this.listeAnnonces = new ArrayList<>();
-        this.db = Room.databaseBuilder(context,sappDatabase.class,"sappDatabase")
+        this.db = Room.databaseBuilder(context, SappDatabase.class,"SappDatabase")
                 .allowMainThreadQueries().build();
     }
 
@@ -57,7 +53,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     }
 
     //Va au final renvoyer jour resant
-    public String format_Date(Date d){
+    public String formatDate(Date d){
         DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT,
                 DateFormat.SHORT);
@@ -69,30 +65,30 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
         Annonce uneAnnonce = listeAnnonces.get(position);
-        holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonce_image()));
-        holder.titre.setText(uneAnnonce.getAnnonce_titre());
-        holder.prix.setText("$" + uneAnnonce.getAnnonce_prix());
+        holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
+        holder.titre.setText(uneAnnonce.getAnnonceTitre());
+        holder.prix.setText("$" + uneAnnonce.getAnnoncePrix());
         //apelle de la methode de formatage
-        holder.date.setText(""+format_Date(uneAnnonce.getAnnonce_date()));
+        holder.date.setText(""+ formatDate(uneAnnonce.getAnnonceDate()));
 
         // Donner les états initials du Boutton
-        if (!uneAnnonce.isAnnonce_liked())
+        if (!uneAnnonce.isAnnonceLiked())
             holder.likeBtn.setImageResource(R.drawable.ic_favoris);
         else {
             holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
         }
 
         holder.likeBtn.setOnClickListener(v -> {
-            if (!uneAnnonce.isAnnonce_liked()) {
+            if (!uneAnnonce.isAnnonceLiked()) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
-                uneAnnonce.setAnnonce_liked(true); // setter le changement dans la classe
+                uneAnnonce.setAnnonceLiked(true); // setter le changement dans la classe
 
                 // Ajouter (ou insérer l'enregistrement dans la Table des Annonces Favories)
                 db.annonceDao().insertLiked(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
 
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
-                uneAnnonce.setAnnonce_liked(false); // setter le changement
+                uneAnnonce.setAnnonceLiked(false); // setter le changement
 
                 // Supprimer l'enregitrement dans la Table des Annonces Favoris
                 db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
@@ -104,10 +100,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.cardView_detail_Article.setOnClickListener(v -> {
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
-            intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonce_image().trim());
-            intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonce_titre().trim());
-            intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnonce_prix());
-            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonce_description().trim());
+            intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonceImage().trim());
+            intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonceTitre().trim());
+            intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnoncePrix());
+            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonceDescription().trim());
             context.startActivity(intent);
         });
     }
