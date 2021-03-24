@@ -50,20 +50,20 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         Annonce annonce = listeAnnoncesFavoris.get(position);
         // TODO : pour le besoin de necessité, toutes les annonces viendront dans le Favoris, mais le transfret sera normalemnt fait par rapport un Utilisateur
 
-        holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonce_image()));
-        holder.titre.setText(annonce.getAnnonce_titre());
-        holder.description.setText(annonce.getAnnonce_description());
-        holder.prix.setText("$ " + annonce.getAnnonce_prix());
+        holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        holder.titre.setText(annonce.getAnnonceTitre());
+        holder.description.setText(annonce.getAnnonceDescription());
+        holder.prix.setText("$ " + annonce.getAnnoncePrix());
 
 
         // set OnClickListener
         holder.cardViewFavoris.setOnClickListener(v -> {
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
-            intent.putExtra(ANNONCE_IMAGE_REQUEST_FAVORIS, annonce.getAnnonce_image());
-            intent.putExtra(ANNONCE_TITRE_REQUEST_FAVORIS, annonce.getAnnonce_titre());
-            intent.putExtra(ANNONCE_PRICE_REQUEST_FAVORIS, annonce.getAnnonce_prix());
-            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST_FAVORIS, annonce.getAnnonce_description());
+            intent.putExtra(ANNONCE_IMAGE_REQUEST_FAVORIS, annonce.getAnnonceImage());
+            intent.putExtra(ANNONCE_TITRE_REQUEST_FAVORIS, annonce.getAnnonceTitre());
+            intent.putExtra(ANNONCE_PRICE_REQUEST_FAVORIS, annonce.getAnnoncePrix());
+            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST_FAVORIS, annonce.getAnnonceDescription());
             context.startActivity(intent);
         });
     }

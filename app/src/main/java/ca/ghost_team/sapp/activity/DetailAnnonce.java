@@ -2,13 +2,11 @@ package ca.ghost_team.sapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.room.Room;
 
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityDetailAnnonceBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
 
@@ -32,7 +30,7 @@ public class DetailAnnonce extends AppCompatActivity {
     private TextView detail_tv_description;
     private TextView detail_tv_vendeur;
     private Button detail_btn_contacter;
-    private sappDatabase db;
+    private SappDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,7 @@ public class DetailAnnonce extends AppCompatActivity {
         String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
 
         // envoyer une requête pour aller chercher le Nom du vendeur
-        db = Room.databaseBuilder(getApplication(), sappDatabase.class, BaseApplication.NAME_DB)
+        db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
 
@@ -63,7 +61,7 @@ public class DetailAnnonce extends AppCompatActivity {
         Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description);
         System.out.println("Info vendeur : " + vendeur.toString());
         // Set Information to Fields
-        detail_tv_vendeur.setText(vendeur.getUtilisateur_nom());
+        detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
         detail_image_annonce.setImageURI(Uri.parse(annonce_image));
         detail_tv_titre.setText(annonce_titre);
         detail_tv_prix.setText("$" + annonce_prix);

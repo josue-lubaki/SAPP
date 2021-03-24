@@ -6,9 +6,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.dao.AnnonceFavorisDao;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
@@ -19,7 +18,7 @@ public class AnnonceFavorisRepo {
 
     public AnnonceFavorisRepo(Application app) {
 
-        dao = sappDatabase.getInstance(app).AnnonceFavorisDao();
+        dao = SappDatabase.getInstance(app).AnnonceFavorisDao();
         AllAnnonceFavoriteByUser  = dao.findAnnonceFavoriteByUser(ID_USER_CURRENT);
     }
 

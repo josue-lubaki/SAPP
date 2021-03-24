@@ -4,13 +4,11 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
 
 import java.util.List;
 
-import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.dao.UtilisateurDao;
-import ca.ghost_team.sapp.database.sappDatabase;
+import ca.ghost_team.sapp.database.SappDatabase;
 
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
@@ -22,7 +20,7 @@ public class UtilisateurRepo {
 
     public UtilisateurRepo(Application app) {
 
-        dao = sappDatabase.getInstance(app).utilisateurDao();
+        dao = SappDatabase.getInstance(app).utilisateurDao();
         AllUtilisateurs  = dao.allUtilisateur();
     }
     public LiveData getAllUtilitisateur(){
@@ -92,8 +90,6 @@ public class UtilisateurRepo {
         }
 
     }
-
-
 
 }
 
