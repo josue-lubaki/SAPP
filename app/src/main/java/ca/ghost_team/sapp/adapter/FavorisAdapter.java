@@ -3,6 +3,7 @@ package ca.ghost_team.sapp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         Annonce annonce = listeAnnoncesFavoris.get(position);
         // TODO : pour le besoin de necessité, toutes les annonces viendront dans le Favoris, mais le transfret sera normalemnt fait par rapport un Utilisateur
 
-
-        holder.imageAnnonce.setImageResource(annonce.getAnnonce_image());
+        holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonce_image()));
         holder.titre.setText(annonce.getAnnonce_titre());
         holder.description.setText(annonce.getAnnonce_description());
         holder.prix.setText("$ " + annonce.getAnnonce_prix());

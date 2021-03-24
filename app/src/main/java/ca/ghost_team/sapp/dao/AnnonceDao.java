@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.Utilisateur;
 
 @Dao
 public interface AnnonceDao {
@@ -55,5 +56,9 @@ public interface AnnonceDao {
     @Query("SELECT 1")
     int start();
 
+    // connaêtre les informations de l'annonceur
+    @Query("SELECT Utilisateur.* FROM Utilisateur INNER JOIN annonceTable ON idUtilisateur = utilisateurId " +
+            "WHERE (titre_annonce LIKE :titre AND prix_annonce =:prix AND description_annonce LIKE :description)")
+    Utilisateur infoAnnonceur(String titre, int prix, String description);
 
 }

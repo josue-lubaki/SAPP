@@ -77,7 +77,7 @@ public class Login extends AppCompatActivity {
             }
             else {
                 // Lancer la requête pour verifier si le Username et Password donné par le User est correct
-                ID_USER_CURRENT = connect_user(getApplication(),username.getText().toString(), password.getText().toString());
+                ID_USER_CURRENT = connect_user(getApplication(),username.getText().toString().trim(), password.getText().toString().trim());
 
                 // User trouvé
                 if (ID_USER_CURRENT != 0) {

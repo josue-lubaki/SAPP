@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 
 import ca.ghost_team.sapp.model.CategorieAnnonce;
 
@@ -15,4 +16,7 @@ public interface CategorieAnnonceDao {
 
     @Delete
     void deleteCategorie(CategorieAnnonce categorieAnnonce);
+
+    @Query("SELECT idCategorie FROM categorieTable WHERE LOWER(nomCategorie) LIKE :nomcategorie LIMIT 1")
+    int findIndexCategorieByName(String nomcategorie);
 }
