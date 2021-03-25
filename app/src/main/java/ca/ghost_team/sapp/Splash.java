@@ -39,7 +39,7 @@ public class Splash extends AppCompatActivity {
 
                 try {
                     // Just to display the progress slowly
-                    sleep(50);
+                    sleep(40);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -51,7 +51,7 @@ public class Splash extends AppCompatActivity {
                 SappDatabase db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                         .allowMainThreadQueries().build();
                 db.annonceDao().start();
-
+//
 //
 //                db.utilisateurDao().insertUtilisateur(new Utilisateur(
 //                        "Josue Lubaki",

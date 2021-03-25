@@ -25,4 +25,5 @@ public class AnnonceFavorisRepo {
     public LiveData<List<Annonce>> getAllAnnonceFavoriteByUser() {
         return AllAnnonceFavoriteByUser;
     }
+
 }

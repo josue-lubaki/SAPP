@@ -16,7 +16,7 @@ import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.AnnonceFavoris;
 import ca.ghost_team.sapp.model.CategorieAnnonce;
 import ca.ghost_team.sapp.model.Utilisateur;
-import conv.Conversion;
+import ca.ghost_team.sapp.Utils.Conversion;
 
 @TypeConverters({Conversion.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
 @Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class, CategorieAnnonce.class}, version = 1, exportSchema = false)
