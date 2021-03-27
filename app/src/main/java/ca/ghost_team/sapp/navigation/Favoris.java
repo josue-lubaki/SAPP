@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +36,6 @@ public class Favoris extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.layout_favoris, container, false);
-
         return binding.getRoot();
     }
 
@@ -50,7 +51,9 @@ public class Favoris extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //binding
         recyclerView = binding.recyclerViewFavoris;
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -68,5 +71,30 @@ public class Favoris extends Fragment {
         });
 
     }
+
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        super.onContextItemSelected(item);
+
+        switch(item.getItemId()){
+
+            case R.id.favorite_delete :
+
+                adapter.removeFromFavorites(item.getGroupId());
+                Toast.makeText(getContext()," Annonce supprimée des favoris", Toast.LENGTH_SHORT).show();
+
+                return true;
+
+            default:
+                Toast.makeText(getContext(),"default", Toast.LENGTH_SHORT).show();
+
+                return super.onContextItemSelected(item);
+
+        }
+    }
+
+
 }
 

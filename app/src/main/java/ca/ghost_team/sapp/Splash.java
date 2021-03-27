@@ -12,7 +12,6 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.CategorieAnnonce;
-import ca.ghost_team.sapp.model.Utilisateur;
 
 import static java.lang.Thread.sleep;
 
@@ -71,16 +70,16 @@ public class Splash extends AppCompatActivity {
 //                        "PC JO",
 //                        "jonathan@gmail.com"));
 //
-//                CategorieAnnonce[] categories = {
-//                        new CategorieAnnonce(1, "Pantalon"),
-//                        new CategorieAnnonce(2, "T-Shirt"),
-//                        new CategorieAnnonce(3, "Hoodie"),
-//                        new CategorieAnnonce(4, "Short"),
-//                        new CategorieAnnonce(5, "Casquette"),
-//                        new CategorieAnnonce(6, "Autres")
-//                };
-//
-//                db.categorieAnnonceDao().insertCategorie(categories);
+                CategorieAnnonce[] categories = {
+                        new CategorieAnnonce(1, "Pantalon"),
+                        new CategorieAnnonce(2, "T-Shirt"),
+                        new CategorieAnnonce(3, "Hoodie"),
+                        new CategorieAnnonce(4, "Short"),
+                        new CategorieAnnonce(5, "Casquette"),
+                        new CategorieAnnonce(6, "Autres")
+                };
+
+                db.categorieAnnonceDao().insertCategorie(categories);
 
 //                db.annonceDao().insertAnnonce(new Annonce(
 //                        R.drawable.collection,
