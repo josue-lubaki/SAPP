@@ -1,11 +1,14 @@
 package ca.ghost_team.sapp.navigation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +19,12 @@ import androidx.room.Room;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutProfilBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
+
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class Profil extends Fragment {
     private LayoutProfilBinding binding;
@@ -26,6 +32,8 @@ public class Profil extends Fragment {
     private TextView infoUsername;
     private TextView infoEmailUser;
     private SappDatabase db;
+    private RelativeLayout logOutContainer;
+    private MainActivity mainActivity;
 
     @Nullable
     @Override
@@ -40,6 +48,8 @@ public class Profil extends Fragment {
         this.db = Room.databaseBuilder(context, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
         ((MainActivity)context).setTitle(R.string.profil);
+
+        mainActivity = (MainActivity) mainActivity;
     }
 
     @Override
@@ -51,13 +61,31 @@ public class Profil extends Fragment {
         infoNameUser = binding.infoNameUser;
         infoUsername = binding.infoUsernameUser;
         infoEmailUser = binding.infoEmailUser;
+        logOutContainer = binding.logoutContainer;
 
-        Utilisateur currentUser = db.utilisateurDao().getInfoUtilisateur(BaseApplication.ID_USER_CURRENT);
+        Utilisateur currentUser = db.utilisateurDao().getInfoUtilisateur(ID_USER_CURRENT);
 
         // Setter les Infos
         infoNameUser.setText(currentUser.getUtilisateurNom());
         infoUsername.setText(currentUser.getUsername());
         infoEmailUser.setText(currentUser.getEmail());
 
+        //Log Out
+        logOutContainer.setOnClickListener(this::logOut);
+
     }
+
+    private void logOut(View view) {
+        ID_USER_CURRENT = 0;
+        Intent intent = new Intent(getContext(), Login.class);
+
+        startActivity(intent);
+        Toast.makeText(getContext(),infoUsername.getText().toString() + " logged out...", Toast.LENGTH_SHORT).show();
+
+        //on veut eviter que le back button nous ramene dans l'application
+        mainActivity.finish();
+
+    }
+
+
 }
