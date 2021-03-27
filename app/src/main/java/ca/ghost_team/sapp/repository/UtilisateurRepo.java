@@ -27,7 +27,7 @@ public class UtilisateurRepo {
         return AllUtilisateurs;
     }
 
-    public void inserUtilisiateur(Utilisateur x){ new InsertAsynchrone(dao).execute(x);}
+    public void insertUtilisateur(Utilisateur x){ new InsertAsynchrone(dao).execute(x);}
     public void deleteUtilisateur(Utilisateur x){ new DeleteAsynchrone(dao).execute(x);}
     public void updateUtilisiateur(Utilisateur x){ new UpdateAsynchrone(dao).execute(x);}
     public List<Annonce> findAnnonceByUtilisateur(int idUtilisateur){

@@ -7,12 +7,15 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.room.Room;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -40,6 +43,9 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
+                .allowMainThreadQueries()
+                .build();
 
         getSupportActionBar().hide();
 
@@ -84,14 +90,22 @@ public class Register extends AppCompatActivity {
             } else {
                 // On instancie l'objet Utilisateur
                 Utilisateur utilisateur = new Utilisateur(
-                        register_name.getText().toString(),
-                        register_username.getText().toString(),
-                        register_password.getText().toString(),
-                        register_email.getText().toString()
+                        register_name.getText().toString().trim(),
+                        register_username.getText().toString().trim(),
+                        register_password.getText().toString().trim(),
+                        register_email.getText().toString().trim()
                 );
 
-                // on insère l'Utilisateur
-                new UtilisateurRepo(getApplication()).inserUtilisiateur(utilisateur);
+                // on insère l'Utilisateur sur le Thread Main
+                db.utilisateurDao().insertUtilisateur(utilisateur);
+                Toast.makeText(this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
+
+                // Attendre 0.5s avant d'aller connecter le nouveau Utilisateur
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 // Auto Login
                 ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUsername(), utilisateur.getPassword());
