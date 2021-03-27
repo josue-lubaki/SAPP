@@ -11,12 +11,12 @@ import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
 
-public class UtilisateurVieuwModel extends AndroidViewModel {
+public class UtilisateurViewModel extends AndroidViewModel {
     private final UtilisateurRepo userRepo;
     private final LiveData<List<Utilisateur>> Allusers;
 
 
-    public UtilisateurVieuwModel(@NonNull Application application) {
+    public UtilisateurViewModel(@NonNull Application application) {
         super(application);
         userRepo = new UtilisateurRepo(application);
         Allusers = userRepo.getAllUtilitisateur();
@@ -24,7 +24,7 @@ public class UtilisateurVieuwModel extends AndroidViewModel {
     public LiveData< List<Utilisateur>> getAllusers(){
         return Allusers;
     }
-    public void insertUtilisateurs(Utilisateur x){ userRepo.inserUtilisiateur(x);}
+    public void insertUtilisateurs(Utilisateur x){ userRepo.insertUtilisateur(x);}
 
     public void deleteUtilisateurs(Utilisateur x){userRepo.deleteUtilisateur(x);}
     public void updteUtilisateurs(Utilisateur x){userRepo.updateUtilisiateur(x);}

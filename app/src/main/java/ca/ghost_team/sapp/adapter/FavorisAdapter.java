@@ -60,10 +60,10 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
         // TODO : pour le besoin de necessité, toutes les annonces viendront dans le Favoris, mais le transfret sera normalemnt fait par rapport un Utilisateur
-        Glide.with(context)
-                .load(Uri.parse(annonce.getAnnonceImage()))
-                .into(holder.imageAnnonce);
-        //holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+//        Glide.with(context)
+//                .load(Uri.parse(annonce.getAnnonceImage()))
+//                .into(holder.imageAnnonce);
+        holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
         holder.titre.setText(annonce.getAnnonceTitre());
         holder.description.setText(annonce.getAnnonceDescription());
         holder.prix.setText("$ " + annonce.getAnnoncePrix());
