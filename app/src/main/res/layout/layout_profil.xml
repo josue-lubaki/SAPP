@@ -141,7 +141,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/logout"
+            android:id="@+id/logout_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/bloc_myAnnonce"
@@ -149,15 +149,16 @@
             android:gravity="center"
             android:background="@color/BackgroundAnnonce">
 
+
             <ImageButton
-                android:id="@+id/icon_exit"
+                android:id="@+id/logout_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/bg_white_rounded"
                 android:src="@drawable/ic_logout" />
 
             <TextView
-                android:layout_toEndOf="@+id/icon_exit"
+                android:layout_toEndOf="@+id/logout_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="20dp"
@@ -171,7 +172,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/copyright"
-            android:layout_below="@id/logout"
+            android:layout_below="@id/logout_container"
             android:layout_marginTop="100dp"
             android:gravity="center"
             android:padding="5dp"
