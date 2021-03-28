@@ -114,7 +114,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/bloc_myAnnonce"
+            android:id="@+id/annonceVendueContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/champsInfo"
@@ -144,7 +144,7 @@
             android:id="@+id/logout_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bloc_myAnnonce"
+            android:layout_below="@id/annonceVendueContainer"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:background="@color/BackgroundAnnonce">

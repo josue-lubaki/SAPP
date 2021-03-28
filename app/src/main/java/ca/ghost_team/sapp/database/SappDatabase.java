@@ -24,7 +24,7 @@ public abstract class SappDatabase extends RoomDatabase {
     public static SappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();
     public abstract UtilisateurDao utilisateurDao();
-    public abstract AnnonceFavorisDao AnnonceFavorisDao();
+    public abstract AnnonceFavorisDao annonceFavorisDao();
     public abstract CategorieAnnonceDao categorieAnnonceDao();
 
     public static synchronized SappDatabase getInstance(Context context){

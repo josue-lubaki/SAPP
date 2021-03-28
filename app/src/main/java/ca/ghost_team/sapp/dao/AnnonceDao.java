@@ -32,11 +32,11 @@ public interface AnnonceDao {
             "INNER JOIN AnnonceFavoris " +
             "ON annonceTable.idAnnonce = AnnonceFavoris.annonceId " +
             "WHERE AnnonceFavoris.utilisateurId =:idUser")
-    LiveData<List<Annonce>> AllAnnonces(int idUser);
+    LiveData<List<Annonce>> allAnnonces(int idUser);
 
     // Requête qui permet de récuperer toutes les annonces par rapport à un Utilisateur
     @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")
-    LiveData<List<Annonce>> findAnnonceByUser(final int utilisateurId);
+    LiveData<List<Annonce>> findAnnonceByUser(int utilisateurId);
 
     @Delete
     void deleteAnnonce(Annonce annonce);
