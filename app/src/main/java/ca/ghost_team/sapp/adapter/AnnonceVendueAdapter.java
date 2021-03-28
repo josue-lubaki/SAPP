@@ -2,12 +2,14 @@ package ca.ghost_team.sapp.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,11 +23,13 @@ import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.repository.AnnonceRepo;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdapter.AnnonceVendueVH> {
 
+    private static final String TAG = AnnonceVendueAdapter.class.getSimpleName();
     Context context;
     private List<Annonce> listeAnnonceVendue;
     private SappDatabase db;
@@ -54,8 +58,17 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
         holder.annoncePrice.setText("$" + annonce.getAnnoncePrix());
 
         // Trash
-        // CODE ICI
+        holder.annonceTrash.setOnClickListener((v)->{
+            Annonce uneAnnonce = listeAnnonceVendue.get(position);
+            listeAnnonceVendue.remove(uneAnnonce);
+            Log.i(TAG,"Annonce " + uneAnnonce + " supprimé");
+            // Envoyer une Requte pour supprimer l'Annonce
+            db.annonceDao().deleteAnnonce(uneAnnonce);
+            notifyDataSetChanged();
+        });
     }
+
+
 
     @Override
     public int getItemCount() {

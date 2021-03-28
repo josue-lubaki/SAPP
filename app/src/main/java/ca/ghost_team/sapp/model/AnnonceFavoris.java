@@ -3,14 +3,18 @@ package ca.ghost_team.sapp.model;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(tableName="AnnonceFavoris",primaryKeys = {"utilisateurId","annonceId"},
         foreignKeys = {
                 @ForeignKey(entity = Utilisateur.class,
                         parentColumns = "idUtilisateur",
-                        childColumns = "utilisateurId"),
+                        childColumns = "utilisateurId",
+                        onDelete = CASCADE),
                 @ForeignKey(entity = Annonce.class,
                         parentColumns = "idAnnonce",
-                        childColumns = "annonceId")
+                        childColumns = "annonceId",
+                        onDelete = CASCADE)
         })
 public class AnnonceFavoris {
     public int annonceId;
