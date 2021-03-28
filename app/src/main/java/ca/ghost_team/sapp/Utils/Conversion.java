@@ -15,9 +15,28 @@ public class Conversion {
         //
         return value == null ? null :  new Date(value);
     }
-    //Converion  de Long a  date pour Vieuw
+    //Converion  de Long a  date pour View
     @TypeConverter
     public static Long dateToTimestamp(Date date) {
         return date == null ? null : date.getTime();
     }
+
+    public static String toTimeStr(Date time) {
+        int hour = time.getHours();
+        int min = time.getMinutes();
+        StringBuilder sb = new StringBuilder();
+        if (hour < 10) {
+            sb.append(0).append(hour);
+        } else {
+            sb.append(hour);
+        }
+        sb.append(":");
+        if (min < 10) {
+            sb.append(0).append(min);
+        } else {
+            sb.append(min);
+        }
+        return sb.toString();
+    }
+
 }

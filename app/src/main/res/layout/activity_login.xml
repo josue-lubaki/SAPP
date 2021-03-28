@@ -99,15 +99,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
-                android:background="@color/BackgroundSplash"
+                android:layout_marginHorizontal="40dp"
                 android:gravity="center_vertical">
 
                 <ImageButton
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:src="@drawable/bg_bouton_login" />
+                    android:background="@drawable/bg_white_rounded_large"
+                    android:src="@drawable/bg_white_rounded_large" />
 
                 <TextView
                     android:id="@+id/tv_log"

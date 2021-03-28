@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,10 +71,13 @@ public class DetailAnnonce extends AppCompatActivity {
         detail_tv_description.setText(annonce_description);
 
         detail_btn_contacter.setOnClickListener(v -> {
-            Snackbar.make(v, "Email vendeur : " + vendeur.getEmail(), 5000)
-                    .setActionTextColor(Color.WHITE)
-                    .setAction("Merci", d -> {
-                    }).setBackgroundTint(Color.parseColor("#266127")).show();
+//            Snackbar.make(v, "Email vendeur : " + vendeur.getEmail(), 5000)
+//                    .setActionTextColor(Color.WHITE)
+//                    .setAction("Merci", d -> {
+//                    }).setBackgroundTint(Color.parseColor("#266127")).show();
+
+            Intent intent = new Intent(DetailAnnonce.this, MessageActivity.class);
+            startActivity(intent);
         });
     }
 }
