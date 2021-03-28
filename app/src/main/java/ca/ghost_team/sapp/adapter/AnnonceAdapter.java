@@ -15,20 +15,16 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.bumptech.glide.Glide;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
-import ca.ghost_team.sapp.repository.AnnonceFavorisRepo;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
@@ -77,7 +73,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
-        this.listeAnnonceFavorite = db.AnnonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
+        this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
 
         Annonce uneAnnonce = listeAnnonces.get(position);
         holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));

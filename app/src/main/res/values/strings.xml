@@ -35,6 +35,7 @@
     <string name="myAnnonce">Mes Annonces</string>
     <string name="quit">Log out</string>
     <string name="copyright">Copyright © 2020-2021 / ghost-team.ca \nAll rights reserved </string>
+    <string name="mesannonce">Mes Annonces</string>
 
 
 </resources>

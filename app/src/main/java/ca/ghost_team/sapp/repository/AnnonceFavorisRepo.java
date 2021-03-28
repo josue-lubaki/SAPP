@@ -18,7 +18,7 @@ public class AnnonceFavorisRepo {
 
     public AnnonceFavorisRepo(Application app) {
 
-        dao = SappDatabase.getInstance(app).AnnonceFavorisDao();
+        dao = SappDatabase.getInstance(app).annonceFavorisDao();
         AllAnnonceFavoriteByUser  = dao.findAnnonceFavoriteByUser(ID_USER_CURRENT);
     }
 

@@ -26,6 +26,10 @@
             android:name=".activity.Login"
             android:theme="@style/generalnotitle" />
 
+        <activity
+            android:name=".activity.AnnonceVendue"
+            android:theme="@style/generalnotitle" />
+
         <activity android:name=".activity.DetailAnnonce" />
 
         <activity

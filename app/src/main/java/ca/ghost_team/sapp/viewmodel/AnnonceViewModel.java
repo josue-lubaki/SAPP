@@ -42,8 +42,8 @@ public class AnnonceViewModel extends AndroidViewModel {
         annonceRepo.deleteAllAnnonce();
     }
 
-    public List<Annonce> findAnnonceByUser(int idUtilisateur){
-        return annonceRepo.findAnnonceByUser(idUtilisateur);
+    public LiveData<List<Annonce>> findAnnonceByUser(){
+        return annonceRepo.findAnnonceByUser();
     }
 
     public LiveData<List<Annonce>> getAllAnnonces() {

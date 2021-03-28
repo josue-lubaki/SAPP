@@ -15,45 +15,50 @@ import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceRepo {
     private final AnnonceDao dao;
-    private final LiveData<List<Annonce>> AllAnnonces;
+    private final LiveData<List<Annonce>> allAnnonces;
+    private final LiveData<List<Annonce>> allAnnonceVendues;
 
-    public AnnonceRepo(Application app){
+    public AnnonceRepo(Application app) {
         SappDatabase database = SappDatabase.getInstance(app);
         dao = database.annonceDao();
-        AllAnnonces = dao.AllAnnonces(ID_USER_CURRENT);
+        allAnnonces = dao.allAnnonces(ID_USER_CURRENT);
+        allAnnonceVendues = dao.findAnnonceByUser(ID_USER_CURRENT);
     }
 
     public LiveData<List<Annonce>> getAllAnnonces() {
-        return AllAnnonces;
+        return allAnnonces;
     }
 
-    public void insertAnnonce(Annonce annonce){
+    public LiveData<List<Annonce>> findAnnonceByUser() {
+        return allAnnonceVendues;
+    }
+
+    public void insertAnnonce(Annonce annonce) {
         new InsertAnnonceAsyncTask(dao).execute(annonce);
     }
 
-    public void insertAllAnnonce(Annonce... annonce){ new InsertAllAnnonceAsyncTask(dao).execute(annonce);}
+    public void insertAllAnnonce(Annonce... annonce) {
+        new InsertAllAnnonceAsyncTask(dao).execute(annonce);
+    }
 
-    public void updateAnnonce(Annonce annonce){
+    public void updateAnnonce(Annonce annonce) {
         new UpdateAnnonceAsyncTask(dao).execute(annonce);
     }
 
-    public void deleteAllAnnonce(){
+    public void deleteAllAnnonce() {
         new DeleteAllAnnoncesAsyncTask(dao).execute();
     }
 
-    public void deleteAnnonce(Annonce annonce){
+    public void deleteAnnonce(Annonce annonce) {
         new DeleteAnnonceAsyncTask(dao).execute(annonce);
     }
 
-    public List<Annonce> findAnnonceByUser(int idUtilisateur){
-        return (List<Annonce>) new findAnnonceByUserAsyncTask(dao).execute(idUtilisateur);
-    }
-
-    private static class InsertAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
+    private static class InsertAnnonceAsyncTask extends AsyncTask<Annonce, Void, Void> {
 
         private final AnnonceDao uneAnnonceDao;
+
         private InsertAnnonceAsyncTask(AnnonceDao dao) {
-            this.uneAnnonceDao= dao;
+            this.uneAnnonceDao = dao;
         }
 
         @Override
@@ -63,11 +68,12 @@ public class AnnonceRepo {
         }
     }
 
-    private static class InsertAllAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
+    private static class InsertAllAnnonceAsyncTask extends AsyncTask<Annonce, Void, Void> {
 
         private final AnnonceDao uneAnnonceDao;
+
         private InsertAllAnnonceAsyncTask(AnnonceDao dao) {
-            this.uneAnnonceDao= dao;
+            this.uneAnnonceDao = dao;
         }
 
         @Override
@@ -77,11 +83,12 @@ public class AnnonceRepo {
         }
     }
 
-    private static class DeleteAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
+    private static class DeleteAnnonceAsyncTask extends AsyncTask<Annonce, Void, Void> {
 
         private final AnnonceDao uneAnnonceDao;
+
         private DeleteAnnonceAsyncTask(AnnonceDao dao) {
-            this.uneAnnonceDao= dao;
+            this.uneAnnonceDao = dao;
         }
 
         @Override
@@ -91,11 +98,12 @@ public class AnnonceRepo {
         }
     }
 
-    private static class DeleteAllAnnoncesAsyncTask extends AsyncTask<Void,Void,Void>{
+    private static class DeleteAllAnnoncesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private final AnnonceDao uneAnnonceDao;
+
         private DeleteAllAnnoncesAsyncTask(AnnonceDao dao) {
-            this.uneAnnonceDao= dao;
+            this.uneAnnonceDao = dao;
         }
 
         @Override
@@ -105,11 +113,12 @@ public class AnnonceRepo {
         }
     }
 
-    private static class UpdateAnnonceAsyncTask extends AsyncTask<Annonce,Void,Void>{
+    private static class UpdateAnnonceAsyncTask extends AsyncTask<Annonce, Void, Void> {
 
         private final AnnonceDao uneAnnonceDao;
+
         private UpdateAnnonceAsyncTask(AnnonceDao dao) {
-            this.uneAnnonceDao= dao;
+            this.uneAnnonceDao = dao;
         }
 
         @Override
@@ -117,21 +126,6 @@ public class AnnonceRepo {
             uneAnnonceDao.updateAnnonce(annonces[0]);
             return null;
         }
-    }
-
-    static class findAnnonceByUserAsyncTask extends AsyncTask<Integer,Void,List<Annonce>>{
-
-        private final AnnonceDao uneAnnonceDao;
-        findAnnonceByUserAsyncTask(AnnonceDao dao) {
-            this.uneAnnonceDao= dao;
-        }
-
-        @Override
-        protected List<Annonce> doInBackground(Integer... id) {
-            uneAnnonceDao.findAnnonceByUser(id[0]);
-            return null;
-        }
-
     }
 
 }

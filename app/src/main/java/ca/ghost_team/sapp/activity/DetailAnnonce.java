@@ -52,12 +52,14 @@ public class DetailAnnonce extends AppCompatActivity {
         int annonce_prix = bundle.getInt(AnnonceAdapter.ANNONCE_PRICE_REQUEST);
         String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
 
-        // envoyer une requête pour aller chercher le Nom du vendeur
+
         db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
 
         System.out.println("Valeur de Annonce Prix : " + annonce_prix);
+
+        // envoyer une requête pour aller chercher le Nom du vendeur
         Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description);
         System.out.println("Info vendeur : " + vendeur.toString());
         // Set Information to Fields
