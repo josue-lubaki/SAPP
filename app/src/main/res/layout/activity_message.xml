@@ -83,6 +83,7 @@
             android:layout_toStartOf="@+id/button_send"
             android:background="@android:color/transparent"
             android:hint="Enter Message"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:inputType="text"
             android:maxLines="6"
