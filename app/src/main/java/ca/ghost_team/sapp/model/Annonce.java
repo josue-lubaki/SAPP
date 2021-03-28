@@ -52,9 +52,7 @@ public class Annonce {
     public static List<Annonce> listeTotalAnnonce =  new ArrayList<>();
 
     // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
-
     private int utilisateurId;
-
     private int categorieId;
 
 
