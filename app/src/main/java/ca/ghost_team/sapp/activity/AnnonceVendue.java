@@ -34,15 +34,11 @@ public class AnnonceVendue extends AppCompatActivity {
     private AnnonceVendueBinding binding;
     private RecyclerView recyclerView;
     private AnnonceVendueAdapter adapter;
-    private SappDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.annonce_vendue);
-
-        db =  Room.databaseBuilder(this, SappDatabase.class, BaseApplication.NAME_DB)
-                .allowMainThreadQueries().build();
 
         // binding
         recyclerView = binding.annonceVenduRecyclerView;

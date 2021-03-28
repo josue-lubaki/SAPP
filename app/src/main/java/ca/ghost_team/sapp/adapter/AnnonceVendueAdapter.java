@@ -62,7 +62,8 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
             Annonce uneAnnonce = listeAnnonceVendue.get(position);
             listeAnnonceVendue.remove(uneAnnonce);
             Log.i(TAG,"Annonce " + uneAnnonce + " supprimé");
-            // Envoyer une Requte pour supprimer l'Annonce
+
+            // Envoyer une Requête pour supprimer l'Annonce
             db.annonceDao().deleteAnnonce(uneAnnonce);
             notifyDataSetChanged();
         });
