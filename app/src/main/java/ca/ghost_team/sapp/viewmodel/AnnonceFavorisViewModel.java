@@ -24,4 +24,5 @@ public class AnnonceFavorisViewModel extends AndroidViewModel {
     public LiveData<List<Annonce>> getAllAnnonceFavoriteByUser() {
         return AllAnnonceFavoriteByUser;
     }
+
 }

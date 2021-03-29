@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -30,6 +31,8 @@ import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
     Context context;
     List<Annonce> listeAnnonces;
+    List<Annonce> listeAnnonceFavorite;
+    private MainActivity app;
     private SappDatabase db;
 
     // Constantes
@@ -41,8 +44,14 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public AnnonceAdapter(Context context) {
         this.context = context;
         this.listeAnnonces = new ArrayList<>();
+        this.listeAnnonceFavorite = new ArrayList<>();
         this.db = Room.databaseBuilder(context, SappDatabase.class,"SappDatabase")
                 .allowMainThreadQueries().build();
+
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @NonNull
@@ -64,6 +73,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
+        this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
+
         Annonce uneAnnonce = listeAnnonces.get(position);
         holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
         holder.titre.setText(uneAnnonce.getAnnonceTitre());
@@ -71,15 +82,19 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         //apelle de la methode de formatage
         holder.date.setText(""+ formatDate(uneAnnonce.getAnnonceDate()));
 
+//        Glide.with(context.getApplicationContext())
+//                .load(Uri.parse(uneAnnonce.getAnnonceImage()))
+//                .into(holder.imageAnnonce);
+
         // Donner les états initials du Boutton
-        if (!uneAnnonce.isAnnonceLiked())
+        if (!verifyContent(uneAnnonce))
             holder.likeBtn.setImageResource(R.drawable.ic_favoris);
         else {
             holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
         }
 
         holder.likeBtn.setOnClickListener(v -> {
-            if (!uneAnnonce.isAnnonceLiked()) {
+            if (!verifyContent(uneAnnonce)) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
                 uneAnnonce.setAnnonceLiked(true); // setter le changement dans la classe
 
@@ -116,6 +131,16 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public void addAnnonce(List<Annonce> maListe) {
         listeAnnonces = maListe;
         notifyDataSetChanged();
+    }
+
+    public boolean verifyContent(Annonce uneAnnonce){
+        if(listeAnnonceFavorite.size() > 0) {
+            for (Annonce annonce : listeAnnonceFavorite) {
+                if (annonce.getCategorieId() == uneAnnonce.getCategorieId())
+                    return true;
+            }
+        }
+        return false;
     }
 
     static class AnnonceVH extends RecyclerView.ViewHolder {
