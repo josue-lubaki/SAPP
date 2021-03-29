@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -77,10 +78,15 @@ public class DetailAnnonce extends AppCompatActivity {
 
         Log.i(TAG, "je te montre la valeur de ID_Annonce : " + id_annonce);
         detail_btn_contacter.setOnClickListener(v -> {
-            Intent intent = new Intent(DetailAnnonce.this, MessageActivity.class);
-            intent.putExtra(ID_ANNONCE_CURRENT, id_annonce);
-            intent.putExtra(ID_RECEIVER_CURRENT, vendeur.getIdUtilisateur());
-            startActivity(intent);
+            // Un vendeur ne peut pas appuyer sur le button "Contacter" pour sa propre annonce
+            if(BaseApplication.ID_USER_CURRENT == vendeur.getIdUtilisateur()){
+                Toast.makeText(this, "Vous êtes déjà l'auteur de cette Annonce !", Toast.LENGTH_LONG).show();
+            }else{
+                Intent intent = new Intent(DetailAnnonce.this, MessageActivity.class);
+                intent.putExtra(ID_ANNONCE_CURRENT, id_annonce);
+                intent.putExtra(ID_RECEIVER_CURRENT, vendeur.getIdUtilisateur());
+                startActivity(intent);
+            }
         });
     }
 }

@@ -15,6 +15,9 @@ public interface MessageDao {
     @Query("SELECT * FROM MessageTable WHERE idReceiver = :idUser OR idSender = :idUser")
     LiveData<List<Message>> allMessages(int idUser);
 
+    @Query("SELECT * FROM MessageTable WHERE idReceiver = :idUser GROUP BY idSender")
+    LiveData<List<Message>> allMessagesReceiver(int idUser);
+
     @Insert
     void sendMessage(Message message);
 

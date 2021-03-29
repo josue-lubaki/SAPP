@@ -38,6 +38,10 @@ public interface AnnonceDao {
     @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")
     LiveData<List<Annonce>> findAnnonceByUser(int utilisateurId);
 
+    // Requête qui permet de récuperer toutes les annonces par rapport à un Utilisateur
+    @Query("SELECT * FROM annonceTable WHERE idAnnonce = :annonceId")
+    Annonce getInfoAnnonce(int annonceId);
+
     @Delete
     void deleteAnnonce(Annonce annonce);
 
