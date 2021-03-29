@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.dao.MessageDao;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -20,7 +21,7 @@ public class MessageRepo {
     public MessageRepo(Application application) {
         SappDatabase database = SappDatabase.getInstance(application);
         dao = database.messageDao();
-        this.allMessages = dao.allMessages();
+        this.allMessages = dao.allMessages(BaseApplication.ID_USER_CURRENT);
     }
 
     public LiveData<List<Message>> getAllMessages() {
