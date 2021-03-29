@@ -2,7 +2,6 @@ package ca.ghost_team.sapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,18 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.MessageAdapter;
 import ca.ghost_team.sapp.databinding.ActivityMessageBinding;
-import ca.ghost_team.sapp.databinding.LayoutMessageBinding;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.repository.MessageRepo;
-import ca.ghost_team.sapp.viewmodel.AnnonceVendueViewModel;
 import ca.ghost_team.sapp.viewmodel.MessageViewModel;
 
 public class MessageActivity extends AppCompatActivity {
@@ -37,6 +32,8 @@ public class MessageActivity extends AppCompatActivity {
     private EditText editMessage;
     private String TAG = MessageActivity.class.getSimpleName();
     private ActivityMessageBinding binding;
+    private int idAnnonceCurrent;
+    private int idReceiverCurrent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +45,10 @@ public class MessageActivity extends AppCompatActivity {
 
         sendMessage = binding.buttonSend;
         editMessage = binding.editMessage;
+
+        Bundle bundle = getIntent().getExtras();
+        idAnnonceCurrent = bundle.getInt(DetailAnnonce.ID_ANNONCE_CURRENT);
+        idReceiverCurrent = bundle.getInt(DetailAnnonce.ID_RECEIVER_CURRENT);
 
         // Init RecyclerView
         mMessageRecycler = binding.recyclerMessage;
@@ -80,7 +81,11 @@ public class MessageActivity extends AppCompatActivity {
             return;
         }
 
-        Message myMessage = new Message(editMessage.getText().toString().trim(), BaseApplication.ID_USER_CURRENT, new Date());
+        Log.i(TAG, "Voici la valeur de idAnnonceCurrent : " + idAnnonceCurrent);
+        Log.i(TAG, "Voici la valeur de idReceiverCurrent : " + idReceiverCurrent);
+
+        // Instancier le Message à envoyer et Inserer dans la BD
+        Message myMessage = new Message(editMessage.getText().toString().trim(), BaseApplication.ID_USER_CURRENT, idReceiverCurrent, idAnnonceCurrent, new Date());
         new MessageRepo(getApplication()).sendMessage(myMessage);
         Log.i(TAG, "[" + myMessage.toString() + "] - ENVOYÉ !");
 
