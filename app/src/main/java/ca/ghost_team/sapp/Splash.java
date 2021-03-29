@@ -9,9 +9,14 @@ import androidx.room.Room;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.CategorieAnnonce;
+import ca.ghost_team.sapp.model.Message;
 
 import static java.lang.Thread.sleep;
 
@@ -78,6 +83,15 @@ public class Splash extends AppCompatActivity {
                         new CategorieAnnonce(5, "Casquette"),
                         new CategorieAnnonce(6, "Autres")
                 };
+
+//                Message[] messages = {
+//                        new Message("Bonjour", BaseApplication.ID_USER_CURRENT, new Date()),
+//                        new Message("Salut", 2, new Date()),
+//                        new Message("Bonsoir", BaseApplication.ID_USER_CURRENT, new Date())
+//                };
+//
+//                db.messageDao().sendMessage(messages);
+
 
                 db.categorieAnnonceDao().insertCategorie(categories);
 

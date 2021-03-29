@@ -32,9 +32,10 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/titreAnnonce"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/AnnonceVendueDescription"
@@ -46,7 +47,7 @@
                     android:maxLines="4"
                     android:text="@string/remplissage"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,10 +67,10 @@
                         android:id="@+id/AnnonceVenduePrix"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-
+                        android:textStyle="bold"
                         android:layout_weight="1"
                         android:text="@string/prixText"
-                        android:textAlignment="textEnd"
+                        android:gravity="center"
                         android:textColor="@color/yellow"
                         android:textSize="25sp" />
 
