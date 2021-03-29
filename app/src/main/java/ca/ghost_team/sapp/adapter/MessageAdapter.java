@@ -25,15 +25,15 @@ public class MessageAdapter extends RecyclerView.Adapter{
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    private static SappDatabase db;
+    private final SappDatabase db;
     private Context mContext;
     private List<Message> mMessageList;
-    
+
 
     public MessageAdapter(Context context) {
         mContext = context;
         mMessageList = new ArrayList<>();
-        this.db = Room.databaseBuilder(context, SappDatabase.class,"SappDatabase")
+        db = Room.databaseBuilder(context, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
     }
 
@@ -77,8 +77,19 @@ public class MessageAdapter extends RecyclerView.Adapter{
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageVH) holder).bind(message);
                 break;
-            case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceivedMessageVH) holder).bind(message);
+            case VIEW_TYPE_MESSAGE_RECEIVED:{
+                //((ReceivedMessageVH) holder).bind(message);
+
+                ((ReceivedMessageVH) holder).messageTextReceiver.setText(message.getMessage());
+
+                // Format the stored timestamp into a readable String using method.
+                ((ReceivedMessageVH) holder).timeTextReceiver.setText(Conversion.toTimeStr(message.getCreationDate()));
+                Utilisateur user = db.utilisateurDao().getInfoUtilisateur(message.getIdSender());
+
+                if(user != null)
+                    ((ReceivedMessageVH) holder).nameTextReceiver.setText(user.getUtilisateurNom());
+            }
+
         }
     }
 
@@ -93,28 +104,28 @@ public class MessageAdapter extends RecyclerView.Adapter{
     }
 
     static class ReceivedMessageVH extends RecyclerView.ViewHolder {
-        TextView messageText, timeText, nameText;
+        TextView messageTextReceiver, timeTextReceiver, nameTextReceiver;
         ImageView profileImage;
 
         ReceivedMessageVH(View itemView) {
             super(itemView);
-            messageText = itemView.findViewById(R.id.text_message_receiver);
-            timeText = itemView.findViewById(R.id.text_time_receiver);
-            nameText = itemView.findViewById(R.id.text_name_receiver);
+            messageTextReceiver = itemView.findViewById(R.id.text_message_receiver);
+            timeTextReceiver = itemView.findViewById(R.id.text_time_receiver);
+            nameTextReceiver = itemView.findViewById(R.id.text_name_receiver);
             profileImage = itemView.findViewById(R.id.image_profile_receiver);
         }
 
         void bind(Message message) {
-            messageText.setText(message.getMessage());
+//            messageTextReceiver.setText(message.getMessage());
+//
+//            // Format the stored timestamp into a readable String using method.
+//            timeTextReceiver.setText(Conversion.toTimeStr(message.getCreationDate()));
+//
+//            Utilisateur user = db.utilisateurDao().getInfoUtilisateur(message.getIdSender());
+//
+//            if(user != null)
+//                nameTextReceiver.setText(user.getUtilisateurNom());
 
-            // Format the stored timestamp into a readable String using method.
-            timeText.setText("" + Conversion.toTimeStr(message.getCreationDate()));
-
-            Utilisateur user = db.utilisateurDao().getInfoUtilisateur(message.getIdSender());
-            nameText.setText(user.getUtilisateurNom());
-
-            // Insert the profile image from the URL into the ImageView.
-            // Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
     }
 
@@ -131,7 +142,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
             messageText.setText(message.getMessage());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText("" + Conversion.toTimeStr(message.getCreationDate()));
+            timeText.setText(Conversion.toTimeStr(message.getCreationDate()));
 
         }
     }
