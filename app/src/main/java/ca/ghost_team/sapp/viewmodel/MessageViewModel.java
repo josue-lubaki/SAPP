@@ -15,6 +15,7 @@ public class MessageViewModel extends AndroidViewModel {
     private final MessageRepo messageRepo;
     private LiveData<List<Message>> allMessages;
     private LiveData<List<Message>> allMessagesReceiver;
+    private LiveData<List<Message>> allMessagesBetween;
 
     public MessageViewModel(@NonNull Application application) {
         super(application);
@@ -25,6 +26,10 @@ public class MessageViewModel extends AndroidViewModel {
 
     public LiveData<List<Message>> getAllMessages() {
         return allMessages;
+    }
+
+    public LiveData<List<Message>> getAllMessagesBetween(int idSender) {
+        return allMessagesBetween = messageRepo.getAllMessageBetween(idSender);
     }
 
     public LiveData<List<Message>> getAllMessagesReceiver() {
