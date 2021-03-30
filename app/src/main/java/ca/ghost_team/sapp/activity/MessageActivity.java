@@ -2,7 +2,6 @@ package ca.ghost_team.sapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,18 +14,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.adapter.ListMessageAdapter;
 import ca.ghost_team.sapp.adapter.MessageAdapter;
 import ca.ghost_team.sapp.databinding.ActivityMessageBinding;
-import ca.ghost_team.sapp.databinding.LayoutMessageBinding;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.repository.MessageRepo;
-import ca.ghost_team.sapp.viewmodel.AnnonceVendueViewModel;
 import ca.ghost_team.sapp.viewmodel.MessageViewModel;
 
 public class MessageActivity extends AppCompatActivity {
@@ -37,6 +33,10 @@ public class MessageActivity extends AppCompatActivity {
     private EditText editMessage;
     private String TAG = MessageActivity.class.getSimpleName();
     private ActivityMessageBinding binding;
+    private int idAnnonceCurrent;
+    private int idReceiverCurrent;
+    private int idAnnonceCurrentVendeur;
+    private int idReceiverCurrentVendeur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,18 @@ public class MessageActivity extends AppCompatActivity {
         sendMessage = binding.buttonSend;
         editMessage = binding.editMessage;
 
+        Bundle bundle = getIntent().getExtras();
+
+        /* Venant de DetailAnnonce
+         * Si les informations idAnnonce et idReceiver viennent du click du button "Contacter" de DetailAnnonce */
+        idAnnonceCurrent = bundle.getInt(DetailAnnonce.ID_ANNONCE_CURRENT);
+        idReceiverCurrent = bundle.getInt(DetailAnnonce.ID_RECEIVER_CURRENT);
+
+        /* Venant de ListMessageAdapter (Fragment Message)
+        /* Si les informations idAnnonce et idReceiver viennent de ListMessageAdapter sur le click de l'Item conversation */
+        idAnnonceCurrentVendeur = bundle.getInt(ListMessageAdapter.ID_ANNONCE_CURRENT_LIST_MESSAGE);
+        idReceiverCurrentVendeur = bundle.getInt(ListMessageAdapter.ID_RECEIVER_CURRENT_LIST_MESSAGE);
+
         // Init RecyclerView
         mMessageRecycler = binding.recyclerMessage;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -59,28 +71,62 @@ public class MessageActivity extends AppCompatActivity {
         mMessageRecycler.setAdapter(mMessageAdapter);
         MessageViewModel messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
 
-        messageViewModel.getAllMessages().observe(this, messages -> {
-            mMessageAdapter.addAnnonce(messages);
-            mMessageAdapter.notifyDataSetChanged();
+        /* Venant de ListMessageAdapter (Fragment Message) */
+        if(idReceiverCurrentVendeur != 0){
+            messageViewModel.getAllMessagesBetween(idReceiverCurrentVendeur).observe(this, messages -> {
+                mMessageAdapter.addAnnonce(messages);
+                mMessageAdapter.notifyDataSetChanged();
 
-            Log.i(TAG, "RecyclerView Message correct");
-        });
+                Log.i(TAG, "RecyclerView Message correct");
+            });
+        }
+
+        /* Venant de DetailAnnonce (Button Contacter)*/
+        else{
+            messageViewModel.getAllMessages().observe(this, messages -> {
+                mMessageAdapter.addAnnonce(messages);
+                mMessageAdapter.notifyDataSetChanged();
+
+                Log.i(TAG, "RecyclerView Message correct");
+            });
+        }
 
         sendMessage.setOnClickListener(this::sendMessage);
 
     }
 
     /**
-     * Methode qui permet d'envoyer un Message
+     * Methode qui permet d'envoyer un Message par rapport à la provenance des informations
+     * @see {idReceiverCurrentVendeur != 0} alors ce sont les informations venues du ListMessageAdapter (Fragment Message)
+     * @see else les informations venues du DetailAnnonce (Button Contacter)
      * */
     private void sendMessage(View view) {
-        // Vérifier que le champ message n'est pas vide
+
         if(TextUtils.isEmpty(editMessage.getText().toString().trim())){
             Toast.makeText(this, "Entrer un Message", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Message myMessage = new Message(editMessage.getText().toString().trim(), BaseApplication.ID_USER_CURRENT, new Date());
+        Message myMessage;
+
+        // Instancier le Message à envoyer et Inserer dans la BD
+        if(idReceiverCurrentVendeur != 0){
+            myMessage = new Message(
+                    editMessage.getText().toString().trim(),
+                    BaseApplication.ID_USER_CURRENT,
+                    idReceiverCurrentVendeur,
+                    idAnnonceCurrentVendeur,
+                    new Date());
+        }
+        else{
+            myMessage = new Message(
+                    editMessage.getText().toString().trim(),
+                    BaseApplication.ID_USER_CURRENT,
+                    idReceiverCurrent,
+                    idAnnonceCurrent,
+                    new Date());
+        }
+
         new MessageRepo(getApplication()).sendMessage(myMessage);
         Log.i(TAG, "[" + myMessage.toString() + "] - ENVOYÉ !");
 

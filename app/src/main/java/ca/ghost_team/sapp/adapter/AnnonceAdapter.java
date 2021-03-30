@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
@@ -29,6 +30,7 @@ import ca.ghost_team.sapp.model.Annonce;
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
+
     Context context;
     List<Annonce> listeAnnonces;
     List<Annonce> listeAnnonceFavorite;
@@ -40,12 +42,13 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public static String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
     public static String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
     public static String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
+    public static final String ANNONCE_ID_REQUEST = "Annonce_ID_current_Detail";
 
     public AnnonceAdapter(Context context) {
         this.context = context;
         this.listeAnnonces = new ArrayList<>();
         this.listeAnnonceFavorite = new ArrayList<>();
-        this.db = Room.databaseBuilder(context, SappDatabase.class,"SappDatabase")
+        this.db = Room.databaseBuilder(context, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
 
     }
@@ -115,6 +118,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.cardView_detail_Article.setOnClickListener(v -> {
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
+            intent.putExtra(ANNONCE_ID_REQUEST, uneAnnonce.getIdAnnonce());
             intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonceImage().trim());
             intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonceTitre().trim());
             intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnoncePrix());
