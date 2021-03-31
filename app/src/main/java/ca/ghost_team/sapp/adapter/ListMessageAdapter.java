@@ -27,9 +27,7 @@ import ca.ghost_team.sapp.model.Utilisateur;
 
 
 public class ListMessageAdapter extends RecyclerView.Adapter<ListMessageAdapter.ListMessageVH>{
-
     private static final String TAG = ListMessageAdapter.class.getSimpleName();
-
     Context context;
     List<Message> listConversation;
     SappDatabase db;
@@ -84,7 +82,11 @@ public class ListMessageAdapter extends RecyclerView.Adapter<ListMessageAdapter.
         return listConversation.size();
     }
 
-
+    /**
+     * Methode qui permet de passer à la liste de conversation la nouvelle liste venant de la BD
+     * @param liste liste à passer à l'adapter
+     * @return void
+     * */
     public void addConversation(List<Message> liste){
         listConversation = liste;
         notifyDataSetChanged();

@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import com.bumptech.glide.Glide;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -77,17 +80,21 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     @Override
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
         this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
-
         Annonce uneAnnonce = listeAnnonces.get(position);
-        holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
+
+        if(!uneAnnonce.getAnnonceImage().equals("null")){
+            Glide.with(context.getApplicationContext())
+                    .load(Uri.parse(uneAnnonce.getAnnonceImage()))
+                    .into(holder.imageAnnonce);
+        }
+        else
+            holder.imageAnnonce.setImageResource(R.drawable.collection);
+
+        // holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
         holder.titre.setText(uneAnnonce.getAnnonceTitre());
         holder.prix.setText("$" + uneAnnonce.getAnnoncePrix());
         //apelle de la methode de formatage
         holder.date.setText(""+ formatDate(uneAnnonce.getAnnonceDate()));
-
-//        Glide.with(context.getApplicationContext())
-//                .load(Uri.parse(uneAnnonce.getAnnonceImage()))
-//                .into(holder.imageAnnonce);
 
         // Donner les états initials du Boutton
         if (!verifyContent(uneAnnonce))
@@ -97,6 +104,11 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         }
 
         holder.likeBtn.setOnClickListener(v -> {
+            if(uneAnnonce.getUtilisateurId() == ID_USER_CURRENT){
+                Toast.makeText(context, "Tu ne peux pas aimer ton annonce !", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             if (!verifyContent(uneAnnonce)) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
                 uneAnnonce.setAnnonceLiked(true); // setter le changement dans la classe
@@ -109,7 +121,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
                 uneAnnonce.setAnnonceLiked(false); // setter le changement
 
                 // Supprimer l'enregitrement dans la Table des Annonces Favoris
-                db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
+                 db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
             }
             notifyDataSetChanged();
         });
@@ -132,15 +144,29 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         return listeAnnonces.size();
     }
 
-    public void addAnnonce(List<Annonce> maListe) {
-        listeAnnonces = maListe;
+    /**
+     * Methode qui permet de setter une nouvelle liste à la liste de toutes les Annonces récupérée
+     * depuis a base de données
+     * @param listeAllAnnonces la nouvelle liste à passer vers l'Adapter, contenant toutes les Annonces
+     * @return void
+     * */
+    public void addAnnonce(List<Annonce> listeAllAnnonces) {
+        listeAnnonces = listeAllAnnonces;
         notifyDataSetChanged();
     }
 
+    /**
+     * Methode qui permet de Vérifier si une Annonce se trouve dans la liste des Annonces Aimées
+     * par l'utilisateur Courant del'Application
+     * @param uneAnnonce Entité Annonce à vérifier
+     *                   Si @code{uneAnnonce} est trouvée, retourne true
+     *                   Sinon false
+     * @return boolean
+     * */
     public boolean verifyContent(Annonce uneAnnonce){
         if(listeAnnonceFavorite.size() > 0) {
             for (Annonce annonce : listeAnnonceFavorite) {
-                if (annonce.getCategorieId() == uneAnnonce.getCategorieId())
+                if (annonce.getIdAnnonce() == uneAnnonce.getIdAnnonce())
                     return true;
             }
         }

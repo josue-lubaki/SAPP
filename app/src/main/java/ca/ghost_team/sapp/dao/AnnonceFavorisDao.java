@@ -25,6 +25,7 @@ public interface AnnonceFavorisDao {
             "WHERE AnnonceFavoris.utilisateurId =:idUser")
     List<Annonce> findListAnnonceFavoriteByUser(int idUser);
 
+
     @Query("SELECT COUNT(*) FROM AnnonceFavoris WHERE utilisateurId = :idUser")
     int getAnnonceFavorisCount(int idUser);
 }

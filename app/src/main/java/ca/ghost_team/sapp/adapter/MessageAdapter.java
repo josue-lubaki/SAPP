@@ -98,11 +98,20 @@ public class MessageAdapter extends RecyclerView.Adapter{
         return mMessageList.size();
     }
 
-    public void addAnnonce(List<Message> messages) {
-        mMessageList = messages;
+    /**
+     * Methode qui permet de passer à la liste de Message la nouvelle liste venant de la BD
+     * @param listMessages liste à passer à l'adapter
+     * @return void
+     * */
+    public void addAnnonce(List<Message> listMessages) {
+        mMessageList = listMessages;
         notifyDataSetChanged();
     }
 
+    /**
+     * Classe Interne qui permet de permet de connecter les champs au View Holder pour
+     * l'affichage de celui qui reçoit un message
+     * */
     static class ReceivedMessageVH extends RecyclerView.ViewHolder {
         TextView messageTextReceiver, timeTextReceiver, nameTextReceiver;
         ImageView profileImage;
@@ -114,21 +123,12 @@ public class MessageAdapter extends RecyclerView.Adapter{
             nameTextReceiver = itemView.findViewById(R.id.text_name_receiver);
             profileImage = itemView.findViewById(R.id.image_profile_receiver);
         }
-
-        void bind(Message message) {
-//            messageTextReceiver.setText(message.getMessage());
-//
-//            // Format the stored timestamp into a readable String using method.
-//            timeTextReceiver.setText(Conversion.toTimeStr(message.getCreationDate()));
-//
-//            Utilisateur user = db.utilisateurDao().getInfoUtilisateur(message.getIdSender());
-//
-//            if(user != null)
-//                nameTextReceiver.setText(user.getUtilisateurNom());
-
-        }
     }
 
+    /**
+     * Classe Interne qui permet de permet de connecter les champs au View Holder pour
+     * l'affichage de celui qui envoie un message
+     * */
     static class SentMessageVH extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
@@ -143,7 +143,6 @@ public class MessageAdapter extends RecyclerView.Adapter{
 
             // Format the stored timestamp into a readable String using method.
             timeText.setText(Conversion.toTimeStr(message.getCreationDate()));
-
         }
     }
 

@@ -18,7 +18,6 @@ public class MessageRepo {
     private final MessageDao dao;
     private LiveData<List<Message>> allMessages;
     private LiveData<List<Message>> allMessagesReceiver;
-    private LiveData<List<Message>> allMessageBetween;
 
     public MessageRepo(Application application) {
         SappDatabase database = SappDatabase.getInstance(application);
@@ -31,8 +30,8 @@ public class MessageRepo {
         return allMessages;
     }
 
-    public LiveData<List<Message>> getAllMessageBetween(int idSender) {
-        return allMessageBetween = dao.allMessagesBetween(BaseApplication.ID_USER_CURRENT, idSender);
+    public LiveData<List<Message>> getAllMessageBetween(int idSender, int idAnnonceDiscussion) {
+        return dao.allMessagesBetween(BaseApplication.ID_USER_CURRENT, idSender, idAnnonceDiscussion);
     }
 
     public LiveData<List<Message>> getAllMessagesReceiver() {

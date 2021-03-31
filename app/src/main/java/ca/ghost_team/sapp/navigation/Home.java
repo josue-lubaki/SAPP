@@ -25,6 +25,7 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.databinding.LayoutHomeBinding;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.viewmodel.AnnonceFavorisViewModel;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 
 public class Home extends Fragment {
@@ -33,6 +34,7 @@ public class Home extends Fragment {
     private final String LOG_TAG = "Fragment_Home";
     private int selectedFilter = 0;
     private AnnonceViewModel annonceViewModel;
+    private AnnonceFavorisViewModel annonceFavoriteViewModel;
     private RecyclerView recyclerViewAnnonce;
 
     private Button filterAll;
@@ -87,23 +89,27 @@ public class Home extends Fragment {
         // Définition de l'Adapter et ViewModel
         adapter = new AnnonceAdapter(getActivity());
         annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
+        annonceFavoriteViewModel = new ViewModelProvider(this).get(AnnonceFavorisViewModel.class);
 
+        // Lire les contenues de la LiveData de toutes les Annonces depuis la base de données
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
-            adapter.addAnnonce(annonces);
-            Log.i(LOG_TAG, "Finish put Annonces in RecyclerView");
+                adapter.addAnnonce(annonces);
+                adapter.notifyDataSetChanged();
+                Log.i(LOG_TAG, "Finish put Annonces in RecyclerView");
         });
+
+        // Setter toutes les modifications de l'Adapter dans le RecyclerView pour l'Affichage
         recyclerViewAnnonce.setAdapter(adapter);
     }
 
     /**
      * Methode FilterList
      *
-     * Methode générique qui permet de filter les Annonces selon le ID Categorie passée ne paramètre
+     * Methode assez générique qui permet de filter les Annonces selon le ID Categorie passée ne paramètre
      * @param categorie : La categorie ciblée
      * @return void
      * */
     public void filterList(int categorie) {
-
         List<Annonce> annonceFilteredList = new ArrayList<>();
 
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {

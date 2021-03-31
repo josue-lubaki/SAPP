@@ -49,4 +49,5 @@ public class AnnonceViewModel extends AndroidViewModel {
     public LiveData<List<Annonce>> getAllAnnonces() {
         return AllAnnonces;
     }
+
 }

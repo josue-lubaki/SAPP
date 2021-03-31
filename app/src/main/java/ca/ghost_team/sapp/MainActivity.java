@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
@@ -16,10 +17,14 @@ import ca.ghost_team.sapp.navigation.Favoris;
 import ca.ghost_team.sapp.navigation.Home;
 import ca.ghost_team.sapp.navigation.Message;
 import ca.ghost_team.sapp.navigation.Profil;
+import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
+import ca.ghost_team.sapp.viewmodel.MessageViewModel;
 
 public class MainActivity extends AppCompatActivity{
 
     private final String LOG_TAG = "mainActivity";
+    private AnnonceViewModel annonceViewModel;
+    private MessageViewModel messageViewModel;
     private ActivityMainBinding binding;
 
     @Override
@@ -64,18 +69,23 @@ public class MainActivity extends AppCompatActivity{
             showFragment(fragment);
         });
 
-        navBar.setCount(1, String.valueOf(Annonce.listeTotalAnnonce.size()));
+        // init viewModel and observe count annonces
+        annonceViewModel = new ViewModelProvider(this).get(AnnonceViewModel.class);
+        annonceViewModel.getAllAnnonces().observe(this, annonces -> {
+            navBar.setCount(1, String.valueOf(annonces.size()));
+        });
+
+        messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
+        messageViewModel.getAllMessagesReceiver().observe(this, messagesRecus -> {
+            navBar.setCount(4, String.valueOf(messagesRecus.size()));
+        });
+
         navBar.show(1,true);
 
-        // pour éviter les erreurs de Compilation
+        // pour éviter les erreurs
         navBar.setOnClickMenuListener(item -> {});
         navBar.setOnReselectListener(item -> {});
-
     }
-
-    // TODO : Créer les Frames de connexion
-
-    // ICI
 
 
     /*****************  Affichage des Fragments  *****************/
@@ -95,8 +105,4 @@ public class MainActivity extends AppCompatActivity{
             Log.d(LOG_TAG,"erreur au moment d'instancier fragment");
         }
     }
-
-
-
-
 }

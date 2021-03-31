@@ -72,6 +72,7 @@ public class Login extends AppCompatActivity {
                 username.requestFocus();
             }
             else {
+                ID_USER_CURRENT = 0;
                 // Lancer la requête pour verifier si le Username et Password donné par le User est correct
                 ID_USER_CURRENT = connect_user(getApplication(), username.getText().toString().trim(), password.getText().toString().trim());
 
