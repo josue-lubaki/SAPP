@@ -64,19 +64,23 @@ public class Register extends AppCompatActivity {
 
         btn_register.setOnClickListener(v -> {
             // Vérifier si le champs ne sont pas vide
+
+
             if (TextUtils.isEmpty(register_username.getText()) ||
                     TextUtils.isEmpty(register_password.getText().toString()) ||
-                    TextUtils.isEmpty(register_email.getText().toString()) ||
-                    TextUtils.isEmpty(register_name.getText().toString())) {
+                    !isMailValid(register_email.getText().toString().trim()) ||
+                    TextUtils.isEmpty(register_name.getText().toString()) ) {
 
-                if (TextUtils.isEmpty(register_email.getText()))
+                if (TextUtils.isEmpty(register_name.getText()))
                     register_name.setError("Name required");
                 if (TextUtils.isEmpty(register_username.getText()))
                     register_username.setError("Username required");
                 if (TextUtils.isEmpty(register_password.getText()))
                     register_password.setError("Password required");
                 if (TextUtils.isEmpty(register_email.getText()))
-                    register_email.setError("Email required");
+                    register_email.setError("Email require");
+                 if(!register_email.getText().toString().trim().contains("@"))
+                     register_email.setError("Email require '@'");
 
 
                 Snackbar.make(v, "Please fill texts in the field", 5000)
@@ -114,5 +118,12 @@ public class Register extends AppCompatActivity {
                 Log.i(TAG, "Utilisateur enregistré");
             }
         });
+    }
+    public boolean isMailValid(String mail){
+
+        if (mail==null || !mail.contains("@") ){
+            return false;
+        }
+        return true;
     }
 }
