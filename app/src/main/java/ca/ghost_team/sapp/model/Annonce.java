@@ -44,27 +44,18 @@ public class Annonce {
     @ColumnInfo(name = "date_annonce")
     private Date annonceDate;
 
-    //cette variable permet de savoir si l'annonce est mise en favoris ou non
-    @ColumnInfo(name = "liked_annonce")
-    private boolean annonceLiked;
-
-    // Cette liste nous permettra de connaître le nombre total des Annonces
-    public static List<Annonce> listeTotalAnnonce =  new ArrayList<>();
-
     // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
     private int utilisateurId;
     private int categorieId;
 
 
-    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, Date annonceDate, boolean annonceLiked, int utilisateurId, int categorieId) {
+    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, Date annonceDate, int utilisateurId, int categorieId) {
         this.annonceTitre = annonceTitre;
         this.annonceDescription = annonceDescription;
         this.annoncePrix = annoncePrix;
         this.annonceDate = annonceDate;
-        this.annonceLiked = annonceLiked;
         this.annonceImage = annonceImage;
         this.utilisateurId = utilisateurId;
-        listeTotalAnnonce.add(this);
         this.categorieId = categorieId;
     }
 
@@ -133,13 +124,6 @@ public class Annonce {
         this.annonceDate = annonce_date;
     }
 
-    public boolean isAnnonceLiked() {
-        return annonceLiked;
-    }
-
-    public void setAnnonceLiked(boolean annonceLiked) {
-        this.annonceLiked = annonceLiked;
-    }
 
     @Override
     public String toString() {
@@ -150,7 +134,6 @@ public class Annonce {
                 ", annonce_description='" + annonceDescription + '\'' +
                 ", annonce_prix=" + annoncePrix +
                 ", annonce_date=" + annonceDate +
-                ", annonce_liked=" + annonceLiked +
                 ", utilisateurId=" + utilisateurId +
                 ", categorieId=" + categorieId +
                 '}';

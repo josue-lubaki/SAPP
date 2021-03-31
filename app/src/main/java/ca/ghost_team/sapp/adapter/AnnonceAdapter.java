@@ -111,14 +111,12 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
 
             if (!verifyContent(uneAnnonce)) {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
-                uneAnnonce.setAnnonceLiked(true); // setter le changement dans la classe
 
                 // Ajouter (ou insérer l'enregistrement dans la Table des Annonces Favories)
                 db.annonceDao().insertLiked(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
 
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
-                uneAnnonce.setAnnonceLiked(false); // setter le changement
 
                 // Supprimer l'enregitrement dans la Table des Annonces Favoris
                  db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());

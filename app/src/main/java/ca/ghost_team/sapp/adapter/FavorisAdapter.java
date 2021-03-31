@@ -60,14 +60,17 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     @Override
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
-//        Glide.with(context)
-//                .load(Uri.parse(annonce.getAnnonceImage()))
-//                .into(holder.imageAnnonce);
-        holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        if(!annonce.getAnnonceImage().equals("null")){
+            Glide.with(context.getApplicationContext())
+                    .load(Uri.parse(annonce.getAnnonceImage()))
+                    .into(holder.imageAnnonce);
+        }
+        else
+            holder.imageAnnonce.setImageResource(R.drawable.collection);
+
         holder.titre.setText(annonce.getAnnonceTitre());
         holder.description.setText(annonce.getAnnonceDescription());
         holder.prix.setText("$ " + annonce.getAnnoncePrix());
-
 
         // set OnClickListener
         holder.cardViewFavoris.setOnClickListener(v -> {
@@ -95,7 +98,6 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         /* On définit les Champs du model */
         TextView titre;
         TextView prix;
-        ImageView likeBtn; // TODO : Ajouter le Like puisqu'il sera relier au client, Si le client DisLike, on supprime l'Annonce du favoris
         ImageView imageAnnonce;
         TextView description;
         CardView cardViewFavoris;
