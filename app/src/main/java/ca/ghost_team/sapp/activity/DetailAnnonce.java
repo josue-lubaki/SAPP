@@ -67,17 +67,25 @@ public class DetailAnnonce extends AppCompatActivity {
         System.out.println("Valeur de Annonce Prix : " + annonce_prix);
 
         // envoyer une requête pour aller chercher le Nom du vendeur
-        Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description);
-        System.out.println("Info vendeur : " + vendeur.toString());
-        // Set Information to Fields
-        detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
-        detail_image_annonce.setImageURI(Uri.parse(annonce_image));
-        detail_tv_titre.setText(annonce_titre);
-        detail_tv_prix.setText("$" + annonce_prix);
-        detail_tv_description.setText(annonce_description);
+        Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description).get(0);
+
+        if(vendeur != null){
+            System.out.println("Info vendeur : " + vendeur.toString());
+            // Set Information to Fields
+            detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
+            detail_image_annonce.setImageURI(Uri.parse(annonce_image));
+            detail_tv_titre.setText(annonce_titre);
+            detail_tv_prix.setText("$" + annonce_prix);
+            detail_tv_description.setText(annonce_description);
+        }
 
         Log.i(TAG, "je te montre la valeur de ID_Annonce : " + id_annonce);
         detail_btn_contacter.setOnClickListener(v -> {
+            if(vendeur == null){
+                Toast.makeText(this, "Un problème s'est produit", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             // Un vendeur ne peut pas appuyer sur le button "Contacter" pour sa propre annonce
             if(BaseApplication.ID_USER_CURRENT == vendeur.getIdUtilisateur()){
                 Toast.makeText(this, "Vous êtes déjà l'auteur de cette Annonce !", Toast.LENGTH_LONG).show();
