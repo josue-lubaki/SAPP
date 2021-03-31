@@ -30,7 +30,6 @@ public class Favoris extends Fragment {
     private LayoutFavorisBinding binding;
     private RecyclerView recyclerView;
     private FavorisAdapter adapter;
-    private SappDatabase db;
 
     @Nullable
     @Override
@@ -42,8 +41,6 @@ public class Favoris extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.db = Room.databaseBuilder(context, SappDatabase.class,"SappDatabase")
-                .allowMainThreadQueries().build();
         ((MainActivity)context).setTitle(R.string.favoris);
     }
 
@@ -75,18 +72,14 @@ public class Favoris extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-
         super.onContextItemSelected(item);
 
+        // Utilisation de switch / pour une future ajout du menu contextuel
         switch(item.getItemId()){
-
             case R.id.favorite_delete :
-
                 adapter.removeFromFavorites(item.getGroupId());
                 Toast.makeText(getContext()," Annonce supprimée des favoris", Toast.LENGTH_SHORT).show();
-
                 return true;
-
             default:
                 Toast.makeText(getContext(),"default", Toast.LENGTH_SHORT).show();
 

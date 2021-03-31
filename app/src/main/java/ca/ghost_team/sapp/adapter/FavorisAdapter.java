@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -44,7 +45,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     public FavorisAdapter(Context context) {
         this.context = context;
         this.listeAnnoncesFavoris = new ArrayList<>();
-        this.db = Room.databaseBuilder(context, SappDatabase.class,"SappDatabase")
+        this.db = Room.databaseBuilder(context, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
     }
 

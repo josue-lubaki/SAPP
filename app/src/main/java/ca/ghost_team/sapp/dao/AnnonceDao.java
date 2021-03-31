@@ -26,13 +26,8 @@ public interface AnnonceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAnnonce(Annonce annonce);
 
-    @Query("SELECT annonceTable.* FROM annonceTable WHERE liked_annonce = 0 UNION " +
-            "SELECT annonceTable.* " +
-            "FROM annonceTable " +
-            "INNER JOIN AnnonceFavoris " +
-            "ON annonceTable.idAnnonce = AnnonceFavoris.annonceId " +
-            "WHERE AnnonceFavoris.utilisateurId =:idUser")
-    LiveData<List<Annonce>> allAnnonces(int idUser);
+    @Query("SELECT * FROM annonceTable")
+    LiveData<List<Annonce>> allAnnonces();
 
     // Requête qui permet de récuperer toutes les annonces par rapport à un Utilisateur
     @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")

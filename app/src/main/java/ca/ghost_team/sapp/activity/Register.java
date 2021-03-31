@@ -16,12 +16,10 @@ import androidx.room.Room;
 import com.google.android.material.snackbar.Snackbar;
 
 import ca.ghost_team.sapp.BaseApplication;
-import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
-import ca.ghost_team.sapp.repository.UtilisateurRepo;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
@@ -96,32 +94,24 @@ public class Register extends AppCompatActivity {
                         register_email.getText().toString().trim()
                 );
 
+                // Auto Login
+                ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUsername(), utilisateur.getPassword());
+
+                if (ID_USER_CURRENT != 0) {
+                    // L'Utilisateur existe déjà
+                    Toast.makeText(this, "Désolé, L'Utilisateur existe déjà", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 // on insère l'Utilisateur sur le Thread Main
                 db.utilisateurDao().insertUtilisateur(utilisateur);
                 Toast.makeText(this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
 
-                // Attendre 0.5s avant d'aller connecter le nouveau Utilisateur
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                // Auto Login
-                ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUsername(), utilisateur.getPassword());
-
-                // User trouvé
-                if (ID_USER_CURRENT != 0) {
-                    //Lancer l'activity Main
-                    Intent intent = new Intent(Register.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    Log.i(TAG, "Utilisateur trouvé");
-                } else {
-                    Snackbar.make(v, "Sorry ! Not found your new account", 5000)
-                            .setAction("Okay", d -> {
-                            }).show();
-                }
+                //Lancer l'activity Main
+                Intent intent = new Intent(Register.this, Login.class);
+                startActivity(intent);
+                finish();
+                Log.i(TAG, "Utilisateur enregistré");
             }
         });
     }

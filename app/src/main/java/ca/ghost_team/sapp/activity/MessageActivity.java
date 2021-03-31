@@ -32,6 +32,7 @@ public class MessageActivity extends AppCompatActivity {
     private ImageButton sendMessage;
     private EditText editMessage;
     private String TAG = MessageActivity.class.getSimpleName();
+    private MessageViewModel messageViewModel;
     private ActivityMessageBinding binding;
     private int idAnnonceCurrent;
     private int idReceiverCurrent;
@@ -69,30 +70,35 @@ public class MessageActivity extends AppCompatActivity {
         // Init Adapter
         mMessageAdapter = new MessageAdapter(this);
         mMessageRecycler.setAdapter(mMessageAdapter);
-        MessageViewModel messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
+        messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
 
         /* Venant de ListMessageAdapter (Fragment Message) */
-        if(idReceiverCurrentVendeur != 0){
-            messageViewModel.getAllMessagesBetween(idReceiverCurrentVendeur).observe(this, messages -> {
-                mMessageAdapter.addAnnonce(messages);
-                mMessageAdapter.notifyDataSetChanged();
-
-                Log.i(TAG, "RecyclerView Message correct");
-            });
-        }
+        if(idReceiverCurrentVendeur != 0)
+            sendMessageBetween(idReceiverCurrentVendeur, idAnnonceCurrentVendeur);
 
         /* Venant de DetailAnnonce (Button Contacter)*/
-        else{
-            messageViewModel.getAllMessages().observe(this, messages -> {
-                mMessageAdapter.addAnnonce(messages);
-                mMessageAdapter.notifyDataSetChanged();
+        else
+            sendMessageBetween(idReceiverCurrent, idAnnonceCurrent);
 
-                Log.i(TAG, "RecyclerView Message correct");
-            });
-        }
-
+        // Envoi du Message au clic du Bouton "Contacter"
         sendMessage.setOnClickListener(this::sendMessage);
 
+    }
+
+    /**
+     * La methode qui permet de donner à l'Adapter les messages entre deux Utilisateurs par rapport à une Annonce donnée
+     *
+     * @param idReceiver est l'ID du correspondant avec qui, vous voulez communiquer
+     * @param idAnnonce est l'ID de l'Annonce dont la discussion fait réference
+     * @return void
+     * */
+    private void sendMessageBetween(int idReceiver, int idAnnonce){
+        messageViewModel.getAllMessagesBetween(idReceiver, idAnnonce).observe(this, messages -> {
+            mMessageAdapter.addAnnonce(messages);
+            mMessageAdapter.notifyDataSetChanged();
+
+            Log.i(TAG, "Tous les messages reçus : \n" + messages);
+        });
     }
 
     /**
@@ -132,7 +138,6 @@ public class MessageActivity extends AppCompatActivity {
 
         // Réinitialiser le champ d'édition après l'envoi du Message
         editMessage.setText("");
-
     }
 
 }

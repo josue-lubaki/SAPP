@@ -15,11 +15,11 @@ public interface MessageDao {
     @Query("SELECT * FROM MessageTable WHERE idReceiver = :idUser OR idSender = :idUser")
     LiveData<List<Message>> allMessages(int idUser);
 
-    @Query("SELECT * FROM MessageTable WHERE idReceiver = :idUser GROUP BY idSender")
+    @Query("SELECT * FROM MessageTable WHERE idReceiver = :idUser GROUP BY annonceId")
     LiveData<List<Message>> allMessagesReceiver(int idUser);
 
-    @Query("SELECT * FROM MessageTable WHERE (idReceiver = :idUser AND idSender = :idSender) OR (idReceiver = :idSender AND idSender =:idUser)")
-    LiveData<List<Message>> allMessagesBetween(int idUser, int idSender);
+    @Query("SELECT * FROM MessageTable WHERE ((idReceiver = :idUser AND idSender = :idSender) OR (idReceiver = :idSender AND idSender =:idUser)) AND annonceId = :idAnnonce")
+    LiveData<List<Message>> allMessagesBetween(int idUser, int idSender, int idAnnonce);
 
     @Insert
     void sendMessage(Message message);

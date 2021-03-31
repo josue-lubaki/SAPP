@@ -21,7 +21,7 @@ public class AnnonceRepo {
     public AnnonceRepo(Application app) {
         SappDatabase database = SappDatabase.getInstance(app);
         dao = database.annonceDao();
-        allAnnonces = dao.allAnnonces(ID_USER_CURRENT);
+        allAnnonces = dao.allAnnonces();
         allAnnonceVendues = dao.findAnnonceByUser(ID_USER_CURRENT);
     }
 
