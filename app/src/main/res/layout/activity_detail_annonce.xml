@@ -10,6 +10,40 @@
         android:orientation="vertical"
         tools:context=".activity.DetailAnnonce">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_group_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_detail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/Widget.AppCompat.Toolbar"
+                android:background="@color/black"
+                app:popupTheme="@style/Theme.AppCompat.Light">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textSize="22sp"
+                        android:text="@string/detail"/>
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <ImageView
             android:id="@+id/vendeur_image_article"
             android:layout_width="match_parent"
@@ -28,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/vendeur_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/bg_white_rounded_medium"
@@ -42,9 +76,8 @@
                 android:layout_marginStart="9dp"
                 android:layout_marginTop="30dp"
                 android:layout_toEndOf="@id/vendeur_image"
-                android:text="Diary Diallo"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/vendeur_contacter"

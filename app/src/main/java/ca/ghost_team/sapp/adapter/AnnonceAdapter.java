@@ -82,11 +82,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
         Annonce uneAnnonce = listeAnnonces.get(position);
 
-        if(!uneAnnonce.getAnnonceImage().equals("null")){
-            Glide.with(context.getApplicationContext())
-                    .load(Uri.parse(uneAnnonce.getAnnonceImage()))
-                    .into(holder.imageAnnonce);
-        }
+        if(!uneAnnonce.getAnnonceImage().equals("null"))
+            holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
         else
             holder.imageAnnonce.setImageResource(R.drawable.collection);
 

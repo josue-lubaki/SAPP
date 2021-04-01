@@ -1,8 +1,11 @@
 package ca.ghost_team.sapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -18,6 +21,8 @@ import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.CategorieAnnonce;
 import ca.ghost_team.sapp.model.Message;
 
+import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+import static ca.ghost_team.sapp.activity.Login.connect_user;
 import static java.lang.Thread.sleep;
 
 public class Splash extends AppCompatActivity {
@@ -25,6 +30,8 @@ public class Splash extends AppCompatActivity {
     private CircularProgressIndicator myProgress;
     int pStatus = 0;
     private final Handler handler = new Handler();
+    private SharedPreferences pref;
+    private String TAG = Splash.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,8 @@ public class Splash extends AppCompatActivity {
 
         // Desactiver le ToolBar
         getSupportActionBar().hide();
+
+        pref = getApplicationContext().getSharedPreferences(Login.NAME_PREFS, MODE_PRIVATE);
 
         myProgress = findViewById(R.id.myProgressBar);
 
@@ -43,7 +52,7 @@ public class Splash extends AppCompatActivity {
 
                 try {
                     // Just to display the progress slowly
-                    sleep(40);
+                    sleep(15);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -55,26 +64,7 @@ public class Splash extends AppCompatActivity {
                 SappDatabase db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                         .allowMainThreadQueries().build();
                 db.annonceDao().start();
-//
-//
-//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-//                        "Josue Lubaki",
-//                        "Lubaki",
-//                        "Heroes",
-//                        "jojo@gmail.com"));
-//
-//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-//                        "Ismael",
-//                        "Coulibaly",
-//                        "hybs",
-//                        "ismael@gmail.com"));
-//
-//                db.utilisateurDao().insertUtilisateur(new Utilisateur(
-//                        "Jonathan",
-//                        "Kanyinda",
-//                        "PC JO",
-//                        "jonathan@gmail.com"));
-//
+
                 CategorieAnnonce[] categories = {
                         new CategorieAnnonce(1, "Pantalon"),
                         new CategorieAnnonce(2, "T-Shirt"),
@@ -84,21 +74,33 @@ public class Splash extends AppCompatActivity {
                         new CategorieAnnonce(6, "Autres")
                 };
 
-//                Message[] messages = {
-//                        new Message("Bonjour", BaseApplication.ID_USER_CURRENT, new Date()),
-//                        new Message("Salut", 2, new Date()),
-//                        new Message("Bonsoir", BaseApplication.ID_USER_CURRENT, new Date())
-//                };
-//
-//                db.messageDao().sendMessage(messages);
-
-
                 db.categorieAnnonceDao().insertCategorie(categories);
 
+                // Recupere les informations sauvergardées avec les Preferences
+                String username = pref.getString("username","");
+                String password = pref.getString("password","");
 
-                Intent intent = new Intent(Splash.this, Login.class);
-                startActivity(intent);
-                finish();
+                if(!TextUtils.isEmpty(username.trim()) && !TextUtils.isEmpty(password.trim())){
+
+                    ID_USER_CURRENT = 0;
+                    // Lancer la requête pour verifier si le Username et Password donné par le User est correct
+                    ID_USER_CURRENT = connect_user(getApplication(), username.trim(), password.trim());
+
+                    // User trouvé
+                    if (ID_USER_CURRENT != 0) {
+
+                        //Lancer l'activity Main
+                        Intent intent = new Intent(Splash.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                else{
+                    Intent intent = new Intent(Splash.this, Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         }).start();
     }

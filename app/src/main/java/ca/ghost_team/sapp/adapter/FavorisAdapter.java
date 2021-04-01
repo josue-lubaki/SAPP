@@ -60,11 +60,9 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     @Override
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
-        if(!annonce.getAnnonceImage().equals("null")){
-            Glide.with(context.getApplicationContext())
-                    .load(Uri.parse(annonce.getAnnonceImage()))
-                    .into(holder.imageAnnonce);
-        }
+
+        if(!annonce.getAnnonceImage().equals("null"))
+            holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
         else
             holder.imageAnnonce.setImageResource(R.drawable.collection);
 
