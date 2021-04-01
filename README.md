@@ -5,6 +5,4 @@
 * VersionSDK : 9.0 (lollipop)
 * Architecture MVVM
 
-# #To-do's
-* --> searchbox interface
-* --> filtrer
+# Livrable 2 sur la Branche "Livrable_2"
