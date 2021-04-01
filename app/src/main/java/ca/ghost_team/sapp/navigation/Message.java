@@ -49,7 +49,6 @@ public class Message extends Fragment {
         // Associer le champ
         recyclerViewListMessage = binding.recyclerViewListMessage;
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewListMessage.setLayoutManager(linearLayoutManager);
 
@@ -61,9 +60,7 @@ public class Message extends Fragment {
         messageViewModel.getAllMessagesReceiver().observe(getViewLifecycleOwner(), conversation -> {
             mMessageAdapter.addConversation(conversation);
             mMessageAdapter.notifyDataSetChanged();
-
             Log.i(TAG, "RecyclerView Message correct");
         });
-
     }
 }

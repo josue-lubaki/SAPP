@@ -14,19 +14,29 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <Button
+            <RelativeLayout
                 android:id="@+id/filterAll"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.2"
-                android:text="ALL"
-                android:textColor="@color/white"
-                android:textSize="8sp"
                 android:layout_marginHorizontal="5dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_white_rounded"
-                android:backgroundTint="@color/black"
-                />
+                android:background="@drawable/bg_white_rounded_dark">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/filterAllText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/all"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
 
             <ImageButton
                 android:id="@+id/filterPant"

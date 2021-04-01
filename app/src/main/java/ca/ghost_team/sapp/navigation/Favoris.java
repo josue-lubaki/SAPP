@@ -63,13 +63,14 @@ public class Favoris extends Fragment {
         annonceFavorisViewModel.getAllAnnonceFavoriteByUser().observe(getViewLifecycleOwner(), annonces -> {
             adapter.addAnnonceToFavoris(annonces);
             adapter.notifyDataSetChanged();
-
             Log.i(TAG, "RecyclerView correct");
         });
 
     }
 
-
+    /**
+     * Methode qui permet de definir le Menu Contextuel pour la supprimer d'une annonce de la table des annonces Aimées
+     * */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         super.onContextItemSelected(item);
@@ -84,7 +85,6 @@ public class Favoris extends Fragment {
                 Toast.makeText(getContext(),"default", Toast.LENGTH_SHORT).show();
 
                 return super.onContextItemSelected(item);
-
         }
     }
 
