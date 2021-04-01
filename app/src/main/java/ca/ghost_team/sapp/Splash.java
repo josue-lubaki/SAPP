@@ -52,7 +52,7 @@ public class Splash extends AppCompatActivity {
 
                 try {
                     // Just to display the progress slowly
-                    sleep(15);
+                    sleep(25);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

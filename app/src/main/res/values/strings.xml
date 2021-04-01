@@ -37,6 +37,7 @@
     <string name="copyright">Copyright © 2020-2021 / ghost-team.ca \nAll rights reserved </string>
     <string name="mesannonce">Mes Annonces</string>
     <string name="detail">Detail Annonce</string>
+    <string name="all">ALL</string>
 
 
 </resources>
