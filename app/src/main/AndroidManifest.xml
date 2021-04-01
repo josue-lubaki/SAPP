@@ -23,19 +23,27 @@
         <activity
             android:name=".activity.MessageActivity"
             android:theme="@style/generalnotitle"/>
+
         <activity
             android:name=".activity.Register"
             android:theme="@style/generalnotitle" />
+
         <activity
             android:name=".activity.Login"
-            android:theme="@style/generalnotitle" />
+            android:theme="@style/generalnotitle"/>
+
         <activity
             android:name=".activity.AnnonceVendue"
             android:theme="@style/generalnotitle" />
-        <activity android:name=".activity.DetailAnnonce" />
+
+        <activity
+            android:name=".activity.DetailAnnonce"
+            android:theme="@style/generalnotitle"/>
+
         <activity
             android:name=".MainActivity"
-            android:theme="@style/generalnotitle" />
+            android:theme="@style/generalnotitle"/>
+
         <activity
             android:name=".Splash"
             android:theme="@style/generalnotitle">

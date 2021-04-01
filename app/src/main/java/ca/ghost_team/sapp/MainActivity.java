@@ -87,8 +87,11 @@ public class MainActivity extends AppCompatActivity{
         navBar.setOnReselectListener(item -> {});
     }
 
-
-    /*****************  Affichage des Fragments  *****************/
+    /**
+     * Methode qui permet de remplacer des Fragments sur le container principal de l'Activité
+     * @param fragment le fragment dont il faut afficher
+     *
+     * @return void*/
     public void showFragment(Class<? extends Fragment> fragment) {
         try {
             Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragment.getName());
@@ -98,7 +101,8 @@ public class MainActivity extends AppCompatActivity{
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container, currentFragment, fragment.getName()).commit();
+                    .replace(R.id.container, currentFragment, fragment.getName())
+                    .commit();
 
         } catch(InstantiationException | IllegalAccessException e){
             e.printStackTrace();

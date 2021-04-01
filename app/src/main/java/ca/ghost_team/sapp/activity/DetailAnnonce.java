@@ -38,11 +38,13 @@ public class DetailAnnonce extends AppCompatActivity {
     private SappDatabase db;
     private String TAG = DetailAnnonce.class.getSimpleName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_annonce);
+
+        // Desactiver le ToolBar
+        getSupportActionBar().hide();
 
         // Assigner les Variables
         detail_image_annonce = binding.vendeurImageArticle;
@@ -63,8 +65,6 @@ public class DetailAnnonce extends AppCompatActivity {
         db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
-
-        System.out.println("Valeur de Annonce Prix : " + annonce_prix);
 
         // envoyer une requête pour aller chercher le Nom du vendeur
         Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description).get(0);

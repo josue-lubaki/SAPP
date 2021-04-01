@@ -2,6 +2,7 @@ package ca.ghost_team.sapp.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import java.util.Objects;
+
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
@@ -25,6 +28,7 @@ import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutProfilBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
 
+import static android.content.Context.MODE_PRIVATE;
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class Profil extends Fragment {
@@ -36,6 +40,7 @@ public class Profil extends Fragment {
     private RelativeLayout logOutContainer;
     private RelativeLayout displayAnnonceVendueContainer;
     private MainActivity mainActivity;
+    private SharedPreferences prefs;
 
     @Nullable
     @Override
@@ -58,6 +63,7 @@ public class Profil extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        prefs = getContext().getSharedPreferences(Login.NAME_PREFS, MODE_PRIVATE);
 
         // Binding Fields
         infoNameUser = binding.infoNameUser;
@@ -68,10 +74,17 @@ public class Profil extends Fragment {
 
         Utilisateur currentUser = db.utilisateurDao().getInfoUtilisateur(ID_USER_CURRENT);
 
-        // Setter les Infos
-        infoNameUser.setText(currentUser.getUtilisateurNom());
-        infoUsername.setText(currentUser.getUsername());
-        infoEmailUser.setText(currentUser.getEmail());
+        if(ID_USER_CURRENT == 0){
+            Intent intent = new Intent(getContext(), Login.class);
+            startActivity(intent);
+        }
+
+        if(currentUser != null){
+            // Setter les Infos
+            infoNameUser.setText(currentUser.getUtilisateurNom());
+            infoUsername.setText(currentUser.getUsername());
+            infoEmailUser.setText(currentUser.getEmail());
+        }
 
         //Log Out
         logOutContainer.setOnClickListener(this::logOut);
@@ -88,15 +101,14 @@ public class Profil extends Fragment {
 
     private void logOut(View view) {
         ID_USER_CURRENT = 0;
-        Intent intent = new Intent(getContext(), Login.class);
 
+        // Effacer les informations de la Preferences
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(getContext(), Login.class);
         startActivity(intent);
         Toast.makeText(getContext(),infoUsername.getText().toString() + " logged out...", Toast.LENGTH_SHORT).show();
-
-        //on veut eviter que le back button nous ramene dans l'application
-        mainActivity.finish();
-
     }
-
-
 }
