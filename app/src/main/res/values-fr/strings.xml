@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SAPP</string>
+    <string name="home">Accueil</string>
+    <string name="favoris">Favoris</string>
+    <string name="addPost">Ajout Annonce</string>
+    <string name="message">Message</string>
+    <string name="profil">Profil</string>
+    <string name="date">date</string>
+    <string name="titreAnnonce">Titre de l\'Annonce</string>
+    <string name="prixText">$ Prix</string>
+    <string name="welcome">--- Bienvenue ---</string>
+    <string name="splash_screen">Splash Screen</string>
+    <string name="remplissage">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book.strings.xml
+    </string>
+    <string name="_40">$40</string>
+    <string name="username">Nom d\'Utilisateur</string>
+    <string name="password">Mot de Passe</string>
+    <string name="log_in">Connecter</string>
+    <string name="dontaccount">Vous n\'avez pas de compte ?</string>
+    <string name="sign">S\'enregistrer</string>
+    <string name="email">your_email@domain.com</string>
+    <string name="register">S\'enregistrer</string>
+    <string name="IhaveAccount">J\'ai déjà un compte</string>
+    <string name="sign_in">Connecter</string>
+    <string name="names">Nom</string>
+    <string name="description">Description</string>
+    <string name="takePicture">Prendre une Photo</string>
+    <string name="codePostal">Code Postal</string>
+    <string name="publier">Publier</string>
+    <string name="MesInformations">Mes Informations</string>
+    <string name="emails">E-mail</string>
+    <string name="myAnnonce">Mes Annonces</string>
+    <string name="quit">Déconnexion</string>
+    <string name="copyright">Copyright © 2020-2021 / ghost-team.ca \nAll rights reserved </string>
+    <string name="mesannonce">Mes Annonces</string>
+    <string name="detail">Détails Annonce</string>
+    <string name="all">Tout</string>
+    <string name="CategorieSelection">Choisir une Catégorie</string>
+    <string name="pants">Pantalon</string>
+    <string name="Tshirt">T-Shirt</string>
+    <string name="Hoodie">Chandail</string>
+    <string name="Short">Short</string>
+    <string name="Cap">Casquette</string>
+    <string name="Other">Autres</string>
+    <string name="dontCamera">Désolé, vous n\'avez pas de caméra</string>
+    <string name="dontPermission">Je n\'ai pas la permission</string>
+    <string name="offerPost">Annonce Publiée</string>
+    <string name="offerDelete">Annnonce Supprimée des Favoris</string>
+
+
+</resources>

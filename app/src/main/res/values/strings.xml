@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">SAPP</string>
-    <string name="home">Accueil</string>
-    <string name="favoris">Favoris</string>
-    <string name="addPost">Publier</string>
+    <string name="home">Home</string>
+    <string name="favoris">Favorite</string>
+    <string name="addPost">Post</string>
     <string name="message">Message</string>
-    <string name="profil">Profil</string>
-    <string name="date">5 days ago</string>
-    <string name="titreAnnonce">Titre de l\'Annonce</string>
-    <string name="prixText">$ Prix</string>
-    <string name="welcome">--- Bienvenue ---</string>
+    <string name="profil">Profile</string>
+    <string name="date">date</string>
+    <string name="titreAnnonce">Title of offer</string>
+    <string name="prixText">$ Price</string>
+    <string name="welcome">--- Welcome ---</string>
     <string name="splash_screen">Splash Screen</string>
     <string name="remplissage">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
         Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book.strings.xml
     </string>
     <string name="_40">$40</string>
     <string name="username">Username</string>
@@ -22,22 +22,33 @@
     <string name="dontaccount">Don\'t Have an account ?</string>
     <string name="sign">Sign up</string>
     <string name="email">your_email@domain.com</string>
-    <string name="register">S\'enregistrer</string>
+    <string name="register">Sign Up</string>
     <string name="IhaveAccount">I already have an account</string>
     <string name="sign_in">Sign in</string>
     <string name="names">Name</string>
     <string name="description">Description</string>
-    <string name="takePicture">Prendre une photo</string>
-    <string name="codePostal">Code postal</string>
-    <string name="publier">Publier</string>
-    <string name="MesInformations">Mes Informations</string>
+    <string name="takePicture">Take a Picture</string>
+    <string name="codePostal">ZIP Code</string>
+    <string name="publier">Post</string>
+    <string name="MesInformations">My Informations</string>
     <string name="emails">Email</string>
-    <string name="myAnnonce">Mes Annonces</string>
+    <string name="myAnnonce">My Offers</string>
     <string name="quit">Log out</string>
     <string name="copyright">Copyright © 2020-2021 / ghost-team.ca \nAll rights reserved </string>
-    <string name="mesannonce">Mes Annonces</string>
-    <string name="detail">Detail Annonce</string>
+    <string name="mesannonce">My offers</string>
+    <string name="detail">Offer\'s details</string>
     <string name="all">ALL</string>
+    <string name="CategorieSelection">Categorie Selection</string>
+    <string name="pants">Pants</string>
+    <string name="Tshirt">T-Shirt</string>
+    <string name="Hoodie">Hoodie</string>
+    <string name="Short">Short</string>
+    <string name="Cap">Cap</string>
+    <string name="Other">Other</string>
+    <string name="dontCamera">Sorry, You don\'t have any camera</string>
+    <string name="dontPermission">I don\'t have any permission</string>
+    <string name="offerPost">offer posted</string>
+    <string name="offerDelete">offer removed from Favorites</string>
 
 
 </resources>
