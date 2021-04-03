@@ -79,13 +79,13 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
 
         // Create List of categories
         List<String> categories = new ArrayList<>();
-        categories.add(0, "Choisir une catégorie: ");
-        categories.add(1, "Pantalon");
-        categories.add(2, "T-Shirt");
-        categories.add(3, "Hoodie");
-        categories.add(4, "Short");
-        categories.add(5, "Casquette");
-        categories.add(6, "Autres");
+        categories.add(0, getContext().getResources().getString(R.string.CategorieSelection));
+        categories.add(1, getContext().getResources().getString(R.string.pants));
+        categories.add(2, getContext().getResources().getString(R.string.Tshirt));
+        categories.add(3, getContext().getResources().getString(R.string.Hoodie));
+        categories.add(4, getContext().getResources().getString(R.string.Short));
+        categories.add(5, getContext().getResources().getString(R.string.Cap));
+        categories.add(6, getContext().getResources().getString(R.string.Other));
 
         // Take the instance of Spinner
         spinner = binder.addpostCategorie;
@@ -146,7 +146,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 .resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
             startActivityForResult(intent, 260);
         } else {
-            Toast.makeText(getContext(), "Désolé, vous n'avez pas de Camera", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getContext().getResources().getString(R.string.dontCamera), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -157,7 +157,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         if (requestCode == 250) {
             for (int res : grantResults) {
                 if (res != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getContext(), "Je n'ai pas la Permission", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.dontPermission), Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -196,14 +196,14 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             }
 
             if (idCategorie == 0)
-                Toast.makeText(getContext(), "Choississez categorie", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getContext().getResources().getString(R.string.CategorieSelection), Toast.LENGTH_LONG).show();
 
             if (TextUtils.isEmpty(prix.getText().toString().trim())) {
-                prix.setError("Prix required");
+                prix.setError("Price required");
                 prix.requestFocus();
             }
             if (TextUtils.isEmpty(codePostal.getText().toString().trim())) {
-                codePostal.setError("Code Postal required");
+                codePostal.setError("ZIP Postal required");
                 codePostal.requestFocus();
             }
             return;
@@ -224,7 +224,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
 
         // Publier
         new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
-        Toast.makeText(getContext(), "Annonce Publiée !", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), getContext().getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
         Log.i(TAG, "INSERTION ANNONCE SUCCESS !");
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);

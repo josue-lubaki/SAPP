@@ -79,7 +79,7 @@ public class Favoris extends Fragment {
         switch(item.getItemId()){
             case R.id.favorite_delete :
                 adapter.removeFromFavorites(item.getGroupId());
-                Toast.makeText(getContext()," Annonce supprimée des favoris", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getContext().getResources().getString(R.string.offerDelete), Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 Toast.makeText(getContext(),"default", Toast.LENGTH_SHORT).show();
