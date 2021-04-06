@@ -22,11 +22,18 @@ import androidx.room.Room;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Service.CredentialsAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
+import ca.ghost_team.sapp.model.Utilisateur;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
@@ -87,6 +94,7 @@ public class Login extends AppCompatActivity {
                 username.requestFocus();
             }
             else {
+
                 ID_USER_CURRENT = 0;
                 // Lancer la requête pour verifier si le Username et Password donné par le User est correct
                 ID_USER_CURRENT = connect_user(getApplication(), username.getText().toString().trim(), password.getText().toString().trim());
@@ -114,6 +122,42 @@ public class Login extends AppCompatActivity {
                 savePreferences(buttonView);
             }
         });
+
+
+        // RETROFIT
+        CredentialsAPI api = new CredentialsAPI();
+        api.getApi().getUtilisateurViaAPI("Josue").enqueue(new Callback<List<Utilisateur>>() {
+            @Override
+            public void onResponse(Call<List<Utilisateur>> call, Response<List<Utilisateur>> response) {
+                // Si conncetion Failed
+                if (!response.isSuccessful()) {
+                    Log.i("XXXX","Connection Failed \nFailedCode : " + response.code());
+                    return;
+                }
+
+                List<Utilisateur> maListe = response.body();
+
+                for (Utilisateur user : maListe) {
+                    String content = "";
+                    content += "idUtilisateur : " + user.getIdUtilisateur() + "\n";
+                    content += "utilisateurNom : " + user.getUtilisateurNom() + "\n";
+                    content += "utilisateurUsername : " + user.getUsername() + "\n";
+                    content += "Email : " + user.getEmail() + "\n";
+                    content += "password : " + user.getPassword() + "\n\n";
+                    Log.i("XXXX", content);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Utilisateur>> call, Throwable t) {
+                // Si erreur 404
+                Log.i(TAG, t.getMessage());
+                Log.e("XXXX", t.getMessage());
+            }
+        });
+
+
     }
 
 
