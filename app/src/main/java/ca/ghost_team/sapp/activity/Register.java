@@ -2,6 +2,8 @@ package ca.ghost_team.sapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.room.Room;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
@@ -90,32 +93,72 @@ public class Register extends AppCompatActivity {
                 // Mettre le Focus dur le champs Username
                 register_name.requestFocus();
             } else {
-                // On instancie l'objet Utilisateur
-                Utilisateur utilisateur = new Utilisateur(
-                        register_name.getText().toString().trim(),
-                        register_username.getText().toString().trim(),
-                        register_password.getText().toString().trim(),
-                        register_email.getText().toString().trim()
-                );
 
-                // Auto Login
-                ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUsername(), utilisateur.getPassword());
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Starting Write and Read data with URL
+                        //Creating array for parameters
+                        String[] field = new String[4];
+                        field[0] = "fullname";
+                        field[1] = "username";
+                        field[2] = "password";
+                        field[3] = "email";
+                        //Creating array for data
+                        String[] data = new String[4];
+                        data[0] = register_name.getText().toString().trim();
+                        data[1] = register_username.getText().toString().trim();
+                        data[2] = register_password.getText().toString().trim();
+                        data[3] = register_email.getText().toString().trim();
+                        PutData putData = new PutData("http://192.168.2.183/sappserver/signup.php", "POST", field, data);
+                        if (putData.startPut()) {
+                            if (putData.onComplete()) {
+                                String result = putData.getResult();
 
-                if (ID_USER_CURRENT != 0) {
-                    // L'Utilisateur existe déjà
-                    Toast.makeText(this, "Désolé, L'Utilisateur existe déjà", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                                if(result.equals("Sign Up Success")){
+                                    Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
+                                    Log.i(TAG, "Result : " + result);
 
-                // on insère l'Utilisateur sur le Thread Main
-                db.utilisateurDao().insertUtilisateur(utilisateur);
-                Toast.makeText(this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
+                                    // On instancie l'objet Utilisateur
+                                    Utilisateur utilisateur = new Utilisateur(
+                                            register_name.getText().toString().trim(),
+                                            register_username.getText().toString().trim(),
+                                            register_password.getText().toString().trim(),
+                                            register_email.getText().toString().trim()
+                                    );
 
-                //Lancer l'activity Main
-                Intent intent = new Intent(Register.this, Login.class);
-                startActivity(intent);
-                finish();
-                Log.i(TAG, "Utilisateur enregistré");
+                                    // Auto Login
+                                    ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUtilisateurUsername(), utilisateur.getUtilisateurPassword());
+
+                                    if (ID_USER_CURRENT != 0) {
+                                        // L'Utilisateur existe déjà
+                                        Toast.makeText(Register.this, "Désolé, L'Utilisateur existe déjà", Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
+                                    // on insère l'Utilisateur sur le Thread Main
+                                    db.utilisateurDao().insertUtilisateur(utilisateur);
+                                    Toast.makeText(Register.this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
+
+                                    //Lancer l'activity Main
+                                    Intent intent = new Intent(Register.this, Login.class);
+                                    startActivity(intent);
+                                    finish();
+                                    Log.i(TAG, "Utilisateur enregistré");
+                                }
+                                else{
+                                    Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
+                                }
+
+                                Log.i("PutData", result);
+                            }
+                        }
+                        //End Write and Read data with URL
+                    }
+                });
+
+
             }
         });
     }

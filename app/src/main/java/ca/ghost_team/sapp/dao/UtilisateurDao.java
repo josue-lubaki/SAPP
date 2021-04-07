@@ -21,7 +21,7 @@ public interface UtilisateurDao  {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insertUtilisateur(Utilisateur x);
 
-    @Query("SELECT * FROM Utilisateur ORDER BY utilisateur_Nom")
+    @Query("SELECT * FROM Utilisateur ORDER BY utilisateurNom")
     LiveData< List<Utilisateur> > allUtilisateur();
 
     @Query("SELECT * FROM Utilisateur WHERE idUtilisateur = :idUser LIMIT 1")
@@ -37,7 +37,7 @@ public interface UtilisateurDao  {
     @Query("SELECT * FROM annonceTable WHERE utilisateurId = :utilisateurId")
     LiveData<List<Annonce>> findAnnonceByUser(int utilisateurId);
 
-    @Query("SELECT idUtilisateur FROM Utilisateur WHERE Utilisateur_username = :username AND Utilisateur_password = :password")
+    @Query("SELECT idUtilisateur FROM Utilisateur WHERE utilisateurUsername = :username AND utilisateurPassword = :password")
     int retrieve_ID_User(String username, String password);
 
 }

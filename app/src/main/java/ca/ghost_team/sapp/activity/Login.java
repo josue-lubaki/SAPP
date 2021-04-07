@@ -7,13 +7,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -25,8 +21,13 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Service.CredentialsAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
+import ca.ghost_team.sapp.model.Utilisateur;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
@@ -85,41 +86,65 @@ public class Login extends AppCompatActivity {
 
                 // Mettre le Focus dur le champs Username
                 username.requestFocus();
-            }
-            else {
-                ID_USER_CURRENT = 0;
-                // Lancer la requête pour verifier si le Username et Password donné par le User est correct
-                ID_USER_CURRENT = connect_user(getApplication(), username.getText().toString().trim(), password.getText().toString().trim());
+            } else {
 
-                // User trouvé
-                if (ID_USER_CURRENT != 0) {
+                // RETROFIT
+                CredentialsAPI api = new CredentialsAPI();
+                api.getApi().getUtilisateurViaPost(username.getText().toString(), password.getText().toString()).enqueue(new Callback<Utilisateur>() {
+                    @Override
+                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
+                        // Si conncetion Failed
+                        if (!response.isSuccessful()) {
+                            Log.i("XXXX", "Connection Failed \nFailedCode : " + response.code());
+                            return;
+                        }
 
-                    //Lancer l'activity Main
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    Log.i(TAG, "Utilisateur trouvé");
-                } else {
-                    Snackbar.make(v, "Username Or Password incorrect", 5000)
-                            .setAction("Okay", d -> {
-                            }).show();
-                }
+                        Log.i("XXXX", "response : " + response);
+                        Utilisateur user = response.body();
+
+                        String content = "";
+                        content += "idUtilisateur : " + user.getIdUtilisateur() + "\n";
+                        content += "utilisateurNom : " + user.getUtilisateurNom() + "\n";
+                        content += "utilisateurUsername : " + user.getUtilisateurUsername() + "\n";
+                        content += "Email : " + user.getUtilisateurEmail() + "\n";
+                        content += "password : " + user.getUtilisateurPassword() + "\n\n";
+                        Log.i("XXXX", "\n" + content);
+
+                        // Connecter l'Utilisateur
+                        ID_USER_CURRENT = user.getIdUtilisateur();
+                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Log.i(TAG, "Utilisateur trouvé");
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Utilisateur> call, Throwable t) {
+                        // Si erreur 404
+                        Log.i(TAG, t.getMessage());
+                        Log.e("XXXX", t.getMessage());
+                    }
+                });
+
             }
         });
 
         /* Listener pour le switch */
         switch_save_credentials.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Si le switch est activé
-            if(isChecked){
+            if (isChecked) {
                 savePreferences(buttonView);
             }
         });
+
+
     }
 
 
     /**
      * Methode qui nous permet de bloquer le retour en arrière après une déconnexion
-     * */
+     */
     @Override
     public void onBackPressed() {
         Log.i(TAG, "On empêche le Button Back");
@@ -128,8 +153,9 @@ public class Login extends AppCompatActivity {
 
     /**
      * Methode qui permet de sauvergarder les informations
+     *
      * @return void
-     * */
+     */
     private void savePreferences(View view) {
         if (!TextUtils.isEmpty(username.getText()) && !TextUtils.isEmpty(password.getText().toString())) {
 
@@ -146,8 +172,7 @@ public class Login extends AppCompatActivity {
                 editor.putString("username", usernamePref);
                 editor.putString("password", passwordPref);
                 editor.apply();
-            }
-            else {
+            } else {
                 Snackbar.make(view, "Username Or Password incorrect", 5000)
                         .setAction("Okay", d -> {
                         }).show();
@@ -157,12 +182,12 @@ public class Login extends AppCompatActivity {
 
     /**
      * Faire la requête pour rerchercher l'ID de l'Utilisateur courant
-     * @param application c'est le context de l'application hôte
+     *
+     * @param application   c'est le context de l'application hôte
      * @param username_user le nom de l'Utilisateur dont il faut vérifier dans la BD
      * @param password_user le password pour y accéder
-     *
      * @return int
-     * */
+     */
     public static int connect_user(Application application, String username_user, String password_user) {
         SappDatabase db = Room.databaseBuilder(application, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
