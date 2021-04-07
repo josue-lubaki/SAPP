@@ -17,8 +17,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
-import java.util.Objects;
-
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
@@ -82,8 +80,8 @@ public class Profil extends Fragment {
         if(currentUser != null){
             // Setter les Infos
             infoNameUser.setText(currentUser.getUtilisateurNom());
-            infoUsername.setText(currentUser.getUsername());
-            infoEmailUser.setText(currentUser.getEmail());
+            infoUsername.setText(currentUser.getUtilisateurUsername());
+            infoEmailUser.setText(currentUser.getUtilisateurEmail());
         }
 
         //Log Out

@@ -10,42 +10,42 @@ public class Utilisateur {
     @PrimaryKey(autoGenerate = true)
     private int idUtilisateur;
 
-    @ColumnInfo(name = "Utilisateur_nom")
+    @ColumnInfo(name = "utilisateurNom")
     private String utilisateurNom;
 
-    @ColumnInfo(name = "Utilisateur_username")
-    private String username;
+    @ColumnInfo(name = "utilisateurUsername")
+    private String utilisateurUsername;
     
-    @ColumnInfo(name = "Utilisateur_password")
-    private String password;
+    @ColumnInfo(name = "utilisateurPassword")
+    private String utilisateurPassword;
 
-    @ColumnInfo(name = "Utilisateur_email")
-    private String email;
+    @ColumnInfo(name = "utilisateurEmail")
+    private String utilisateurEmail;
 
 //    @ColumnInfo(name = "nombreAnonce_Utilisateur")
 //    private int utilisateur_nombreAnnonce;
 
-    public Utilisateur(String utilisateurNom, String username, String password, String email) {
+    public Utilisateur(String utilisateurNom, String utilisateurUsername, String utilisateurPassword, String utilisateurEmail) {
         this.utilisateurNom = utilisateurNom;
-        this.username = username;
-        this.password = password;
-        this.email = email;
+        this.utilisateurUsername = utilisateurUsername;
+        this.utilisateurPassword = utilisateurPassword;
+        this.utilisateurEmail = utilisateurEmail;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUtilisateurUsername() {
+        return utilisateurUsername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUtilisateurUsername(String utilisateurUsername) {
+        this.utilisateurUsername = utilisateurUsername;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUtilisateurEmail() {
+        return utilisateurEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUtilisateurEmail(String utilisateurEmail) {
+        this.utilisateurEmail = utilisateurEmail;
     }
 
     public int getIdUtilisateur() {
@@ -64,12 +64,12 @@ public class Utilisateur {
         this.utilisateurNom = utilisateur_nom;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUtilisateurPassword() {
+        return utilisateurPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUtilisateurPassword(String utilisateurPassword) {
+        this.utilisateurPassword = utilisateurPassword;
     }
 
     @Override
@@ -77,9 +77,9 @@ public class Utilisateur {
         return "Utilisateur{" +
                 "idUtilisateur=" + idUtilisateur +
                 ", utilisateur_nom='" + utilisateurNom + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
+                ", username='" + utilisateurUsername + '\'' +
+                ", password='" + utilisateurPassword + '\'' +
+                ", email='" + utilisateurEmail + '\'' +
                 '}';
     }
 }
