@@ -64,6 +64,4 @@ dependencies {
     // Converter using GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
-
 }
