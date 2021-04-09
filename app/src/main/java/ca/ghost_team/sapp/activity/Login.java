@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.Service.CredentialsAPI;
+import ca.ghost_team.sapp.Service.UtilisateurAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
@@ -89,17 +89,17 @@ public class Login extends AppCompatActivity {
             } else {
 
                 // RETROFIT
-                CredentialsAPI api = new CredentialsAPI();
-                api.getApi().getUtilisateurViaPost(username.getText().toString(), password.getText().toString()).enqueue(new Callback<Utilisateur>() {
+                UtilisateurAPI api = new UtilisateurAPI();
+                api.getApi().getUtilisateurViaAPI(username.getText().toString(), password.getText().toString()).enqueue(new Callback<Utilisateur>() {
                     @Override
                     public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
                         // Si conncetion Failed
                         if (!response.isSuccessful()) {
-                            Log.i("XXXX", "Connection Failed \nFailedCode : " + response.code());
+                            Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
                             return;
                         }
 
-                        Log.i("XXXX", "response : " + response);
+                        Log.i(TAG, "response : " + response);
                         Utilisateur user = response.body();
 
                         String content = "";
@@ -108,7 +108,7 @@ public class Login extends AppCompatActivity {
                         content += "utilisateurUsername : " + user.getUtilisateurUsername() + "\n";
                         content += "Email : " + user.getUtilisateurEmail() + "\n";
                         content += "password : " + user.getUtilisateurPassword() + "\n\n";
-                        Log.i("XXXX", "\n" + content);
+                        Log.i(TAG, content);
 
                         // Connecter l'Utilisateur
                         ID_USER_CURRENT = user.getIdUtilisateur();
@@ -123,7 +123,7 @@ public class Login extends AppCompatActivity {
                     public void onFailure(Call<Utilisateur> call, Throwable t) {
                         // Si erreur 404
                         Log.i(TAG, t.getMessage());
-                        Log.e("XXXX", t.getMessage());
+                        Log.e(TAG, t.getMessage());
                     }
                 });
 

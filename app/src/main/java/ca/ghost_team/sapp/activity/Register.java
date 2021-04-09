@@ -2,8 +2,6 @@ package ca.ghost_team.sapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
@@ -16,15 +14,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.room.Room;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Service.UtilisateurAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
-
-import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
 
@@ -68,11 +67,10 @@ public class Register extends AppCompatActivity {
         btn_register.setOnClickListener(v -> {
             // Vérifier si le champs ne sont pas vide
 
-
             if (TextUtils.isEmpty(register_username.getText()) ||
                     TextUtils.isEmpty(register_password.getText().toString()) ||
                     !isMailValid(register_email.getText().toString().trim()) ||
-                    TextUtils.isEmpty(register_name.getText().toString()) ) {
+                    TextUtils.isEmpty(register_name.getText().toString())) {
 
                 if (TextUtils.isEmpty(register_name.getText()))
                     register_name.setError("Name required");
@@ -82,9 +80,8 @@ public class Register extends AppCompatActivity {
                     register_password.setError("Password required");
                 if (TextUtils.isEmpty(register_email.getText()))
                     register_email.setError("Email require");
-                 if(!register_email.getText().toString().trim().contains("@"))
-                     register_email.setError("Email require '@'");
-
+                if (!register_email.getText().toString().trim().contains("@"))
+                    register_email.setError("Email require '@'");
 
                 Snackbar.make(v, "Please fill texts in the field", 5000)
                         .setAction("I understand", d -> {
@@ -94,79 +91,51 @@ public class Register extends AppCompatActivity {
                 register_name.requestFocus();
             } else {
 
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
+                UtilisateurAPI api = new UtilisateurAPI();
+                api.getApi().createUtilisateurViaAPI(
+                        register_name.getText().toString().trim(),
+                        register_username.getText().toString().trim(),
+                        register_password.getText().toString().trim(),
+                        register_email.getText().toString().trim()
+                ).enqueue(new Callback<Utilisateur>() {
+
                     @Override
-                    public void run() {
-                        //Starting Write and Read data with URL
-                        //Creating array for parameters
-                        String[] field = new String[4];
-                        field[0] = "fullname";
-                        field[1] = "username";
-                        field[2] = "password";
-                        field[3] = "email";
-                        //Creating array for data
-                        String[] data = new String[4];
-                        data[0] = register_name.getText().toString().trim();
-                        data[1] = register_username.getText().toString().trim();
-                        data[2] = register_password.getText().toString().trim();
-                        data[3] = register_email.getText().toString().trim();
-                        PutData putData = new PutData("http://192.168.2.183/sappserver/signup.php", "POST", field, data);
-                        if (putData.startPut()) {
-                            if (putData.onComplete()) {
-                                String result = putData.getResult();
-
-                                if(result.equals("Sign Up Success")){
-                                    Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
-                                    Log.i(TAG, "Result : " + result);
-
-                                    // On instancie l'objet Utilisateur
-                                    Utilisateur utilisateur = new Utilisateur(
-                                            register_name.getText().toString().trim(),
-                                            register_username.getText().toString().trim(),
-                                            register_password.getText().toString().trim(),
-                                            register_email.getText().toString().trim()
-                                    );
-
-                                    // Auto Login
-                                    ID_USER_CURRENT = Login.connect_user(getApplication(), utilisateur.getUtilisateurUsername(), utilisateur.getUtilisateurPassword());
-
-                                    if (ID_USER_CURRENT != 0) {
-                                        // L'Utilisateur existe déjà
-                                        Toast.makeText(Register.this, "Désolé, L'Utilisateur existe déjà", Toast.LENGTH_LONG).show();
-                                        return;
-                                    }
-
-                                    // on insère l'Utilisateur sur le Thread Main
-                                    db.utilisateurDao().insertUtilisateur(utilisateur);
-                                    Toast.makeText(Register.this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
-
-                                    //Lancer l'activity Main
-                                    Intent intent = new Intent(Register.this, Login.class);
-                                    startActivity(intent);
-                                    finish();
-                                    Log.i(TAG, "Utilisateur enregistré");
-                                }
-                                else{
-                                    Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
-                                }
-
-                                Log.i("PutData", result);
-                            }
+                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
+                        // Si conncetion Failed
+                        if (!response.isSuccessful()) {
+                            Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                            return;
                         }
-                        //End Write and Read data with URL
+                        Log.i(TAG, "response : " + response);
+
+                        Utilisateur user = response.body();
+                        Log.i(TAG, "user : " + user.toString());
+
+                        // L'Utilisateur a été inseré dans la base de donnée distante
+                        // On peut à présent l'insérer dans la base de données locale
+                        db.utilisateurDao().insertUtilisateur(user);
+                        Toast.makeText(Register.this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
+
+                        //Lancer l'activity Main
+                        Intent intent = new Intent(Register.this, Login.class);
+                        startActivity(intent);
+                        finish();
+                        Log.i(TAG, "Utilisateur enregistré");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Utilisateur> call, Throwable t) {
+                        // Si erreur 404
+                        Log.i(TAG, t.getMessage());
+                        Log.e(TAG, t.getMessage());
                     }
                 });
-
-
             }
         });
     }
-    public boolean isMailValid(String mail){
 
-        if (mail==null || !mail.contains("@") ){
-            return false;
-        }
-        return true;
+
+    public boolean isMailValid(String mail) {
+        return mail != null && mail.contains("@");
     }
 }
