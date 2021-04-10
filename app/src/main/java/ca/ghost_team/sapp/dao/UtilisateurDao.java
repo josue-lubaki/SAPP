@@ -16,10 +16,10 @@ import ca.ghost_team.sapp.model.Utilisateur;
 public interface UtilisateurDao  {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public void insertallUtilisateur(Utilisateur ... Utilisateur);
+    void insertallUtilisateur(Utilisateur ... Utilisateur);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public void insertUtilisateur(Utilisateur x);
+    void insertUtilisateur(Utilisateur x);
 
     @Query("SELECT * FROM Utilisateur ORDER BY utilisateurNom")
     LiveData< List<Utilisateur> > allUtilisateur();

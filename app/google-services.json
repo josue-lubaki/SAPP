@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "637887748248",
+    "project_id": "sapp-3aaa2",
+    "storage_bucket": "sapp-3aaa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637887748248:android:cef2576e42b04306c498ed",
+        "android_client_info": {
+          "package_name": "ca.ghost_team.sapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637887748248-tcell53bp7qpg2ainhlh8pv7q0d0rdsd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaYc-RWnnOJgNzMlVRdXDe1pX8LxltYBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637887748248-tcell53bp7qpg2ainhlh8pv7q0d0rdsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

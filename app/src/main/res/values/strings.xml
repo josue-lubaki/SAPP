@@ -49,6 +49,7 @@
     <string name="dontPermission">I don\'t have any permission</string>
     <string name="offerPost">offer posted</string>
     <string name="offerDelete">offer removed from Favorites</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

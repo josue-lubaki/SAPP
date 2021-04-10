@@ -1,4 +1,4 @@
-package ca.ghost_team.sapp.Service;
+package ca.ghost_team.sapp.service;
 
 
 import ca.ghost_team.sapp.model.Utilisateur;
@@ -6,8 +6,6 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public interface sappDatabaseAPI {
 
