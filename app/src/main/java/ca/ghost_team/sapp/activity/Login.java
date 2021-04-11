@@ -21,15 +21,17 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.Service.UtilisateurAPI;
+import ca.ghost_team.sapp.service.UtilisateurAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
+import ca.ghost_team.sapp.repository.UtilisateurRepo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
+import static ca.ghost_team.sapp.BaseApplication.SAVEDME;
 
 public class Login extends AppCompatActivity {
 
@@ -46,6 +48,7 @@ public class Login extends AppCompatActivity {
     private String usernamePref;
     private String passwordPref;
     private SwitchCompat switch_save_credentials;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +112,20 @@ public class Login extends AppCompatActivity {
                         content += "Email : " + user.getUtilisateurEmail() + "\n";
                         content += "password : " + user.getUtilisateurPassword() + "\n\n";
                         Log.i(TAG, content);
-
+                        new UtilisateurRepo(getApplication()).insertUtilisateur(user);
                         // Connecter l'Utilisateur
                         ID_USER_CURRENT = user.getIdUtilisateur();
+
+                        if(SAVEDME){
+                            usernamePref = username.getText().toString().trim();
+                            passwordPref = user.getUtilisateurPassword();
+
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("username", usernamePref);
+                            editor.putString("password", passwordPref);
+                            editor.apply();
+                        }
+
                         Intent intent = new Intent(Login.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -133,9 +147,7 @@ public class Login extends AppCompatActivity {
         /* Listener pour le switch */
         switch_save_credentials.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Si le switch est activé
-            if (isChecked) {
-                savePreferences(buttonView);
-            }
+            SAVEDME = isChecked;
         });
 
 
@@ -151,34 +163,6 @@ public class Login extends AppCompatActivity {
     }
 
 
-    /**
-     * Methode qui permet de sauvergarder les informations
-     *
-     * @return void
-     */
-    private void savePreferences(View view) {
-        if (!TextUtils.isEmpty(username.getText()) && !TextUtils.isEmpty(password.getText().toString())) {
-
-            ID_USER_CURRENT = 0;
-            // Lancer la requête pour verifier si le Username et Password donné par le User est correct
-            ID_USER_CURRENT = connect_user(getApplication(), username.getText().toString().trim(), password.getText().toString().trim());
-
-            // User trouvé
-            if (ID_USER_CURRENT != 0) {
-                usernamePref = username.getText().toString().trim();
-                passwordPref = password.getText().toString().trim();
-
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("username", usernamePref);
-                editor.putString("password", passwordPref);
-                editor.apply();
-            } else {
-                Snackbar.make(view, "Username Or Password incorrect", 5000)
-                        .setAction("Okay", d -> {
-                        }).show();
-            }
-        }
-    }
 
     /**
      * Faire la requête pour rerchercher l'ID de l'Utilisateur courant

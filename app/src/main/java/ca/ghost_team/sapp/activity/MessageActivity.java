@@ -116,21 +116,20 @@ public class MessageActivity extends AppCompatActivity {
         Message myMessage;
 
         // Instancier le Message à envoyer et Inserer dans la BD
+        // TODO implémenter le pattern Builder pour l'entité Message
         if(idReceiverCurrentVendeur != 0){
-            myMessage = new Message(
-                    editMessage.getText().toString().trim(),
-                    BaseApplication.ID_USER_CURRENT,
-                    idReceiverCurrentVendeur,
-                    idAnnonceCurrentVendeur,
-                    new Date());
+            myMessage = new Message();
+            myMessage.setIdSender(BaseApplication.ID_USER_CURRENT);
+            myMessage.setIdReceiver(idReceiverCurrentVendeur);
+            myMessage.setMessage(editMessage.getText().toString().trim());
+            myMessage.setAnnonceId(idAnnonceCurrentVendeur);
         }
         else{
-            myMessage = new Message(
-                    editMessage.getText().toString().trim(),
-                    BaseApplication.ID_USER_CURRENT,
-                    idReceiverCurrent,
-                    idAnnonceCurrent,
-                    new Date());
+            myMessage = new Message();
+            myMessage.setIdSender(BaseApplication.ID_USER_CURRENT);
+            myMessage.setMessage(editMessage.getText().toString().trim());
+            myMessage.setIdReceiver(idReceiverCurrent);
+            myMessage.setAnnonceId(idAnnonceCurrent);
         }
 
         new MessageRepo(getApplication()).sendMessage(myMessage);

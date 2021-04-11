@@ -44,35 +44,22 @@ public class Annonce {
     @ColumnInfo(name = "date_annonce")
     private Date annonceDate;
 
+    @ColumnInfo(name = "zip_annonce")
+    private String annonceZip;
+
     // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
     private int utilisateurId;
     private int categorieId;
 
-
-    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, Date annonceDate, int utilisateurId, int categorieId) {
+    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, Date annonceDate, String annonceZip, int utilisateurId, int categorieId) {
+        this.annonceImage = annonceImage;
         this.annonceTitre = annonceTitre;
         this.annonceDescription = annonceDescription;
         this.annoncePrix = annoncePrix;
         this.annonceDate = annonceDate;
-        this.annonceImage = annonceImage;
+        this.annonceZip = annonceZip;
         this.utilisateurId = utilisateurId;
         this.categorieId = categorieId;
-    }
-
-    public int getCategorieId() {
-        return categorieId;
-    }
-
-    public void setCategorieId(int categorieId) {
-        this.categorieId = categorieId;
-    }
-
-    public int getUtilisateurId() {
-        return utilisateurId;
-    }
-
-    public void setUtilisateurId(int utilisateurId) {
-        this.utilisateurId = utilisateurId;
     }
 
     public int getIdAnnonce() {
@@ -116,26 +103,34 @@ public class Annonce {
     }
 
     public Date getAnnonceDate() {
-
         return annonceDate;
     }
 
-    public void setAnnonceDate(Date annonce_date) {
-        this.annonceDate = annonce_date;
+    public void setAnnonceDate(Date annonceDate) {
+        this.annonceDate = annonceDate;
     }
 
+    public String getAnnonceZip() {
+        return annonceZip;
+    }
 
-    @Override
-    public String toString() {
-        return "Annonce{" +
-                "idAnnonce=" + idAnnonce +
-                ", annonce_image=" + annonceImage +
-                ", annonce_titre='" + annonceTitre + '\'' +
-                ", annonce_description='" + annonceDescription + '\'' +
-                ", annonce_prix=" + annoncePrix +
-                ", annonce_date=" + annonceDate +
-                ", utilisateurId=" + utilisateurId +
-                ", categorieId=" + categorieId +
-                '}';
+    public void setAnnonceZip(String annonceZip) {
+        this.annonceZip = annonceZip;
+    }
+
+    public int getUtilisateurId() {
+        return utilisateurId;
+    }
+
+    public void setUtilisateurId(int utilisateurId) {
+        this.utilisateurId = utilisateurId;
+    }
+
+    public int getCategorieId() {
+        return categorieId;
+    }
+
+    public void setCategorieId(int categorieId) {
+        this.categorieId = categorieId;
     }
 }

@@ -1,5 +1,6 @@
 package ca.ghost_team.sapp.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.room.Room;
@@ -9,7 +10,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import ca.ghost_team.sapp.BaseApplication;
+import ca.ghost_team.sapp.MapsActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -35,8 +41,11 @@ public class DetailAnnonce extends AppCompatActivity {
     private TextView detail_tv_description;
     private TextView detail_tv_vendeur;
     private Button detail_btn_contacter;
+    private ImageButton btn_maps;
     private SappDatabase db;
     private String TAG = DetailAnnonce.class.getSimpleName();
+    public static final String MAP_TITRE_REQUEST = "ca.ghost_team.sapp.activity.Map_titre" ;
+    public static final String MAP_ZIP_REQUEST = "ca.ghost_team.sapp.activity.Map_zip";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,7 @@ public class DetailAnnonce extends AppCompatActivity {
         detail_tv_description = binding.vendeurDescription;
         detail_tv_vendeur = binding.vendeurName;
         detail_btn_contacter = binding.vendeurContacter;
+        btn_maps = binding.optionMaps;
 
         // Create Bundle
         Bundle bundle = getIntent().getExtras();
@@ -61,6 +71,7 @@ public class DetailAnnonce extends AppCompatActivity {
         String annonce_titre = bundle.getString(AnnonceAdapter.ANNONCE_TITRE_REQUEST);
         int annonce_prix = bundle.getInt(AnnonceAdapter.ANNONCE_PRICE_REQUEST);
         String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
+        String annonce_zip = bundle.getString(AnnonceAdapter.ANNONCE_ZIP_REQUEST);
 
         db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
@@ -69,11 +80,15 @@ public class DetailAnnonce extends AppCompatActivity {
         // envoyer une requête pour aller chercher le Nom du vendeur
         Utilisateur vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix, annonce_description).get(0);
 
+
         if(vendeur != null){
             System.out.println("Info vendeur : " + vendeur.toString());
             // Set Information to Fields
             detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
-            detail_image_annonce.setImageURI(Uri.parse(annonce_image));
+            if(!annonce_image.equals("null"))
+                detail_image_annonce.setImageURI(Uri.parse(annonce_image));
+            else
+                detail_image_annonce.setImageResource(R.drawable.collection);
             detail_tv_titre.setText(annonce_titre);
             detail_tv_prix.setText("$" + annonce_prix);
             detail_tv_description.setText(annonce_description);
@@ -96,5 +111,14 @@ public class DetailAnnonce extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn_maps.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailAnnonce.this, MapsActivity.class);
+            intent.putExtra(MAP_TITRE_REQUEST,annonce_titre);
+            intent.putExtra(MAP_ZIP_REQUEST,annonce_zip);
+            startActivity(intent);
+        });
     }
+
+
 }

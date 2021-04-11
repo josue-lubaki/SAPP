@@ -41,11 +41,12 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     private SappDatabase db;
 
     // Constantes
-    public static String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
-    public static String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
-    public static String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
-    public static String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
+    public static final String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
+    public static final String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
+    public static final String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
+    public static final String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
     public static final String ANNONCE_ID_REQUEST = "Annonce_ID_current_Detail";
+    public static final String ANNONCE_ZIP_REQUEST=  "Annonce_ZIP_Code";
 
     public AnnonceAdapter(Context context) {
         this.context = context;
@@ -130,6 +131,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonceTitre().trim());
             intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnoncePrix());
             intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonceDescription().trim());
+            intent.putExtra(ANNONCE_ZIP_REQUEST, uneAnnonce.getAnnonceZip().trim());
             context.startActivity(intent);
         });
     }
