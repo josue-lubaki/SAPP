@@ -30,6 +30,7 @@ import ca.ghost_team.sapp.databinding.ActivityDetailAnnonceBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
 
 public class DetailAnnonce extends AppCompatActivity {
+
     private ActivityDetailAnnonceBinding binding;
     public static String ID_ANNONCE_CURRENT = "IdAnnonceCurrent";
     public static String ID_RECEIVER_CURRENT = "IdUtilisateurCurrent";
@@ -46,6 +47,7 @@ public class DetailAnnonce extends AppCompatActivity {
     private String TAG = DetailAnnonce.class.getSimpleName();
     public static final String MAP_TITRE_REQUEST = "ca.ghost_team.sapp.activity.Map_titre" ;
     public static final String MAP_ZIP_REQUEST = "ca.ghost_team.sapp.activity.Map_zip";
+    public static final String MAP_DESCRIPTION_REQUEST = "ca.ghost_team.sapp.activity.Map_description";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +118,7 @@ public class DetailAnnonce extends AppCompatActivity {
             Intent intent = new Intent(DetailAnnonce.this, MapsActivity.class);
             intent.putExtra(MAP_TITRE_REQUEST,annonce_titre);
             intent.putExtra(MAP_ZIP_REQUEST,annonce_zip);
+            intent.putExtra(MAP_DESCRIPTION_REQUEST, annonce_description);
             startActivity(intent);
         });
     }

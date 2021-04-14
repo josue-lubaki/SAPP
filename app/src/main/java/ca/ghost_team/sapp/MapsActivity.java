@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -22,8 +23,9 @@ import ca.ghost_team.sapp.activity.DetailAnnonce;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    String titre;
-    String zip;
+    private String titre;
+    private String zip;
+    private String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle bundle = getIntent().getExtras();
         titre = bundle.getString(DetailAnnonce.MAP_TITRE_REQUEST);
         zip = bundle.getString(DetailAnnonce.MAP_ZIP_REQUEST);
+        description = bundle.getString(DetailAnnonce.MAP_DESCRIPTION_REQUEST);
     }
 
     /**
@@ -62,9 +65,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         LatLng location = new LatLng(coordonnees[0], coordonnees[1]);
-        mMap.addMarker(new MarkerOptions().position(location).title(titre));
+        Marker marker =  mMap.addMarker(new MarkerOptions()
+                .position(location)
+                .title(titre)
+                .snippet(description)
+        );
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+        marker.showInfoWindow();
     }
 
     public double[] getLatLngByZipcode(String zipcode) throws IOException {
