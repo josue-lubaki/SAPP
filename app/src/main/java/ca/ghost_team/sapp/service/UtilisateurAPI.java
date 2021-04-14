@@ -1,4 +1,4 @@
-package ca.ghost_team.sapp.Service;
+package ca.ghost_team.sapp.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

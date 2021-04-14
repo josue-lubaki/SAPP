@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.Service.UtilisateurAPI;
+import ca.ghost_team.sapp.service.UtilisateurAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;

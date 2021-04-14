@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import ca.ghost_team.sapp.databinding.ActivityMainBinding;
 import ca.ghost_team.sapp.model.Annonce;

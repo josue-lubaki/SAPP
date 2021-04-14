@@ -217,6 +217,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 description.getText().toString(),
                 Integer.parseInt(prix.getText().toString()),
                 new Date(),
+                codePostal.getText().toString(),
                 BaseApplication.ID_USER_CURRENT,
                 idCategorie);
 

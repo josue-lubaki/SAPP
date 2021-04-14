@@ -3,6 +3,7 @@ package ca.ghost_team.sapp.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -24,6 +25,6 @@ public interface MessageDao {
     @Insert
     void sendMessage(Message message);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void sendMessage(Message... message);
 }
