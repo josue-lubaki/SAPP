@@ -6,10 +6,10 @@ import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UtilisateurAPI {
-    private sappDatabaseAPI api = null;
+public class SappAPI {
+    private SappDatabaseAPI api = null;
 
-    public sappDatabaseAPI getApi(){
+    public SappDatabaseAPI getApi(){
         if(api == null){
             Gson gson = new GsonBuilder().create();
 
@@ -17,7 +17,7 @@ public class UtilisateurAPI {
                     .baseUrl("http://192.168.2.183/sappserver/")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
-                    .create(sappDatabaseAPI.class);
+                    .create(SappDatabaseAPI.class);
         }
 
         return api;

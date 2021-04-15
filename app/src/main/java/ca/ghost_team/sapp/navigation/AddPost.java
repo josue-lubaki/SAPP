@@ -39,7 +39,12 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutAddpostBinding;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
+import ca.ghost_team.sapp.service.SappAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddPost extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -209,24 +214,53 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             return;
         }
 
-        System.out.println("VALEUR TEMPS : " + temp);
 
-        // Instancier l'annonce
-        Annonce newAnnonce = new Annonce(String.valueOf(temp),
+        SappAPI api = new SappAPI();
+        api.getApi().createAnnonceViaGetAPI(
+                String.valueOf(temp),
                 titre.getText().toString(),
                 description.getText().toString(),
                 Integer.parseInt(prix.getText().toString()),
-                new Date(),
-                codePostal.getText().toString(),
                 BaseApplication.ID_USER_CURRENT,
-                idCategorie);
+                idCategorie
+        ).enqueue(new Callback(){
+            @Override
+            public void onResponse(Call call, Response response) {
+                // Si conncetion Failed
+                if (!response.isSuccessful()) {
+                    Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                    return;
+                }
+                Log.i(TAG, "response : " + response);
 
-        Log.i(TAG, newAnnonce.toString());
+                //String annonce =  response.body();
+                Log.i(TAG, "Annonce inserted !" );
+            }
 
-        // Publier
-        new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
-        Toast.makeText(getContext(), getContext().getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
-        Log.i(TAG, "INSERTION ANNONCE SUCCESS !");
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                // Si erreur 404
+                Log.i(TAG, t.getMessage());
+                Log.e(TAG, t.getMessage());
+            }
+        });
+
+//        // Instancier l'annonce
+//        Annonce newAnnonce = new Annonce(String.valueOf(temp),
+//                titre.getText().toString(),
+//                description.getText().toString(),
+//                Integer.parseInt(prix.getText().toString()),
+//                new Date(),
+//                codePostal.getText().toString(),
+//                BaseApplication.ID_USER_CURRENT,
+//                idCategorie);
+//
+//        Log.i(TAG, newAnnonce.toString());
+//
+//        // Publier
+//        new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
+//        Toast.makeText(getContext(), getContext().getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
+//        Log.i(TAG, "INSERTION ANNONCE SUCCESS !");
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
     }

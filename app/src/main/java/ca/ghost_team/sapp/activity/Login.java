@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.service.UtilisateurAPI;
+import ca.ghost_team.sapp.service.SappAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
@@ -92,7 +91,7 @@ public class Login extends AppCompatActivity {
             } else {
 
                 // RETROFIT
-                UtilisateurAPI api = new UtilisateurAPI();
+                SappAPI api = new SappAPI();
                 api.getApi().getUtilisateurViaAPI(username.getText().toString(), password.getText().toString()).enqueue(new Callback<Utilisateur>() {
                     @Override
                     public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
