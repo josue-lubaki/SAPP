@@ -118,22 +118,22 @@ public class MessageActivity extends AppCompatActivity {
         // Instancier le Message à envoyer et Inserer dans la BD
         // TODO implémenter le pattern Builder pour l'entité Message
         if(idReceiverCurrentVendeur != 0){
-            myMessage = new Message();
-            myMessage.setIdSender(BaseApplication.ID_USER_CURRENT);
-            myMessage.setIdReceiver(idReceiverCurrentVendeur);
-            myMessage.setMessage(editMessage.getText().toString().trim());
-            myMessage.setAnnonceId(idAnnonceCurrentVendeur);
+////            myMessage = new Message();
+//            myMessage.setIdSender(BaseApplication.ID_USER_CURRENT);
+//            myMessage.setIdReceiver(idReceiverCurrentVendeur);
+//            myMessage.setMessage(editMessage.getText().toString().trim());
+//            myMessage.setAnnonceId(idAnnonceCurrentVendeur);
         }
-        else{
-            myMessage = new Message();
-            myMessage.setIdSender(BaseApplication.ID_USER_CURRENT);
-            myMessage.setMessage(editMessage.getText().toString().trim());
-            myMessage.setIdReceiver(idReceiverCurrent);
-            myMessage.setAnnonceId(idAnnonceCurrent);
-        }
-
-        new MessageRepo(getApplication()).sendMessage(myMessage);
-        Log.i(TAG, "[" + myMessage.toString() + "] - ENVOYÉ !");
+//        else{
+//            myMessage = new Message();
+//            myMessage.setIdSender(BaseApplication.ID_USER_CURRENT);
+//            myMessage.setMessage(editMessage.getText().toString().trim());
+//            myMessage.setIdReceiver(idReceiverCurrent);
+//            myMessage.setAnnonceId(idAnnonceCurrent);
+//        }
+//
+//        new MessageRepo(getApplication()).sendMessage(myMessage);
+//        Log.i(TAG, "[" + myMessage.toString() + "] - ENVOYÉ !");
 
         // Réinitialiser le champ d'édition après l'envoi du Message
         editMessage.setText("");

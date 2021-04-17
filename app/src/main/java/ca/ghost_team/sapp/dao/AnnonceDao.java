@@ -57,7 +57,7 @@ public interface AnnonceDao {
 
     // connaêtre les informations de l'annonceur
     @Query("SELECT Utilisateur.* FROM Utilisateur INNER JOIN annonceTable ON idUtilisateur = utilisateurId " +
-            "WHERE (titre_annonce LIKE :titre AND prix_annonce =:prix OR description_annonce LIKE :description)")
+            "WHERE (annonceTitre LIKE :titre AND annoncePrix =:prix OR annonceDescription LIKE :description)")
     List<Utilisateur> infoAnnonceur(String titre, int prix, String description);
 
 }

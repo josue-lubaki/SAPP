@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.service.UtilisateurAPI;
+import ca.ghost_team.sapp.service.SappAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
@@ -91,7 +91,7 @@ public class Register extends AppCompatActivity {
                 register_name.requestFocus();
             } else {
 
-                UtilisateurAPI api = new UtilisateurAPI();
+                SappAPI api = new SappAPI();
                 api.getApi().createUtilisateurViaAPI(
                         register_name.getText().toString().trim(),
                         register_username.getText().toString().trim(),

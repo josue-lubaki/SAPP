@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
@@ -40,6 +41,13 @@ import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutAddpostBinding;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
+import ca.ghost_team.sapp.service.SappAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.internal.EverythingIsNonNull;
+
+import static ca.ghost_team.sapp.Utils.Conversion.toTimeStr;
 
 public class AddPost extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -209,24 +217,44 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             return;
         }
 
-        System.out.println("VALEUR TEMPS : " + temp);
+        Log.i(TAG,"valeur de String.valueOf(new Date() : " + String.valueOf(new Date()));
+        Log.i(TAG,"valeur de toTimeStr(new Date() : " + toTimeStr(new Date()));
+        Log.i(TAG,"valeur de new Date() : " + new Date());
 
-        // Instancier l'annonce
-        Annonce newAnnonce = new Annonce(String.valueOf(temp),
+
+        SappAPI api = new SappAPI();
+        api.getApi().createAnnonceViaGetAPI(
+                String.valueOf(temp),
                 titre.getText().toString(),
                 description.getText().toString(),
                 Integer.parseInt(prix.getText().toString()),
-                new Date(),
-                codePostal.getText().toString(),
+                String.valueOf(new Date()),
+                codePostal.getText().toString().trim(),
                 BaseApplication.ID_USER_CURRENT,
-                idCategorie);
+                idCategorie
+        ).enqueue(new Callback<Annonce>() {
+            @Override
+            public void onResponse(Call<Annonce> call, Response<Annonce> response) {
+                // Si conncetion Failed
+                if (!response.isSuccessful()) {
+                    Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                    return;
+                }
+                Annonce newAnnonce =  response.body();
 
-        Log.i(TAG, newAnnonce.toString());
+                Log.i(TAG, "response.body = " + response);
+                // inserer l'annonce dans la base de données locale via le Repository
+                new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
+                Toast.makeText(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
+                Log.i(TAG, "Annonce inserted !");
+            }
+            @Override
+            public void onFailure(Call<Annonce> call, Throwable t) {
+                // Si erreur 404
+                Log.e(TAG, t.getMessage());
+            }
+        });
 
-        // Publier
-        new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
-        Toast.makeText(getContext(), getContext().getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
-        Log.i(TAG, "INSERTION ANNONCE SUCCESS !");
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
     }
@@ -242,9 +270,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
 
 }

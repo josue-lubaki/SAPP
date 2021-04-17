@@ -1,12 +1,10 @@
 package ca.ghost_team.sapp.model;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
-import java.util.UUID;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -23,36 +21,28 @@ import static androidx.room.ForeignKey.CASCADE;
                         onDelete = CASCADE)
         })
 public class Message {
-    @NonNull
-    @PrimaryKey
-    private String idMessage;
+    @PrimaryKey(autoGenerate = true)
+    private int idMessage;
 
     private String message;
     private int idSender;
     private int idReceiver;
     private int annonceId;
-    private boolean deleted;
     private Date creationDate;
 
-//    public Message(String message, int idSender, int idReceiver, int annonceId) {
-//        this.message = message;
-//        this.idSender = idSender;
-//        this.idReceiver = idReceiver;
-//        this.annonceId = annonceId;
-//        this.creationDate = new Date();
-//    }
-
-    public Message() {
-        this.idMessage = UUID.randomUUID().toString();
-        this.deleted = false;
-        this.creationDate = new Date();
+    public Message(String message, int idSender, int idReceiver, int annonceId, Date creationDate) {
+        this.message = message;
+        this.idSender = idSender;
+        this.idReceiver = idReceiver;
+        this.annonceId = annonceId;
+        this.creationDate = creationDate;
     }
 
-    public String getIdMessage() {
+    public int getIdMessage() {
         return idMessage;
     }
 
-    public void setIdMessage(String idMessage) {
+    public void setIdMessage(int idMessage) {
         this.idMessage = idMessage;
     }
 
@@ -94,14 +84,6 @@ public class Message {
 
     public void setAnnonceId(int annonceId) {
         this.annonceId = annonceId;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override
