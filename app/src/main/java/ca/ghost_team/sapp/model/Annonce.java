@@ -4,12 +4,18 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ca.ghost_team.sapp.Utils.Conversion;
+
 import static androidx.room.ForeignKey.CASCADE;
+import static ca.ghost_team.sapp.Utils.Conversion.toTimeStr;
 
 @Entity(tableName = "annonceTable",
         foreignKeys = {
@@ -29,29 +35,34 @@ public class Annonce {
     @PrimaryKey(autoGenerate = true)
     private int idAnnonce;
 
-    @ColumnInfo(name = "image_annonce")
+   // @SerializedName("image")
+    @ColumnInfo(name = "annonceImage")
     private String annonceImage;
 
-    @ColumnInfo(name = "titre_annonce")
+  //  @SerializedName("titre")
+    @ColumnInfo(name = "annonceTitre")
     private String annonceTitre;
 
-    @ColumnInfo(name = "description_annonce")
+   // @SerializedName("description")
+    @ColumnInfo(name = "annonceDescription")
     private String annonceDescription;
 
-    @ColumnInfo(name = "prix_annonce")
+  // @SerializedName("prix")
+    @ColumnInfo(name = "annoncePrix")
     private int annoncePrix;
 
-    @ColumnInfo(name = "date_annonce")
-    private Date annonceDate;
+    @ColumnInfo(name = "annonceDate")
+    private String annonceDate;
 
-    @ColumnInfo(name = "zip_annonce")
+  //  @SerializedName("zip")
+    @ColumnInfo(name = "annonceZip")
     private String annonceZip;
 
     // il s'agit de la clé étrangère qui permet à l'annonce d'avoir une réference vers l'Utilisateur qui l'a publiée
     private int utilisateurId;
     private int categorieId;
 
-    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, Date annonceDate, String annonceZip, int utilisateurId, int categorieId) {
+    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, String annonceDate, String annonceZip, int utilisateurId, int categorieId) {
         this.annonceImage = annonceImage;
         this.annonceTitre = annonceTitre;
         this.annonceDescription = annonceDescription;
@@ -102,11 +113,11 @@ public class Annonce {
         this.annoncePrix = annoncePrix;
     }
 
-    public Date getAnnonceDate() {
+    public String getAnnonceDate() {
         return annonceDate;
     }
 
-    public void setAnnonceDate(Date annonceDate) {
+    public void setAnnonceDate(String annonceDate) {
         this.annonceDate = annonceDate;
     }
 

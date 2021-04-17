@@ -92,7 +92,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         holder.titre.setText(uneAnnonce.getAnnonceTitre());
         holder.prix.setText("$" + uneAnnonce.getAnnoncePrix());
         //apelle de la methode de formatage
-        holder.date.setText(""+ formatDate(uneAnnonce.getAnnonceDate()));
+        holder.date.setText(""+ uneAnnonce.getAnnonceDate());
 
         // Donner les états initials du Boutton
         if (!verifyContent(uneAnnonce))

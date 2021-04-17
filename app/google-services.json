@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "637887748248-hdkbtfrovuh6fmruscrkjunor176hc3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.ghost_team.sapp",
+            "certificate_hash": "725da3c446c62664e8109914b27f52a40a3d54a8"
+          }
+        },
+        {
           "client_id": "637887748248-tcell53bp7qpg2ainhlh8pv7q0d0rdsd.apps.googleusercontent.com",
           "client_type": 3
         }

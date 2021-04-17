@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
@@ -39,12 +40,14 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutAddpostBinding;
 import ca.ghost_team.sapp.model.Annonce;
-import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
 import ca.ghost_team.sapp.service.SappAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.internal.EverythingIsNonNull;
+
+import static ca.ghost_team.sapp.Utils.Conversion.toTimeStr;
 
 public class AddPost extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -214,6 +217,10 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             return;
         }
 
+        Log.i(TAG,"valeur de String.valueOf(new Date() : " + String.valueOf(new Date()));
+        Log.i(TAG,"valeur de toTimeStr(new Date() : " + toTimeStr(new Date()));
+        Log.i(TAG,"valeur de new Date() : " + new Date());
+
 
         SappAPI api = new SappAPI();
         api.getApi().createAnnonceViaGetAPI(
@@ -221,46 +228,33 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 titre.getText().toString(),
                 description.getText().toString(),
                 Integer.parseInt(prix.getText().toString()),
+                String.valueOf(new Date()),
+                codePostal.getText().toString().trim(),
                 BaseApplication.ID_USER_CURRENT,
                 idCategorie
-        ).enqueue(new Callback(){
+        ).enqueue(new Callback<Annonce>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<Annonce> call, Response<Annonce> response) {
                 // Si conncetion Failed
                 if (!response.isSuccessful()) {
                     Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
                     return;
                 }
-                Log.i(TAG, "response : " + response);
+                Annonce newAnnonce =  response.body();
 
-                //String annonce =  response.body();
-                Log.i(TAG, "Annonce inserted !" );
+                Log.i(TAG, "response.body = " + response);
+                // inserer l'annonce dans la base de données locale via le Repository
+                new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
+                Toast.makeText(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
+                Log.i(TAG, "Annonce inserted !");
             }
-
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<Annonce> call, Throwable t) {
                 // Si erreur 404
-                Log.i(TAG, t.getMessage());
                 Log.e(TAG, t.getMessage());
             }
         });
 
-//        // Instancier l'annonce
-//        Annonce newAnnonce = new Annonce(String.valueOf(temp),
-//                titre.getText().toString(),
-//                description.getText().toString(),
-//                Integer.parseInt(prix.getText().toString()),
-//                new Date(),
-//                codePostal.getText().toString(),
-//                BaseApplication.ID_USER_CURRENT,
-//                idCategorie);
-//
-//        Log.i(TAG, newAnnonce.toString());
-//
-//        // Publier
-//        new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
-//        Toast.makeText(getContext(), getContext().getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
-//        Log.i(TAG, "INSERTION ANNONCE SUCCESS !");
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
     }
@@ -276,9 +270,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
 
 }

@@ -92,7 +92,10 @@ public class Login extends AppCompatActivity {
 
                 // RETROFIT
                 SappAPI api = new SappAPI();
-                api.getApi().getUtilisateurViaAPI(username.getText().toString(), password.getText().toString()).enqueue(new Callback<Utilisateur>() {
+                api.getApi().getUtilisateurViaAPI(
+                        username.getText().toString(),
+                        password.getText().toString()
+                ).enqueue(new Callback<Utilisateur>() {
                     @Override
                     public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
                         // Si conncetion Failed
