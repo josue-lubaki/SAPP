@@ -5,4 +5,5 @@
 * VersionSDK : 9.0 (lollipop)
 * Architecture MVVM
 
-# Livrable 2 sur la Branche "Livrable_2"
+# Server Distant
+* voir le repository server-sapp-php
