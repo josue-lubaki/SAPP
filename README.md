@@ -13,16 +13,15 @@
   ________<img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/splash.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/login.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/register.png" width="200" style="max-width:100%;">________
-  
 </p>
+
 <br>
+
 <p>
   ________<img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/home.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/Favoris.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/addpost.png" width="200" style="max-width:100%;">________
 </p>
-  
-  
 
 <br>
 
@@ -31,6 +30,9 @@
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/mesannonce.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/profile.png" width="200" style="max-width:100%;">________
 </p>
+
+<br>
+
 <p>
    _______________________________________________<img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width="200" style="max-width:100%;">_______________________________________________
 </p>
