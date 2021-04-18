@@ -6,7 +6,7 @@
 * Architecture MVVM
 
 # Server Distant
-* voir le repository server-sapp-php
+* voir le repository <a href="https://github.com/josue-lubaki/sapp-server-php">server-sapp-php</a>
 
 # Images :
 <p>
