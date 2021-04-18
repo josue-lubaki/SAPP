@@ -1,4 +1,4 @@
-# Application SAPP
+# Application Android - SAPP
 
 * Langage : Java
 * Dependances : Gradle
