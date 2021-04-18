@@ -19,12 +19,12 @@
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/Favoris.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/detail.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/addpost.png" width="200" style="max-width:100%;">________
+  <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width="200" style="max-width:100%;">________
 </p>
 
 <br>
 
 <p>
-  <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/mesannonce.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/profile.png" width="200" style="max-width:100%;">________
 </p>
