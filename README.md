@@ -31,4 +31,7 @@
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/mesannonce.png" width="200" style="max-width:100%;">________
   <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/profile.png" width="200" style="max-width:100%;">________
 </p>
-  ________<img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width="200" style="max-width:100%;">________
+<p>
+   _______________________________________________<img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width="200" style="max-width:100%;">_______________________________________________
+</p>
+ 
