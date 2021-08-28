@@ -37,8 +37,8 @@ public interface AnnonceDao {
     @Query("SELECT * FROM annonceTable WHERE idAnnonce = :annonceId")
     Annonce getInfoAnnonce(int annonceId);
 
-    @Delete
-    void deleteAnnonce(Annonce annonce);
+    @Query("DELETE FROM annonceTable WHERE idAnnonce =:idAnnonce")
+    void deleteAnnonce(int idAnnonce);
 
     @Update
     void updateAnnonce(Annonce annonce);
@@ -46,18 +46,12 @@ public interface AnnonceDao {
     @Query("DELETE FROM annonceTable")
     void deleteAllAnnonce();
 
-    @Query("DELETE FROM annoncefavoris WHERE utilisateurId = :idUser AND annonceId = :idAnnonce")
-    void deleteAnnonceByID(int idUser, int idAnnonce);
-
-    @Query("INSERT INTO annonceFavoris(utilisateurId, annonceId) VALUES(:idUser, :idAnnonce)")
-    void insertLiked(int idUser, int idAnnonce);
-
     @Query("SELECT 1")
     int start();
 
     // connaêtre les informations de l'annonceur
     @Query("SELECT Utilisateur.* FROM Utilisateur INNER JOIN annonceTable ON idUtilisateur = utilisateurId " +
-            "WHERE (annonceTitre LIKE :titre AND annoncePrix =:prix OR annonceDescription LIKE :description)")
-    List<Utilisateur> infoAnnonceur(String titre, int prix, String description);
+            "WHERE (annonceTitre LIKE :titre AND annoncePrix =:prix OR annonceDescription)")
+    List<Utilisateur> infoAnnonceur(String titre, int prix);
 
 }

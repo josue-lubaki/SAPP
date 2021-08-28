@@ -99,14 +99,22 @@
                 android:src="@drawable/more"/>
 
         </LinearLayout>
-        
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewHome"
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeHome"
             android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_below="@+id/iconContainer"
-            tools:listitem="@layout/layout_annonce_item"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/layout_annonce_item"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </RelativeLayout>
 </layout>

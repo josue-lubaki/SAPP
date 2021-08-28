@@ -50,4 +50,8 @@ public class AnnonceViewModel extends AndroidViewModel {
         return AllAnnonces;
     }
 
+    public Annonce getinfoAnnonce(int idAnnonce){
+        return annonceRepo.getInfoAnnonce(idAnnonce);
+    }
+
 }

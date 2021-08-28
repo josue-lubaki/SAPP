@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceFavoris;
 import ca.ghost_team.sapp.repository.AnnonceFavorisRepo;
 
 public class AnnonceFavorisViewModel extends AndroidViewModel {
@@ -23,6 +24,10 @@ public class AnnonceFavorisViewModel extends AndroidViewModel {
 
     public LiveData<List<Annonce>> getAllAnnonceFavoriteByUser() {
         return AllAnnonceFavoriteByUser;
+    }
+
+    public void insertLiked(AnnonceFavoris... annonce){
+        annonceFavorisRepo.insertLiked(annonce);
     }
 
 }

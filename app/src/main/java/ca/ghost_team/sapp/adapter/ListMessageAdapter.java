@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.ghost_team.sapp.BaseApplication;
+import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.activity.MessageActivity;
@@ -24,6 +25,7 @@ import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.model.Utilisateur;
+import ca.ghost_team.sapp.repository.MessageRepo;
 
 
 public class ListMessageAdapter extends RecyclerView.Adapter<ListMessageAdapter.ListMessageVH>{
@@ -72,6 +74,9 @@ public class ListMessageAdapter extends RecyclerView.Adapter<ListMessageAdapter.
             Intent intent = new Intent(context, MessageActivity.class);
             intent.putExtra(ID_ANNONCE_CURRENT_LIST_MESSAGE, idAnnonce);
             intent.putExtra(ID_RECEIVER_CURRENT_LIST_MESSAGE, message.getIdSender());
+
+            // Utilisateur vient de lire les messages
+            db.messageDao().putRead(BaseApplication.ID_USER_CURRENT, message.getIdSender(), idAnnonce);
             context.startActivity(intent);
         });
 

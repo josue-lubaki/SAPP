@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import ca.ghost_team.sapp.BaseApplication;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.dao.AnnonceDao;
 import ca.ghost_team.sapp.dao.AnnonceFavorisDao;
 import ca.ghost_team.sapp.dao.CategorieAnnonceDao;
@@ -18,9 +19,8 @@ import ca.ghost_team.sapp.model.AnnonceFavoris;
 import ca.ghost_team.sapp.model.CategorieAnnonce;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.model.Utilisateur;
-import ca.ghost_team.sapp.Utils.Conversion;
 
-@TypeConverters({Conversion.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
+@TypeConverters({Utilitaire.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
 @Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class, CategorieAnnonce.class, Message.class}, version = 1, exportSchema = false)
 public abstract class SappDatabase extends RoomDatabase {
     public static SappDatabase INSTANCE;

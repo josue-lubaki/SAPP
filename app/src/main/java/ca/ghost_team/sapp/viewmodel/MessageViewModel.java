@@ -38,4 +38,13 @@ public class MessageViewModel extends AndroidViewModel {
     public void sendMessage(Message message){
         messageRepo.sendMessage(message);
     }
+
+    public void putReadMessage(Message... message){
+        messageRepo.putReadMessage(message);
+    }
+
+    public LiveData<Integer> getCountMessageNoRead(){
+       return messageRepo.getCountMessageNoRead();
+    }
+
 }

@@ -4,6 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.installations.Utils;
+
+import ca.ghost_team.sapp.Utils.Utilitaire;
+
 @Entity(tableName = "Utilisateur")
 public class Utilisateur {
 
@@ -71,6 +75,37 @@ public class Utilisateur {
     public void setUtilisateurPassword(String utilisateurPassword) {
         this.utilisateurPassword = utilisateurPassword;
     }
+
+    /**
+     * La methode qui permet de créer un Checksum pour l'enregistrement de l'Utilisateur
+     * Checksum pour Register
+     * @return String
+     */
+    public String checksumForRegister(){
+        String passwordHash = Utilitaire.hashage(utilisateurPassword);
+
+        assert passwordHash != null;
+        return Utilitaire.encrypt(utilisateurNom + "/"+
+                utilisateurUsername + "/"+
+                (passwordHash.contains("/") ? passwordHash.replace("/","e") : passwordHash)  + "/"+
+                utilisateurEmail + "/"+
+                System.currentTimeMillis(), 2); // Timestamp
+    }
+
+    /**
+     * La methode qui permet de créer un Checksum pour l'authentification de l'utilisateur
+     * Checksum pour Login
+     * @return String
+     */
+    public String checksumForLogin(){
+        String passwordHash = Utilitaire.hashage(utilisateurPassword);
+
+        assert passwordHash != null;
+        return Utilitaire.encrypt(utilisateurUsername + "/"+
+                (passwordHash.contains("/") ? passwordHash.replace("/","e") : passwordHash)  + "/"+
+                System.currentTimeMillis(),2); // Timestamp
+    }
+
 
     @Override
     public String toString() {

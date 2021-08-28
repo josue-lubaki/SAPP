@@ -4,30 +4,20 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import ca.ghost_team.sapp.Utils.Conversion;
 
 import static androidx.room.ForeignKey.CASCADE;
-import static ca.ghost_team.sapp.Utils.Conversion.toTimeStr;
 
 @Entity(tableName = "annonceTable",
         foreignKeys = {
-                @ForeignKey(entity = Utilisateur.class,
-                        parentColumns = "idUtilisateur",
-                        childColumns = "utilisateurId",
-                        onDelete = CASCADE),
+//                @ForeignKey(entity = Utilisateur.class,
+//                        parentColumns = "idUtilisateur",
+//                        childColumns = "utilisateurId",
+//                        onDelete = CASCADE),
 
-                @ForeignKey(entity = CategorieAnnonce.class,
-                        parentColumns = "idCategorie",
-                        childColumns = "categorieId",
-                        onDelete = CASCADE)
+//                @ForeignKey(entity = CategorieAnnonce.class,
+//                        parentColumns = "idCategorie",
+//                        childColumns = "categorieId",
+//                        onDelete = CASCADE)
         }
 )
 public class Annonce {
@@ -35,26 +25,26 @@ public class Annonce {
     @PrimaryKey(autoGenerate = true)
     private int idAnnonce;
 
-   // @SerializedName("image")
+    // @SerializedName("image")
     @ColumnInfo(name = "annonceImage")
     private String annonceImage;
 
-  //  @SerializedName("titre")
+    //  @SerializedName("titre")
     @ColumnInfo(name = "annonceTitre")
     private String annonceTitre;
 
-   // @SerializedName("description")
+    // @SerializedName("description")
     @ColumnInfo(name = "annonceDescription")
     private String annonceDescription;
 
-  // @SerializedName("prix")
+    // @SerializedName("prix")
     @ColumnInfo(name = "annoncePrix")
     private int annoncePrix;
 
     @ColumnInfo(name = "annonceDate")
     private String annonceDate;
 
-  //  @SerializedName("zip")
+    //  @SerializedName("zip")
     @ColumnInfo(name = "annonceZip")
     private String annonceZip;
 

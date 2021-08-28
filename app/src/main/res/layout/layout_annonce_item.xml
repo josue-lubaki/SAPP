@@ -19,6 +19,7 @@
             <ImageView
                 android:id="@+id/annonceImage"
                 android:layout_width="match_parent"
+                android:scaleType="fitXY"
                 android:layout_height="0dp"
                 android:src="@drawable/chemise"
                 android:layout_weight="3"

@@ -17,7 +17,7 @@
         when an unknown printer took a galley of type and scrambled it to make a type specimen book.strings.xml
     </string>
     <string name="_40">$40</string>
-    <string name="username">Nom d\'Utilisateur</string>
+    <string name="username">Pseudo</string>
     <string name="password">Mot de Passe</string>
     <string name="log_in">Connecter</string>
     <string name="dontaccount">Vous n\'avez pas de compte ?</string>
@@ -50,6 +50,8 @@
     <string name="dontPermission">Je n\'ai pas la permission</string>
     <string name="offerPost">Annonce Publiée</string>
     <string name="offerDelete">Annnonce Supprimée des Favoris</string>
+    <string name="title_activity_maps">Carte</string>
+    <string name="market">Marché</string>
 
 
 </resources>

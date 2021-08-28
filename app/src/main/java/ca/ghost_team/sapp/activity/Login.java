@@ -20,11 +20,13 @@ import com.google.android.material.snackbar.Snackbar;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.service.SappAPI;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityLoginBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
+import ca.ghost_team.sapp.service.API.UtilisateurAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,14 +92,17 @@ public class Login extends AppCompatActivity {
                 username.requestFocus();
             } else {
 
+                Utilisateur userLogger = new Utilisateur(
+                        null,
+                        username.getText().toString().trim(),
+                        password.getText().toString().trim(),
+                       null
+                );
+
                 // RETROFIT
-                SappAPI api = new SappAPI();
-                api.getApi().getUtilisateurViaAPI(
-                        username.getText().toString(),
-                        password.getText().toString()
-                ).enqueue(new Callback<Utilisateur>() {
+                SappAPI.getApi().create(UtilisateurAPI.class).getUtilisateurViaAPI(userLogger.checksumForLogin()).enqueue(new Callback<String>() {
                     @Override
-                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
+                    public void onResponse(Call<String> call, Response<String> response) {
                         // Si conncetion Failed
                         if (!response.isSuccessful()) {
                             Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
@@ -105,22 +110,41 @@ public class Login extends AppCompatActivity {
                         }
 
                         Log.i(TAG, "response : " + response);
-                        Utilisateur user = response.body();
+                        String messageServer = response.body();
+
+                        // Decoder les message venu du Server
+                        assert messageServer != null;
+                        String messageClean = Utilitaire.decode(messageServer, 5);
+
+                        // Extraire les informations venus du Server
+                        String[] table = messageClean.split("/");
+                        int utilisateurIdFromServer = Integer.parseInt(table[0]);
+                        String utilisateurNomFromServer = table[1];
+                        String utilisateurEmailFromServer = table[2];
 
                         String content = "";
-                        content += "idUtilisateur : " + user.getIdUtilisateur() + "\n";
-                        content += "utilisateurNom : " + user.getUtilisateurNom() + "\n";
-                        content += "utilisateurUsername : " + user.getUtilisateurUsername() + "\n";
-                        content += "Email : " + user.getUtilisateurEmail() + "\n";
-                        content += "password : " + user.getUtilisateurPassword() + "\n\n";
+                        content += "idUtilisateur : " + utilisateurIdFromServer + "\n";
+                        content += "utilisateurNom : " + utilisateurNomFromServer + "\n";
+                        content += "Email : " + utilisateurEmailFromServer + "\n";
                         Log.i(TAG, content);
-                        new UtilisateurRepo(getApplication()).insertUtilisateur(user);
+
+                        BaseApplication.ID_USER_CURRENT = utilisateurIdFromServer;
+                        String passwordUtilisateur = Utilitaire.hashage(password.getText().toString().trim());
+                        Utilisateur userAuth = new Utilisateur(
+                                utilisateurNomFromServer,
+                                username.getText().toString().trim(),
+                                passwordUtilisateur,
+                                utilisateurEmailFromServer
+                        );
+                        userAuth.setIdUtilisateur(utilisateurIdFromServer);
+
+                        new UtilisateurRepo(getApplication()).insertUtilisateur(userAuth);
                         // Connecter l'Utilisateur
-                        ID_USER_CURRENT = user.getIdUtilisateur();
+                        ID_USER_CURRENT = userAuth.getIdUtilisateur();
 
                         if(SAVEDME){
                             usernamePref = username.getText().toString().trim();
-                            passwordPref = user.getUtilisateurPassword();
+                            passwordPref = passwordUtilisateur;
 
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("username", usernamePref);
@@ -136,9 +160,8 @@ public class Login extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Utilisateur> call, Throwable t) {
+                    public void onFailure(Call<String> call, Throwable t) {
                         // Si erreur 404
-                        Log.i(TAG, t.getMessage());
                         Log.e(TAG, t.getMessage());
                     }
                 });

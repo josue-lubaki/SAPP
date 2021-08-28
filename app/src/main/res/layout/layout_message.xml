@@ -5,13 +5,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewListMessage"
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshMessageList"
             android:layout_height="match_parent"
-            android:background="@color/BackgroundAnnonce"
-            tools:listitem="@layout/layout_list_message_item"
-            />
+            android:layout_width="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewListMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/BackgroundAnnonce"
+                tools:listitem="@layout/layout_list_message_item"
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </RelativeLayout>
 </layout>

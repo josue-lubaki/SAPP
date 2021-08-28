@@ -1,6 +1,7 @@
 package ca.ghost_team.sapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,16 @@ import java.util.List;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.Utils.Conversion;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.model.Utilisateur;
+import ca.ghost_team.sapp.repository.UtilisateurRepo;
+import ca.ghost_team.sapp.service.API.UtilisateurAPI;
+import ca.ghost_team.sapp.service.SappAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageAdapter extends RecyclerView.Adapter{
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
@@ -28,6 +35,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
     private final SappDatabase db;
     private Context mContext;
     private List<Message> mMessageList;
+    private String TAG = MessageAdapter.class.getSimpleName();
 
 
     public MessageAdapter(Context context) {
@@ -80,10 +88,12 @@ public class MessageAdapter extends RecyclerView.Adapter{
             case VIEW_TYPE_MESSAGE_RECEIVED:{
                 //((ReceivedMessageVH) holder).bind(message);
 
+
+
                 ((ReceivedMessageVH) holder).messageTextReceiver.setText(message.getMessage());
 
                 // Format the stored timestamp into a readable String using method.
-                ((ReceivedMessageVH) holder).timeTextReceiver.setText(Conversion.toTimeStr(message.getCreationDate()));
+                ((ReceivedMessageVH) holder).timeTextReceiver.setText(message.getCreationDate());
                 Utilisateur user = db.utilisateurDao().getInfoUtilisateur(message.getIdSender());
 
                 if(user != null)
@@ -99,7 +109,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
     }
 
     /**
-     * Methode qui permet de passer à la liste de Message la nouvelle liste venant de la BD
+     * Methode qui permet de passer à la liste de Messages la nouvelle liste venant de la BD
      * @param listMessages liste à passer à l'adapter
      * @return void
      * */
@@ -142,7 +152,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
             messageText.setText(message.getMessage());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(Conversion.toTimeStr(message.getCreationDate()));
+            timeText.setText(message.getCreationDate());
         }
     }
 

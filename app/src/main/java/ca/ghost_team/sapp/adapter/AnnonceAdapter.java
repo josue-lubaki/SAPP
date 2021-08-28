@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.bumptech.glide.Glide;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,11 +28,20 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceFavoris;
+import ca.ghost_team.sapp.repository.AnnonceFavorisRepo;
+import ca.ghost_team.sapp.service.API.AnnonceFavorisAPI;
+import ca.ghost_team.sapp.service.SappAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
 public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceVH> {
 
+    private static final String TAG = AnnonceAdapter.class.getSimpleName();
+    private final MainActivity activity;
     Context context;
     List<Annonce> listeAnnonces;
     List<Annonce> listeAnnonceFavorite;
@@ -46,7 +54,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public static final String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
     public static final String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
     public static final String ANNONCE_ID_REQUEST = "Annonce_ID_current_Detail";
-    public static final String ANNONCE_ZIP_REQUEST=  "Annonce_ZIP_Code";
+    public static final String ANNONCE_ZIP_REQUEST = "Annonce_ZIP_Code";
 
     public AnnonceAdapter(Context context) {
         this.context = context;
@@ -54,7 +62,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         this.listeAnnonceFavorite = new ArrayList<>();
         this.db = Room.databaseBuilder(context, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
-
+        this.activity = (MainActivity) getContext();
     }
 
     public Context getContext() {
@@ -69,12 +77,12 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     }
 
     //Va au final renvoyer jour resant
-    public String formatDate(Date d){
+    public String formatDate(Date d) {
         DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT,
                 DateFormat.SHORT);
-                String x = "" + shortDateFormat.format(d);
-                return x;
+        String x = "" + shortDateFormat.format(d);
+        return x;
     }
 
     @SuppressLint("SetTextI18n")
@@ -111,13 +119,13 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris_red);
 
                 // Ajouter (ou insérer l'enregistrement dans la Table des Annonces Favories)
-                db.annonceDao().insertLiked(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
+                db.annonceFavorisDao().insertLiked(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
 
             } else {
                 holder.likeBtn.setImageResource(R.drawable.ic_favoris);
 
                 // Supprimer l'enregitrement dans la Table des Annonces Favoris
-                 db.annonceDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
+                db.annonceFavorisDao().deleteAnnonceByID(ID_USER_CURRENT, uneAnnonce.getIdAnnonce());
             }
             notifyDataSetChanged();
         });
@@ -136,6 +144,37 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         });
     }
 
+
+    void test(){
+
+        SappAPI.getApi().create(AnnonceFavorisAPI.class).getAllAnnonceFavorisViaAPI(ID_USER_CURRENT)
+                .enqueue(new Callback<List<AnnonceFavoris>>() {
+                    @Override
+                    public void onResponse(Call<List<AnnonceFavoris>> call, Response<List<AnnonceFavoris>> response) {
+                        // Si conncetion Failed
+                        if (!response.isSuccessful()) {
+                            Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                            return;
+                        }
+
+                        Log.i(TAG, "response : " + response);
+                        List<AnnonceFavoris> annonceFavorisList = response.body();
+
+                        AnnonceFavoris[] tableAnnonceFavoris = new AnnonceFavoris[annonceFavorisList.size()];
+                        annonceFavorisList.toArray(tableAnnonceFavoris);
+                        new AnnonceFavorisRepo(activity.getApplication()).insertLiked(tableAnnonceFavoris);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<AnnonceFavoris>> call, Throwable t) {
+                        // Si erreur 404
+                        Log.e(TAG, t.getMessage());
+                    }
+                });
+    }
+
+
     @Override
     public int getItemCount() {
         return listeAnnonces.size();
@@ -144,9 +183,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     /**
      * Methode qui permet de setter une nouvelle liste à la liste de toutes les Annonces récupérée
      * depuis a base de données
+     *
      * @param listeAllAnnonces la nouvelle liste à passer vers l'Adapter, contenant toutes les Annonces
      * @return void
-     * */
+     */
     public void addAnnonce(List<Annonce> listeAllAnnonces) {
         listeAnnonces = listeAllAnnonces;
         notifyDataSetChanged();
@@ -155,13 +195,14 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     /**
      * Methode qui permet de Vérifier si une Annonce se trouve dans la liste des Annonces Aimées
      * par l'utilisateur Courant del'Application
+     *
      * @param uneAnnonce Entité Annonce à vérifier
      *                   Si @code{uneAnnonce} est trouvée, retourne true
      *                   Sinon false
      * @return boolean
-     * */
-    public boolean verifyContent(Annonce uneAnnonce){
-        if(listeAnnonceFavorite.size() > 0) {
+     */
+    public boolean verifyContent(Annonce uneAnnonce) {
+        if (listeAnnonceFavorite.size() > 0) {
             for (Annonce annonce : listeAnnonceFavorite) {
                 if (annonce.getIdAnnonce() == uneAnnonce.getIdAnnonce())
                     return true;

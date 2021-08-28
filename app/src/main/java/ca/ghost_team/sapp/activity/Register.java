@@ -17,10 +17,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
-import ca.ghost_team.sapp.service.SappAPI;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityRegisterBinding;
 import ca.ghost_team.sapp.model.Utilisateur;
+import ca.ghost_team.sapp.repository.UtilisateurRepo;
+import ca.ghost_team.sapp.service.API.UtilisateurAPI;
+import ca.ghost_team.sapp.service.SappAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,15 +40,11 @@ public class Register extends AppCompatActivity {
     private EditText register_email;
     private TextView sign_in;
     private ImageButton btn_register;
-    private SappDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-        db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
-                .allowMainThreadQueries()
-                .build();
 
         getSupportActionBar().hide();
 
@@ -91,16 +90,18 @@ public class Register extends AppCompatActivity {
                 register_name.requestFocus();
             } else {
 
-                SappAPI api = new SappAPI();
-                api.getApi().createUtilisateurViaAPI(
+                Utilisateur newUser = new Utilisateur(
                         register_name.getText().toString().trim(),
                         register_username.getText().toString().trim(),
                         register_password.getText().toString().trim(),
                         register_email.getText().toString().trim()
-                ).enqueue(new Callback<Utilisateur>() {
+                );
 
+
+
+                SappAPI.getApi().create(UtilisateurAPI.class).createUtilisateurViaAPI(newUser.checksumForRegister()).enqueue(new Callback<String>() {
                     @Override
-                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
+                    public void onResponse(Call<String> call, Response<String> response) {
                         // Si conncetion Failed
                         if (!response.isSuccessful()) {
                             Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
@@ -108,12 +109,31 @@ public class Register extends AppCompatActivity {
                         }
                         Log.i(TAG, "response : " + response);
 
-                        Utilisateur user = response.body();
-                        Log.i(TAG, "user : " + user.toString());
+                        String messageServer = response.body();
+                        Log.i(TAG, "user : " + messageServer);
+
+                        //Decrypter les messages du server
+                        assert messageServer != null;
+                        String messageClean = Utilitaire.decode(messageServer, 5);
+
+                        // Extraire les informations venus du Server
+                        String[] table = messageClean.split("/");
+                        int utilisateurIdFromServer = Integer.parseInt(table[0]);
+                        String utilisateurNomFromServer = table[1];
+                        String utilisateurEmailFromServer = table[2];
 
                         // L'Utilisateur a été inseré dans la base de donnée distante
                         // On peut à présent l'insérer dans la base de données locale
-                        db.utilisateurDao().insertUtilisateur(user);
+                        // avec son mot de passe Hashé
+                        Utilisateur userAuth = new Utilisateur(
+                                utilisateurNomFromServer,
+                                register_username.getText().toString().trim(),
+                                Utilitaire.hashage(register_password.getText().toString().trim()),
+                                utilisateurEmailFromServer
+                        );
+                        userAuth.setIdUtilisateur(utilisateurIdFromServer);
+
+                        new UtilisateurRepo(getApplication()).insertUtilisateur(userAuth);
                         Toast.makeText(Register.this, "Enregistré avec succès", Toast.LENGTH_SHORT).show();
 
                         //Lancer l'activity Main
@@ -124,12 +144,14 @@ public class Register extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Utilisateur> call, Throwable t) {
+                    public void onFailure(Call<String> call, Throwable t) {
                         // Si erreur 404
                         Log.i(TAG, t.getMessage());
                         Log.e(TAG, t.getMessage());
+                        Toast.makeText(Register.this, "Username déjà Utilisée existe déjà", Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         });
     }

@@ -1,11 +1,11 @@
 package ca.ghost_team.sapp;
 
-import androidx.fragment.app.FragmentActivity;
-
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -63,9 +63,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
 
+
         // Add a marker in Sydney and move the camera
         LatLng location = new LatLng(coordonnees[0], coordonnees[1]);
-        Marker marker =  mMap.addMarker(new MarkerOptions()
+        Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(location)
                 .title(titre)
                 .snippet(description)
@@ -73,16 +74,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
         marker.showInfoWindow();
+
     }
 
     public double[] getLatLngByZipcode(String zipcode) throws IOException {
         Geocoder geocoder = new Geocoder(this);
-        List<Address> liste = geocoder.getFromLocationName(zipcode,1);
+        List<Address> liste = geocoder.getFromLocationName(zipcode, 1);
+
+
         double latitude = liste.get(0).getLatitude();
         double longitude = liste.get(0).getLongitude();
-
-
         Log.i("XXXX", "Latitude :" + latitude + "\nLongitude : " + longitude);
-        return new double[]{latitude,longitude};
+        return new double[]{latitude, longitude};
+
     }
 }

@@ -23,7 +23,14 @@ import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceFavoris;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
+import ca.ghost_team.sapp.repository.MessageRepo;
+import ca.ghost_team.sapp.service.API.AnnonceAPI;
+import ca.ghost_team.sapp.service.SappAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
@@ -52,19 +59,48 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
     public void onBindViewHolder(@NonNull AnnonceVendueVH holder, int position) {
         Annonce annonce = listeAnnonceVendue.get(position);
 
-        holder.annonceImage.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        if(!annonce.getAnnonceImage().equals("null"))
+            holder.annonceImage.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        else
+            holder.annonceImage.setImageResource(R.drawable.collection);
+
         holder.annonceTitre.setText(annonce.getAnnonceTitre());
         holder.annonceDescription.setText(annonce.getAnnonceDescription());
         holder.annoncePrice.setText("$" + annonce.getAnnoncePrix());
 
         // Trash
         holder.annonceTrash.setOnClickListener((v)->{
-            Annonce uneAnnonce = listeAnnonceVendue.get(position);
-            listeAnnonceVendue.remove(uneAnnonce);
-            Log.i(TAG,"Annonce " + uneAnnonce + " supprimé");
 
-            // Envoyer une Requête pour supprimer l'Annonce
-            db.annonceDao().deleteAnnonce(uneAnnonce);
+            SappAPI.getApi().create(AnnonceAPI.class).deleteMyAnnonce(
+                    annonce.getIdAnnonce(),
+                    annonce.getUtilisateurId(),
+                    annonce.getAnnonceTitre(),
+                    annonce.getAnnoncePrix()).enqueue(new Callback<Annonce>() {
+                @Override
+                public void onResponse(Call<Annonce> call, Response<Annonce> response) {
+                    // Si conncetion Failed
+                    if (!response.isSuccessful()) {
+                        Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                        return;
+                    }
+
+                    Log.i(TAG, "response : " + response);
+                    Annonce reponse = response.body();
+                    // Envoyer une Requête pour supprimer l'Annonce
+                    assert reponse != null;
+                    db.annonceDao().deleteAnnonce(reponse.getIdAnnonce());
+                }
+
+                @Override
+                public void onFailure(Call<Annonce> call, Throwable t) {
+                    // Si erreur 404
+                    Log.e(TAG, t.getMessage());
+                }
+            });
+
+            /*Annonce uneAnnonce = listeAnnonceVendue.get(position);
+            listeAnnonceVendue.remove(uneAnnonce);*/
+            Log.i(TAG,"Annonce supprimé");
             notifyDataSetChanged();
         });
     }

@@ -18,17 +18,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
+import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutHomeBinding;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
+import ca.ghost_team.sapp.service.API.AnnonceAPI;
 import ca.ghost_team.sapp.service.SappAPI;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 import retrofit2.Call;
@@ -41,7 +46,6 @@ public class Home extends Fragment {
     private final String TAG = Home.class.getSimpleName();
     private AnnonceViewModel annonceViewModel;
     private RecyclerView recyclerViewAnnonce;
-
     private RelativeLayout filterAll;
     private ImageButton filterPant;
     private ImageButton filterTshirt;
@@ -50,6 +54,7 @@ public class Home extends Fragment {
     private ImageButton filterShort;
     private ImageButton filterMore;
     private TextView filterAllText;
+    private SwipeRefreshLayout swipeHome;
     private MainActivity activity;
 
     @Nullable
@@ -62,7 +67,7 @@ public class Home extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((MainActivity) context).setTitle(R.string.home);
+        ((MainActivity) context).setTitle(R.string.market);
         this.activity = (MainActivity) getActivity();
     }
 
@@ -79,6 +84,7 @@ public class Home extends Fragment {
         filterShort = binding.filterShort;
         filterTshirt = binding.filterTshirt;
         filterAllText = binding.filterAllText;
+        swipeHome = binding.swipeHome;
 
         // Evenements au Clic
         filterAll.setOnClickListener(this::filterAllAnnonce);
@@ -112,33 +118,40 @@ public class Home extends Fragment {
         // Setter toutes les modifications de l'Adapter dans le RecyclerView pour l'Affichage
         recyclerViewAnnonce.setAdapter(adapter);
 
-        // Recuperation de toutes les annonces
-        SappAPI api = new SappAPI();
+        swipeHome.setOnRefreshListener(() -> {
+            // Supprimer toutes les annonces dans la table
+            new AnnonceRepo(activity.getApplication()).deleteAllAnnonce();
 
-        Call<List<Annonce>> callApi = api.getApi().getAllAnnonceViaAPI();
-        callApi.enqueue(new Callback<List<Annonce>>() {
-            @Override
-            public void onResponse(Call<List<Annonce>> call, Response<List<Annonce>> response) {
-                // Si conncetion Failed
-                if (!response.isSuccessful()) {
-                    Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
-                    return;
-                }
-                List<Annonce> newAnnonce = response.body();
-                Log.i(TAG, "newAnnonce : " + newAnnonce);
+            //Recuperation de toutes les annonces
+            SappAPI.getApi().create(AnnonceAPI.class)
+                    .getAllAnnonceViaAPI()
+                    .enqueue(new Callback<List<Annonce>>() {
+                        @Override
+                        public void onResponse(Call<List<Annonce>> call, Response<List<Annonce>> response) {
+                            // Si conncetion Failed
+                            if (!response.isSuccessful()) {
+                                Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                                return;
+                            }
+                            List<Annonce> newAnnonce = response.body();
+                            Log.i(TAG, "newAnnonce : " + newAnnonce);
+                            // inserer l'annonce dans la base de données locale via le Repository
+                            assert newAnnonce != null;
+                            Annonce[] tableAnnonce = new Annonce[newAnnonce.size()];
+                            newAnnonce.toArray(tableAnnonce);
+                            new AnnonceRepo(activity.getApplication()).insertAllAnnonce(tableAnnonce);
+                        }
 
-                // inserer l'annonce dans la base de données locale via le Repository
-                for (Annonce annonce : newAnnonce) {
-                    new AnnonceRepo(activity.getApplication()).insertAnnonce(annonce);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Annonce>> call, Throwable t) {
-                // Si erreur 404
-                Log.e(TAG, t.getMessage());
-            }
+                        @Override
+                        public void onFailure(Call<List<Annonce>> call, Throwable t) {
+                            // Si erreur 404
+                            Log.e(TAG, t.getMessage());
+                        }
+                    });
+            swipeHome.setRefreshing(false);
         });
+
+
     }
 
     /**
@@ -151,15 +164,12 @@ public class Home extends Fragment {
      */
     public void filterList(int categorie) {
         List<Annonce> annonceFilteredList = new ArrayList<>();
-
         annonceViewModel.getAllAnnonces().observe(getViewLifecycleOwner(), annonces -> {
-
             for (Annonce annonce : annonces) {
                 if (annonce.getCategorieId() == categorie) {
                     annonceFilteredList.add(annonce);
                 }
             }
-
             adapter.addAnnonce(annonceFilteredList);
             recyclerViewAnnonce.setAdapter(adapter);
             Log.i(TAG, "Method Filter Generic finished");
@@ -167,42 +177,49 @@ public class Home extends Fragment {
     }
 
     private void filterPantAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.pants);
         initColorFilter();
         filterPant.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterList(1);
     }
 
     private void filterTshirtAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.Tshirt);
         initColorFilter();
         filterTshirt.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterList(2);
     }
 
     private void filterHoodieAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.Hoodie);
         initColorFilter();
         filterHoodie.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterList(3);
     }
 
     private void filterShortAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.Short);
         initColorFilter();
         filterShort.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterList(4);
     }
 
     private void filterCapAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.Cap);
         initColorFilter();
         filterCap.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterList(5);
     }
 
     private void filterMoreAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.Other);
         initColorFilter();
         filterMore.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterList(6);
     }
 
     private void filterAllAnnonce(View view) {
+        Objects.requireNonNull(getActivity()).setTitle(R.string.market);
         initColorFilter();
         filterAll.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.bg_white_rounded_yellow));
         filterAllText.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
@@ -212,7 +229,6 @@ public class Home extends Fragment {
         });
         recyclerViewAnnonce.setAdapter(adapter);
     }
-
 
     /**
      * Methode qui permet de réinitilaiser les couleurs de Background de les ImageButton lorsqu'on clique sur un filtre en particulier
@@ -230,26 +246,3 @@ public class Home extends Fragment {
         filterCap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bg_white_rounded_dark));
     }
 }
-
-//new Callback<Annonce>() {
-//@Override
-//public void onResponse(Call<Annonce> call, Response<Annonce> response) {
-//        // Si conncetion Failed
-//        if (!response.isSuccessful()) {
-//        Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
-//        return;
-//        }
-//        Annonce newAnnonce =  response.body();
-//        Log.i(TAG, "newAnnonce : " + newAnnonce);
-//
-//        // inserer l'annonce dans la base de données locale via le Repository
-////                for (Annonce annonce : newAnnonce) {
-////                    new AnnonceRepo(activity.getApplication()).insertAnnonce(annonce);
-////                }
-//        }
-//@Override
-//public void onFailure(Call<Annonce> call, Throwable t) {
-//        // Si erreur 404
-//        Log.e(TAG, t.getMessage());
-//        }
-//        }

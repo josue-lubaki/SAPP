@@ -1,182 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <RelativeLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp">
 
         <RelativeLayout
-            android:id="@+id/champsInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/informations"
+            <RelativeLayout
+                android:id="@+id/champsInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:text="@string/MesInformations"
-                android:textColor="@color/yellow"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/ChampsNomUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/informations"
-                android:layout_marginTop="15sp"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/informations"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:paddingStart="10dp"
-                    android:text="@string/names"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:text="@string/MesInformations"
+                    android:textColor="@color/yellow"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/infoNameUser"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/champsPhoto"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:paddingStart="5dp"
-                    android:text="@string/names"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:gravity="center"
+                    android:layout_marginVertical="15dp"
+                    android:layout_below="@+id/informations">
 
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/profile_pic"
+                        android:background="@drawable/bg_white_rounded_profil"
+                        android:src="@drawable/user_64"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"/>
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ChampsUsernameUser"
+                <LinearLayout
+                    android:id="@+id/ChampsNomUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/champsPhoto"
+                    android:layout_marginTop="15sp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="@string/names"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/infoNameUser"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/names"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ChampsUsernameUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ChampsNomUser"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="@string/username"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/infoUsernameUser"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/username"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ChampsEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ChampsUsernameUser"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="@string/emails"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/infoEmailUser"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/emails"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/annonceVendueContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ChampsNomUser"
+                android:layout_below="@id/champsInfo"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center"
+                android:background="@color/BackgroundAnnonce">
+
+                <ImageButton
+                    android:id="@+id/icon_myAnnonce"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/bg_white_rounded"
+                    android:src="@drawable/paper" />
+
+                <TextView
+                    android:layout_toEndOf="@+id/icon_myAnnonce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="20dp"
+                    android:text="@string/myAnnonce"
+                    android:textColor="@color/yellow"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/logout_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/annonceVendueContainer"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center"
+                android:background="@color/BackgroundAnnonce">
+
+
+                <ImageButton
+                    android:id="@+id/logout_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/bg_white_rounded"
+                    android:src="@drawable/ic_logout" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_toEndOf="@+id/logout_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="10dp"
-                    android:text="@string/username"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:paddingVertical="20dp"
+                    android:text="@string/quit"
+                    android:textColor="@color/yellow"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
+            </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/infoUsernameUser"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:paddingStart="5dp"
-                    android:text="@string/username"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ChampsEmail"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ChampsUsernameUser"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="10dp"
-                    android:text="@string/emails"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/infoEmailUser"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:paddingStart="5dp"
-                    android:text="@string/emails"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
+                android:text="@string/copyright"
+                android:layout_below="@id/logout_container"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/yellow"/>
         </RelativeLayout>
 
+    </androidx.core.widget.NestedScrollView>
 
-        <RelativeLayout
-            android:id="@+id/annonceVendueContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/champsInfo"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:background="@color/BackgroundAnnonce">
-
-            <ImageButton
-                android:id="@+id/icon_myAnnonce"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/bg_white_rounded"
-                android:src="@drawable/paper" />
-
-            <TextView
-                android:layout_toEndOf="@+id/icon_myAnnonce"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="20dp"
-                android:text="@string/myAnnonce"
-                android:textColor="@color/yellow"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/logout_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/annonceVendueContainer"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:background="@color/BackgroundAnnonce">
-
-
-            <ImageButton
-                android:id="@+id/logout_btn"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/bg_white_rounded"
-                android:src="@drawable/ic_logout" />
-
-            <TextView
-                android:layout_toEndOf="@+id/logout_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="20dp"
-                android:text="@string/quit"
-                android:textColor="@color/yellow"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/copyright"
-            android:layout_below="@id/logout_container"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:textColor="@color/yellow"/>
-
-    </RelativeLayout>
 </layout>
