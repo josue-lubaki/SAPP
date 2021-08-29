@@ -15,6 +15,9 @@ import androidx.room.Room;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.Utils.Utilitaire;
@@ -89,6 +92,19 @@ public class Register extends AppCompatActivity {
                 // Mettre le Focus dur le champs Username
                 register_name.requestFocus();
             } else {
+
+                // Vérifier le mot de passe
+                Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+                Matcher m = p.matcher(register_password.getText());
+                boolean isContainSpecialCharacter = m.find();
+                if (isContainSpecialCharacter){
+                    register_password.setError("Format no correct");
+                    Snackbar.make(v, "the password must not have a special character", 5000)
+                            .setAction("I understand", d -> {
+                            }).show();
+                    return;
+                }
+
 
                 Utilisateur newUser = new Utilisateur(
                         register_name.getText().toString().trim(),

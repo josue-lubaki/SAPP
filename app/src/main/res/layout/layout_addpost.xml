@@ -15,6 +15,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1.75"
                 android:layout_marginHorizontal="5dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -23,6 +24,7 @@
                     android:layout_height="100dp"
                     android:layout_weight="2"
                     android:src="@drawable/chemise"
+                    android:scaleType="fitXY"
                     android:contentDescription="imagePrise" />
 
                 <Button
