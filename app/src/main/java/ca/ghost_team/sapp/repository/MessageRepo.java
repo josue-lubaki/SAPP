@@ -48,7 +48,7 @@ public class MessageRepo {
         new DeleteMessageAsyncTask (dao).execute();
     }
 
-    public void sendMessage(Message message){
+    public void sendMessage(Message... message){
         new SendMessageAsyncTask(dao).execute(message);
     }
 
@@ -66,8 +66,7 @@ public class MessageRepo {
 
         @Override
         protected Void doInBackground(Message... message) {
-            //for(Message msg : message)
-            unMessageDao.sendMessage(message[0]);
+            unMessageDao.sendMessage(message);
             return null;
         }
 
@@ -84,10 +83,8 @@ public class MessageRepo {
         @Override
         protected Void  doInBackground(Void... Void) {
             unMessageDao.deleteAllAMessage();
-
             return null;
         }
-
     }
 
     private static class MessageReadAsyncTask extends AsyncTask<Message, Void, Void> {

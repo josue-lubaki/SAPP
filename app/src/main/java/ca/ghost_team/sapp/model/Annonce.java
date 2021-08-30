@@ -25,26 +25,21 @@ public class Annonce {
     @PrimaryKey(autoGenerate = true)
     private int idAnnonce;
 
-    // @SerializedName("image")
     @ColumnInfo(name = "annonceImage")
-    private String annonceImage;
+    private long annonceImage;
 
-    //  @SerializedName("titre")
     @ColumnInfo(name = "annonceTitre")
     private String annonceTitre;
 
-    // @SerializedName("description")
     @ColumnInfo(name = "annonceDescription")
     private String annonceDescription;
 
-    // @SerializedName("prix")
     @ColumnInfo(name = "annoncePrix")
     private int annoncePrix;
 
     @ColumnInfo(name = "annonceDate")
     private String annonceDate;
 
-    //  @SerializedName("zip")
     @ColumnInfo(name = "annonceZip")
     private String annonceZip;
 
@@ -52,7 +47,7 @@ public class Annonce {
     private int utilisateurId;
     private int categorieId;
 
-    public Annonce(String annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, String annonceDate, String annonceZip, int utilisateurId, int categorieId) {
+    public Annonce(long annonceImage, String annonceTitre, String annonceDescription, int annoncePrix, String annonceDate, String annonceZip, int utilisateurId, int categorieId) {
         this.annonceImage = annonceImage;
         this.annonceTitre = annonceTitre;
         this.annonceDescription = annonceDescription;
@@ -71,11 +66,11 @@ public class Annonce {
         this.idAnnonce = idAnnonce;
     }
 
-    public String getAnnonceImage() {
+    public long getAnnonceImage() {
         return annonceImage;
     }
 
-    public void setAnnonceImage(String annonceImage) {
+    public void setAnnonceImage(long annonceImage) {
         this.annonceImage = annonceImage;
     }
 

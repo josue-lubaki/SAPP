@@ -31,6 +31,7 @@ public class BaseApplication extends MultiDexApplication {
     public static final String CHANNEL_DEFAULT = "ca.ghost_team.sapp.default.level";
     public static String NAME_DB = "SappDatabase";
     public static int ID_USER_CURRENT;
+    public static String BASE_URL = "http://192.168.0.38/sappserver/";
     public static boolean SAVEDME;
     private SappDatabase db;
     private AnnonceRepo annonceRepo;

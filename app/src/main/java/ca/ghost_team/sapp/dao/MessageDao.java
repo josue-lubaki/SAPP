@@ -24,7 +24,11 @@ public interface MessageDao {
     LiveData<List<Message>> allMessagesBetween(int idUser, int idSender, int idAnnonce);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void sendMessage(Message... message);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void sendMessage(Message message);
+
 
     /*@Insert(onConflict = OnConflictStrategy.IGNORE)
     void sendMessage(Message... message);*/

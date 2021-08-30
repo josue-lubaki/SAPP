@@ -17,6 +17,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +32,7 @@ import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.AnnonceFavoris;
+import ca.ghost_team.sapp.model.AnnonceImage;
 import ca.ghost_team.sapp.repository.AnnonceFavorisRepo;
 import ca.ghost_team.sapp.service.API.AnnonceFavorisAPI;
 import ca.ghost_team.sapp.service.SappAPI;
@@ -91,8 +95,15 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
         Annonce uneAnnonce = listeAnnonces.get(position);
 
-        if(!uneAnnonce.getAnnonceImage().equals("null"))
-            holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
+        // Récuperer l'Id de l'image pour le rechercher sur le net
+        String location = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage()).getLocation();
+        String url = BaseApplication.BASE_URL + location;
+        if(uneAnnonce.getAnnonceImage() != 0){
+            Picasso.with(context)
+                    .load(url)
+                    .fit()
+                    .into(holder.imageAnnonce);
+        }
         else
             holder.imageAnnonce.setImageResource(R.drawable.collection);
 
@@ -135,7 +146,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
             intent.putExtra(ANNONCE_ID_REQUEST, uneAnnonce.getIdAnnonce());
-            intent.putExtra(ANNONCE_IMAGE_REQUEST, uneAnnonce.getAnnonceImage().trim());
+            intent.putExtra(ANNONCE_IMAGE_REQUEST, url);
             intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonceTitre().trim());
             intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnoncePrix());
             intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonceDescription().trim());

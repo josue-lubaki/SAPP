@@ -106,10 +106,6 @@ public class Messages extends Fragment {
                     Message[] tablMessage = new Message[newMessage.size()];
                     newMessage.toArray(tablMessage);
 
-
-
-
-
                     for (Message msd : tablMessage)
                         new MessageRepo(activity.getApplication()).sendMessage(msd);
 

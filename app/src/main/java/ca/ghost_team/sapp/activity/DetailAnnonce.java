@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MapsActivity;
 import ca.ghost_team.sapp.R;
@@ -69,7 +72,7 @@ public class DetailAnnonce extends AppCompatActivity {
         // Create Bundle
         Bundle bundle = getIntent().getExtras();
         int id_annonce = bundle.getInt(AnnonceAdapter.ANNONCE_ID_REQUEST);
-        String annonce_image = bundle.getString(AnnonceAdapter.ANNONCE_IMAGE_REQUEST);
+        String annonce_image = bundle.getString(AnnonceAdapter.ANNONCE_IMAGE_REQUEST); // Ceci correspond à URL (Location)
         String annonce_titre = bundle.getString(AnnonceAdapter.ANNONCE_TITRE_REQUEST);
         int annonce_prix = bundle.getInt(AnnonceAdapter.ANNONCE_PRICE_REQUEST);
         String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
@@ -91,9 +94,13 @@ public class DetailAnnonce extends AppCompatActivity {
             System.out.println("Info vendeur : " + vendeur.toString());
             // Set Information to Fields
             detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
-            if (!annonce_image.equals("null"))
-                detail_image_annonce.setImageURI(Uri.parse(annonce_image));
-            else
+            if (!annonce_image.equals("null")){
+                Glide.with(this)
+                        .load(annonce_image)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(detail_image_annonce);
+            }else
                 detail_image_annonce.setImageResource(R.drawable.collection);
             detail_tv_titre.setText(annonce_titre);
             detail_tv_prix.setText("$" + annonce_prix);

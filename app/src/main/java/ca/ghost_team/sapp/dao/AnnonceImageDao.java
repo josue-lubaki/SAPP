@@ -26,8 +26,8 @@ public interface AnnonceImageDao {
     LiveData<List<AnnonceImage>> allAnnoncesImages();
 
     // Requête qui permet de récuperer une annonceImage par rapport à une Annonce
-    @Query("SELECT * FROM annonceTable WHERE annonceImage = :annonceImageId")
-    LiveData<List<Annonce>> findAnnonceImageByAnnonce(int annonceImageId);
+    @Query("SELECT * FROM annonceimagetable WHERE idAnnonceImage = :annonceImageId")
+    AnnonceImage findLocationAnnonceImageByAnnonce(long annonceImageId);
 
     @Query("DELETE FROM annonceimagetable WHERE idAnnonceImage =:idAnnonceImage")
     void deleteAnnonceImage(int idAnnonceImage);

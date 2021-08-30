@@ -16,6 +16,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +61,14 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
     @Override
     public void onBindViewHolder(@NonNull AnnonceVendueVH holder, int position) {
         Annonce annonce = listeAnnonceVendue.get(position);
-
-        if(!annonce.getAnnonceImage().equals("null"))
-            holder.annonceImage.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        String location = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage()).getLocation();
+        String url = BaseApplication.BASE_URL + location;
+        if(annonce.getAnnonceImage() != 0){
+            Picasso.with(context)
+                    .load(url)
+                    .into(holder.annonceImage);
+//            holder.annonceImage.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        }
         else
             holder.annonceImage.setImageResource(R.drawable.collection);
 

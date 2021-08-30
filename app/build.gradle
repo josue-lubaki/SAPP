@@ -62,7 +62,13 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
     implementation 'com.android.support:multidex:2.0.1'
-    implementation ("com.github.bumptech.glide:glide:4.11.0@aar") {
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    implementation ("com.github.bumptech.glide:glide:4.9.0") {
+        exclude group: "com.android.support"
+    }
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation ("com.github.bumptech.glide:glide:4.9.0@aar") {
         transitive = true
     }
     // Retrofit
@@ -70,5 +76,8 @@ dependencies {
 
     // Converter using GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
 }

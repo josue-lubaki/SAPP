@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +61,15 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     @Override
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
+        String location = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage()).getLocation();
+        String url = BaseApplication.BASE_URL + location;
 
-        if(!annonce.getAnnonceImage().equals("null"))
-            holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
-        else
+        if(annonce.getAnnonceImage() != 0){
+            Picasso.with(context)
+                    .load(url)
+                    .into(holder.imageAnnonce);
+//            holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
+        } else
             holder.imageAnnonce.setImageResource(R.drawable.collection);
 
         holder.titre.setText(annonce.getAnnonceTitre());
