@@ -2,16 +2,12 @@ package ca.ghost_team.sapp.navigation;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.FileUriExposedException;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -31,15 +27,9 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
-import androidx.room.util.FileUtil;
-
-import com.bumptech.glide.Glide;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,17 +44,11 @@ import ca.ghost_team.sapp.databinding.LayoutAddpostBinding;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
 import ca.ghost_team.sapp.service.API.AnnonceAPI;
-import ca.ghost_team.sapp.service.API.UtilisateurAPI;
 import ca.ghost_team.sapp.service.SappAPI;
-import ca.ghost_team.sapp.service.dto.ImageDTO;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
+import static java.lang.Thread.sleep;
 
 import static ca.ghost_team.sapp.Utils.Utilitaire.toTimeStr;
 
@@ -223,7 +207,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), fileUri);
             reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 40000);
-            binder.addPostCapture.setImageBitmap(reducedBitmap);
+            binder.addPostCapture.setImageBitmap(bitmap);
             Log.i(TAG, "Je viens de setter l'image Bitmap reducedBitmap");
         } catch (IOException e) {
             e.printStackTrace();
@@ -301,6 +285,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                     Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
                     return;
                 }
+
                 Annonce newAnnonce =  response.body();
 
                 Log.i(TAG, "response.body = " + response);

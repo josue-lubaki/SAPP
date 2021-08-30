@@ -96,7 +96,11 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         Annonce uneAnnonce = listeAnnonces.get(position);
 
         // Récuperer l'Id de l'image pour le rechercher sur le net
-        String location = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage()).getLocation();
+        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
+        if( annonceImage == null){
+            return;
+        }
+        String location = annonceImage.getLocation();
         String url = BaseApplication.BASE_URL + location;
         if(uneAnnonce.getAnnonceImage() != 0){
             Picasso.with(context)

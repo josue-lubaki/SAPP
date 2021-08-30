@@ -27,6 +27,7 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.AnnonceFavoris;
+import ca.ghost_team.sapp.model.AnnonceImage;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
 import ca.ghost_team.sapp.repository.MessageRepo;
 import ca.ghost_team.sapp.service.API.AnnonceAPI;
@@ -61,7 +62,11 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
     @Override
     public void onBindViewHolder(@NonNull AnnonceVendueVH holder, int position) {
         Annonce annonce = listeAnnonceVendue.get(position);
-        String location = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage()).getLocation();
+        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
+        if( annonceImage == null){
+            return;
+        }
+        String location = annonceImage.getLocation();
         String url = BaseApplication.BASE_URL + location;
         if(annonce.getAnnonceImage() != 0){
             Picasso.with(context)

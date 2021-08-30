@@ -28,6 +28,7 @@ import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.AnnonceFavoris;
+import ca.ghost_team.sapp.model.AnnonceImage;
 
 import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 
@@ -61,7 +62,12 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     @Override
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
-        String location = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage()).getLocation();
+
+        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
+        if(annonceImage == null){
+            return;
+        }
+        String location = annonceImage.getLocation();
         String url = BaseApplication.BASE_URL + location;
 
         if(annonce.getAnnonceImage() != 0){
