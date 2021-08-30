@@ -32,8 +32,11 @@ import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutHomeBinding;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceImage;
+import ca.ghost_team.sapp.repository.AnnonceImageRepo;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
 import ca.ghost_team.sapp.service.API.AnnonceAPI;
+import ca.ghost_team.sapp.service.API.AnnonceImageAPI;
 import ca.ghost_team.sapp.service.SappAPI;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 import retrofit2.Call;
@@ -148,6 +151,34 @@ public class Home extends Fragment {
                             Log.e(TAG, t.getMessage());
                         }
                     });
+
+            //Recuperation de toutes les annonces
+            SappAPI.getApi().create(AnnonceImageAPI.class)
+                    .getAllAnnoncesImagesViaAPI()
+                    .enqueue(new Callback<List<AnnonceImage>>() {
+                        @Override
+                        public void onResponse(Call<List<AnnonceImage>> call, Response<List<AnnonceImage>> response) {
+                            // Si conncetion Failed
+                            if (!response.isSuccessful()) {
+                                Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                                return;
+                            }
+                            List<AnnonceImage> newAnnonceImage = response.body();
+                            Log.i(TAG, "newAnnonce : " + newAnnonceImage);
+                            // inserer l'annonce dans la base de données locale via le Repository
+                            assert newAnnonceImage != null;
+                            AnnonceImage[] tableAnnonceImage = new AnnonceImage[newAnnonceImage.size()];
+                            newAnnonceImage.toArray(tableAnnonceImage);
+                            new AnnonceImageRepo(activity.getApplication()).insertAllAnnonceImage(tableAnnonceImage);
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<AnnonceImage>> call, Throwable t) {
+                            // Si erreur 404
+                            Log.e(TAG, t.getMessage());
+                        }
+                    });
+
             swipeHome.setRefreshing(false);
         });
 

@@ -280,61 +280,41 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         Log.i(TAG,"valeur de toTimeStr(new Date() : " + toTimeStr(new Date()));
         Log.i(TAG,"valeur de new Date() : " + new Date());
 
-//        RequestBody datePart = RequestBody.create(MultipartBody.FORM, String.valueOf(System.currentTimeMillis()));
-//
-//        File originalFile = new File(path.getPath());
-//        RequestBody filePart = RequestBody.create(MediaType.parse("image/*"), originalFile);
-//        MultipartBody.Part files = MultipartBody.Part.createFormData("photo", originalFile.getName(), filePart);
-
-        String datePart = String.valueOf(System.currentTimeMillis());
-
-
-        SappAPI.getApi().create(AnnonceAPI.class).uploadImage(encodeImage, datePart).enqueue(new Callback<ImageDTO>() {
+        /**
+         * Création de l'Annonce
+         * Le Serveur va sauvergarder l'annonce et l'image de celle-ci
+         * */
+        SappAPI.getApi().create(AnnonceAPI.class).createAnnonceViaAPI(
+                encodeImage,
+                titre.getText().toString(),
+                description.getText().toString(),
+                Integer.parseInt(prix.getText().toString()),
+                String.valueOf(new Date()),
+                codePostal.getText().toString().trim(),
+                BaseApplication.ID_USER_CURRENT,
+                idCategorie
+        ).enqueue(new Callback<Annonce>() {
             @Override
-            public void onResponse(Call<ImageDTO> call, Response<ImageDTO> response) {
-                Toast.makeText(activity, "Yeahhhhhhhh, ON A REUSSI", Toast.LENGTH_SHORT).show();
-                ImageDTO responseImage = response.body();
-                Log.i(TAG, "Voici Image Response : " + responseImage.toString());
+            public void onResponse(Call<Annonce> call, Response<Annonce> response) {
+                // Si conncetion Failed
+                if (!response.isSuccessful()) {
+                    Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                    return;
+                }
+                Annonce newAnnonce =  response.body();
+
+                Log.i(TAG, "response.body = " + response);
+                // inserer l'annonce dans la base de données locale via le Repository
+                new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
+                Toast.makeText(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
+                Log.i(TAG, "Annonce inserted !");
             }
-
             @Override
-            public void onFailure(Call<ImageDTO> call, Throwable t) {
-                Toast.makeText(activity, "NOOOOOOOO", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Annonce> call, Throwable t) {
+                // Si erreur 404
+                Log.e(TAG, t.getMessage());
             }
         });
-
-
-//        SappAPI.getApi().create(AnnonceAPI.class).createAnnonceViaGetAPI(
-//                String.valueOf(temp),
-//                titre.getText().toString(),
-//                description.getText().toString(),
-//                Integer.parseInt(prix.getText().toString()),
-//                String.valueOf(new Date()),
-//                codePostal.getText().toString().trim(),
-//                BaseApplication.ID_USER_CURRENT,
-//                idCategorie
-//        ).enqueue(new Callback<Annonce>() {
-//            @Override
-//            public void onResponse(Call<Annonce> call, Response<Annonce> response) {
-//                // Si conncetion Failed
-//                if (!response.isSuccessful()) {
-//                    Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
-//                    return;
-//                }
-//                Annonce newAnnonce =  response.body();
-//
-//                Log.i(TAG, "response.body = " + response);
-//                // inserer l'annonce dans la base de données locale via le Repository
-//                new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
-//                Toast.makeText(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
-//                Log.i(TAG, "Annonce inserted !");
-//            }
-//            @Override
-//            public void onFailure(Call<Annonce> call, Throwable t) {
-//                // Si erreur 404
-//                Log.e(TAG, t.getMessage());
-//            }
-//        });
 
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);

@@ -20,7 +20,7 @@ public interface AnnonceAPI {
     @FormUrlEncoded
     @POST("createannonce.php")
     Call<Annonce> createAnnonceViaAPI(
-            @Field("image") String image,
+            @Field("photo") String image,
             @Field("titre") String titre,
             @Field("description") String description,
             @Field("prix") int prix,
@@ -36,11 +36,11 @@ public interface AnnonceAPI {
 
     @FormUrlEncoded
     @POST("upload.php")
-    Call<ImageDTO> uploadImage(@Field("photo") String photoEncode, @Field("date") String date);
+    Call<ImageDTO> uploadImage(@Field("photo") String photoEncode);
 
     @GET("createannonce.php")
     Call<Annonce> createAnnonceViaGetAPI(
-            @Query("image") String image,
+            @Query("photo") String imageId,
             @Query("titre") String titre,
             @Query("description") String description,
             @Query("prix") int prix,
