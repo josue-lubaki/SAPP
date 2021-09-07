@@ -152,7 +152,7 @@ public class Home extends Fragment {
                         }
                     });
 
-            //Recuperation de toutes les annonces
+            //Recuperation de toutes les images
             SappAPI.getApi().create(AnnonceImageAPI.class)
                     .getAllAnnoncesImagesViaAPI()
                     .enqueue(new Callback<List<AnnonceImage>>() {

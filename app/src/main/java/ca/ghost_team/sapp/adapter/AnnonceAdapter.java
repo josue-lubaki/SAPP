@@ -97,12 +97,10 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
 
         // Récuperer l'Id de l'image pour le rechercher sur le net
         AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
-        if( annonceImage == null){
-            return;
-        }
-        String location = annonceImage.getLocation();
-        String url = BaseApplication.BASE_URL + location;
-        if(uneAnnonce.getAnnonceImage() != 0){
+
+        if(annonceImage != null && uneAnnonce.getAnnonceImage() != 0){
+            String location = annonceImage.getLocation();
+            String url = BaseApplication.BASE_URL + location;
             Picasso.with(context)
                     .load(url)
                     .fit()
@@ -150,7 +148,18 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
             intent.putExtra(ANNONCE_ID_REQUEST, uneAnnonce.getIdAnnonce());
-            intent.putExtra(ANNONCE_IMAGE_REQUEST, url);
+
+            String location = annonceImage.getLocation();
+            String url = BaseApplication.BASE_URL + location;
+
+            if(annonceImage != null && uneAnnonce.getAnnonceImage() != 0){
+                intent.putExtra(ANNONCE_IMAGE_REQUEST, url);
+            }
+            else{
+                intent.putExtra(ANNONCE_IMAGE_REQUEST, "null");
+            }
+
+
             intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonceTitre().trim());
             intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnoncePrix());
             intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonceDescription().trim());
