@@ -1,163 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BackgroundSplash"
-        android:orientation="vertical"
-        tools:context=".activity.DetailAnnonce">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/layout_group_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_detail"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/Widget.AppCompat.Toolbar"
-                android:background="@color/black"
-                app:popupTheme="@style/Theme.AppCompat.Light">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:id="@+id/tv_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/yellow"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:textSize="22sp"
-                            android:text="@string/detail"/>
-
-                    </RelativeLayout>
-                    <ImageButton
-                        android:id="@+id/optionMaps"
-                        android:layout_width="50dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/BackgroundAnnonce"
-                        android:src="@drawable/maps"/>
-                </LinearLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <ImageView
-            android:id="@+id/vendeur_image_article"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:paddingTop="5dp"
-            android:layout_marginHorizontal="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/collection" />
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0">
-
-            <ImageButton
-                android:id="@+id/vendeur_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_margin="12dp"
-                android:background="@drawable/bg_white_rounded_medium"
-                android:src="@drawable/user" />
-
-            <TextView
-                android:id="@+id/vendeur_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_toEndOf="@id/vendeur_image"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/vendeur_contacter"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:textColor="@color/black"
-                app:backgroundTint="@color/yellow"
-                android:background="@drawable/bg_white_rounded_large"
-                android:text="Contacter" />
-
-
-        </RelativeLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@color/BackgroundSplash"
+            android:orientation="vertical"
+            tools:context=".activity.DetailAnnonce">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/layout_group_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/Widget.AppCompat.Toolbar"
+                    android:background="@color/black"
+                    app:popupTheme="@style/Theme.AppCompat.Light">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/tv_detail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/yellow"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:textSize="22sp"
+                                android:text="@string/detail"/>
+
+                        </RelativeLayout>
+                        <ImageButton
+                            android:id="@+id/optionMaps"
+                            android:layout_width="50dp"
+                            android:layout_margin="5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BackgroundAnnonce"
+                            android:src="@drawable/maps"/>
+                    </LinearLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <ImageView
+                android:id="@+id/vendeur_image_article"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="4"
+                android:paddingTop="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/collection" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0">
+
+                <ImageButton
+                    android:id="@+id/vendeur_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/bg_white_rounded_medium"
+                    android:src="@drawable/user" />
+
+                <TextView
+                    android:id="@+id/vendeur_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_toEndOf="@id/vendeur_image"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/vendeur_contacter"
+                    android:layout_width="125dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/yellow"
+                    android:background="@drawable/bg_white_rounded_large"
+                    android:text="Contacter" />
+
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="8dp"
-                android:background="@color/BackgroundAnnonce"
-                android:layout_margin="15dp"
+                android:layout_height="180dp"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/vendeur_titre"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/titreAnnonce"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/vendeur_prix"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="25dp"
-                        android:text="@string/_40"
-                        android:textColor="@color/yellow"
-                        android:textSize="35sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/vendeur_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_margin="15dp"
+                    android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:padding="15dp"
-                    android:text="@string/remplissage"
-                    android:textColor="@color/white" />
+                    android:background="@color/BackgroundAnnonce"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/vendeur_titre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/titreAnnonce"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/vendeur_prix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="25dp"
+                            android:text="@string/_40"
+                            android:textColor="@color/yellow"
+                            android:textSize="35sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/vendeur_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:text="@string/remplissage"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
