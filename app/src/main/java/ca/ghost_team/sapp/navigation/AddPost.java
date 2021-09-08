@@ -260,7 +260,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             return;
         }
 
-        Log.i(TAG,"valeur de String.valueOf(new Date() : " + String.valueOf(new Date()));
+        Log.i(TAG,"valeur de String.valueOf(new Date() : " + new Date());
         Log.i(TAG,"valeur de toTimeStr(new Date() : " + toTimeStr(new Date()));
         Log.i(TAG,"valeur de new Date() : " + new Date());
 

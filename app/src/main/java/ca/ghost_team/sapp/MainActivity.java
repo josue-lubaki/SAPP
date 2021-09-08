@@ -176,7 +176,9 @@ public class MainActivity extends AppCompatActivity{
                 })
                 .setNegativeButton(R.string.confirmNo, (dialog, which) -> {
                     dialog.cancel();
-                }).create().show();
+                })
+                .create()
+                .show();
     }
 
     @Override

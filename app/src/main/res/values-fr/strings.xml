@@ -20,6 +20,7 @@
     <string name="confirmYes">Oui</string>
     <string name="confirmNo">Non</string>
     <string name="confirmExit">Êtes-vous sûre de vouloir quitter ?</string>
+    <string name="confirmAnnonceDelete">Êtes-vous sûr de vouloir supprimer cette offre ?</string>
     <string name="username">Pseudo</string>
     <string name="password">Mot de Passe</string>
     <string name="log_in">Connecter</string>
@@ -31,7 +32,7 @@
     <string name="sign_in">Connecter</string>
     <string name="names">Nom</string>
     <string name="description">Description</string>
-    <string name="takePicture">Prendre une Photo</string>
+    <string name="takePicture">Charger une Photo</string>
     <string name="codePostal">Code Postal</string>
     <string name="publier">Publier</string>
     <string name="MesInformations">Mes Informations</string>
