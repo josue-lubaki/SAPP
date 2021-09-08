@@ -1,9 +1,11 @@
 package ca.ghost_team.sapp;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -160,6 +162,23 @@ public class MainActivity extends AppCompatActivity{
         navBar.setOnReselectListener(item -> {});
     }
 
+    /**
+     * Methode qui permet de confirmer si l'Utilisateur veut quitter l'application
+     * @return void
+     * */
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.confirmExit)
+                .setCancelable(false)
+                .setPositiveButton(R.string.confirmYes, (dialog, which) -> {
+                    MainActivity.super.onBackPressed();
+                })
+                .setNegativeButton(R.string.confirmNo, (dialog, which) -> {
+                    dialog.cancel();
+                }).create().show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -180,7 +199,8 @@ public class MainActivity extends AppCompatActivity{
      * Methode qui permet de remplacer des Fragments sur le container principal de l'Activité
      * @param fragment le fragment dont il faut afficher
      *
-     * @return void*/
+     * @return void
+     * */
     public void showFragment(Class<? extends Fragment> fragment) {
         try {
             Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragment.getName());

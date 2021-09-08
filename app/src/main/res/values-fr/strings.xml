@@ -17,6 +17,9 @@
         when an unknown printer took a galley of type and scrambled it to make a type specimen book.strings.xml
     </string>
     <string name="_40">$40</string>
+    <string name="confirmYes">Oui</string>
+    <string name="confirmNo">Non</string>
+    <string name="confirmExit">Êtes-vous sûre de vouloir quitter ?</string>
     <string name="username">Pseudo</string>
     <string name="password">Mot de Passe</string>
     <string name="log_in">Connecter</string>
