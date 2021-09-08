@@ -1,5 +1,6 @@
 package ca.ghost_team.sapp.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -72,7 +73,6 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
             Picasso.with(context)
                     .load(url)
                     .into(holder.annonceImage);
-//            holder.annonceImage.setImageURI(Uri.parse(annonce.getAnnonceImage()));
         }
         else
             holder.annonceImage.setImageResource(R.drawable.collection);
@@ -84,40 +84,63 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
         // Trash
         holder.annonceTrash.setOnClickListener((v)->{
 
-            SappAPI.getApi().create(AnnonceAPI.class).deleteMyAnnonce(
-                    annonce.getIdAnnonce(),
-                    annonce.getUtilisateurId(),
-                    annonce.getAnnonceTitre(),
-                    annonce.getAnnoncePrix()).enqueue(new Callback<Annonce>() {
-                @Override
-                public void onResponse(Call<Annonce> call, Response<Annonce> response) {
-                    // Si conncetion Failed
-                    if (!response.isSuccessful()) {
-                        Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
-                        return;
-                    }
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.confirmAnnonceDelete)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.confirmYes, (dialog, which)->{
+                        // Supprimer sur la liste (ROOM)
+                        Annonce uneAnnonce = listeAnnonceVendue.get(position);
+                        listeAnnonceVendue.remove(uneAnnonce);
+                        Log.i(TAG,"Annonce supprimé");
+                        notifyDataSetChanged();
 
-                    Log.i(TAG, "response : " + response);
-                    Annonce reponse = response.body();
-                    // Envoyer une Requête pour supprimer l'Annonce
-                    assert reponse != null;
-                    db.annonceDao().deleteAnnonce(reponse.getIdAnnonce());
-                }
+                        // Methode qui permet de supprimer une annonce via API
+                        suppressionAnnonce(annonce);
+                    })
+                    .setNegativeButton(R.string.confirmNo, (dialog, which)->{
+                        dialog.cancel();
+                    })
+                    .create()
+                    .show();
 
-                @Override
-                public void onFailure(Call<Annonce> call, Throwable t) {
-                    // Si erreur 404
-                    Log.e(TAG, t.getMessage());
-                }
-            });
-
-            /*Annonce uneAnnonce = listeAnnonceVendue.get(position);
-            listeAnnonceVendue.remove(uneAnnonce);*/
-            Log.i(TAG,"Annonce supprimé");
             notifyDataSetChanged();
         });
     }
 
+    /**
+     * Methode qui permet de supprimer une annonce
+     * @param annonce : annonce à supprimer
+     * */
+    private void suppressionAnnonce(Annonce annonce) {
+        SappAPI.getApi().create(AnnonceAPI.class).deleteMyAnnonce(
+                annonce.getIdAnnonce(),
+                annonce.getUtilisateurId(),
+                annonce.getAnnonceTitre(),
+                annonce.getAnnoncePrix()).enqueue(new Callback<Annonce>() {
+            @Override
+            public void onResponse(Call<Annonce> call, Response<Annonce> response) {
+                // Si conncetion Failed
+                if (!response.isSuccessful()) {
+                    Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                    return;
+                }
+
+                Log.i(TAG, "response : " + response);
+                Annonce reponse = response.body();
+                // Envoyer une Requête pour supprimer l'Annonce
+                assert reponse != null;
+                db.annonceDao().deleteAnnonce(reponse.getIdAnnonce());
+                Toast.makeText(context, "\"" + reponse.getAnnonceTitre() + "\" supprimée", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Annonce> call, Throwable t) {
+                // Si erreur 404
+                listeAnnonceVendue.add(annonce);
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
 
 
     @Override
