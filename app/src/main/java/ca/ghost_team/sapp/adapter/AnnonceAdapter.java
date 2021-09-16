@@ -104,6 +104,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             Picasso.with(context)
                     .load(url)
                     .fit()
+                    .error(R.drawable.collection)
                     .into(holder.imageAnnonce);
         }
         else
