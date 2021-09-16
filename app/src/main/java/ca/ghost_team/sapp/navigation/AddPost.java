@@ -206,7 +206,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     private void uploadFile(Uri fileUri){
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), fileUri);
-            reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 40000);
+            reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 90200);
             binder.addPostCapture.setImageBitmap(bitmap);
             Log.i(TAG, "Je viens de setter l'image Bitmap reducedBitmap");
         } catch (IOException e) {
@@ -217,7 +217,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         // compress Bitmap
-        reducedBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+        reducedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
         // Initialize byte array
         byte[] imageInBytes = stream.toByteArray();

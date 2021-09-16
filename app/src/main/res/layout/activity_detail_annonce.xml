@@ -56,7 +56,7 @@
                             android:layout_width="50dp"
                             android:layout_margin="5dp"
                             android:layout_height="match_parent"
-                            android:background="@color/BackgroundAnnonce"
+                            android:background="@drawable/bg_white_rounded_dark"
                             android:src="@drawable/maps"/>
                     </LinearLayout>
 
@@ -109,29 +109,24 @@
                     app:backgroundTint="@color/yellow"
                     android:background="@drawable/bg_white_rounded_large"
                     android:text="Contacter" />
-
-
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_weight="2"
+                android:layout_height="208.5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="12dp"
                     android:layout_marginTop="8dp"
-                    android:layout_weight="1"
                     android:background="@color/BackgroundAnnonce"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:layout_weight="1">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/vendeur_titre"
@@ -141,7 +136,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/titreAnnonce"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:textSize="22sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -157,12 +152,12 @@
 
 
                     </RelativeLayout>
+
                     <TextView
                         android:id="@+id/vendeur_description"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_weight="1"
-                        android:padding="15dp"
+                        android:layout_height="match_parent"
+                        android:padding="14dp"
                         android:text="@string/remplissage"
                         android:textColor="@color/white" />
 

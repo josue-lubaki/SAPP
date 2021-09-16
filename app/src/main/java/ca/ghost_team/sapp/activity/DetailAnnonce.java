@@ -37,15 +37,6 @@ public class DetailAnnonce extends AppCompatActivity {
     public static String ID_ANNONCE_CURRENT = "IdAnnonceCurrent";
     public static String ID_RECEIVER_CURRENT = "IdUtilisateurCurrent";
 
-    // initialiser les variables
-    private ImageView detail_image_annonce;
-    private TextView detail_tv_titre;
-    private TextView detail_tv_prix;
-    private TextView detail_tv_description;
-    private TextView detail_tv_vendeur;
-    private Button detail_btn_contacter;
-    private ImageButton btn_maps;
-    private SappDatabase db;
     private Utilisateur vendeur;
     private final String TAG = DetailAnnonce.class.getSimpleName();
     public static final String MAP_TITRE_REQUEST = "ca.ghost_team.sapp.activity.Map_titre";
@@ -61,13 +52,14 @@ public class DetailAnnonce extends AppCompatActivity {
         getSupportActionBar().hide();
 
         // Assigner les Variables
-        detail_image_annonce = binding.vendeurImageArticle;
-        detail_tv_titre = binding.vendeurTitre;
-        detail_tv_prix = binding.vendeurPrix;
-        detail_tv_description = binding.vendeurDescription;
-        detail_tv_vendeur = binding.vendeurName;
-        detail_btn_contacter = binding.vendeurContacter;
-        btn_maps = binding.optionMaps;
+        // initialiser les variables
+        ImageView detail_image_annonce = binding.vendeurImageArticle;
+        TextView detail_tv_titre = binding.vendeurTitre;
+        TextView detail_tv_prix = binding.vendeurPrix;
+        TextView detail_tv_description = binding.vendeurDescription;
+        TextView detail_tv_vendeur = binding.vendeurName;
+        Button detail_btn_contacter = binding.vendeurContacter;
+        ImageButton btn_maps = binding.optionMaps;
 
         // Create Bundle
         Bundle bundle = getIntent().getExtras();
@@ -78,7 +70,7 @@ public class DetailAnnonce extends AppCompatActivity {
         String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
         String annonce_zip = bundle.getString(AnnonceAdapter.ANNONCE_ZIP_REQUEST);
 
-        db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
+        SappDatabase db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
         int vendeurTrouve = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix).size();
@@ -91,14 +83,11 @@ public class DetailAnnonce extends AppCompatActivity {
             vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix).get(0);
 
         if (vendeur != null) {
-            System.out.println("Info vendeur : " + vendeur.toString());
             // Set Information to Fields
             detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
             if (!annonce_image.equals("null")){
                 Glide.with(this)
                         .load(annonce_image)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
                         .into(detail_image_annonce);
             }else
                 detail_image_annonce.setImageResource(R.drawable.collection);
@@ -107,7 +96,6 @@ public class DetailAnnonce extends AppCompatActivity {
             detail_tv_description.setText(annonce_description);
         }
 
-        Log.i(TAG, "je te montre la valeur de ID_Annonce : " + id_annonce);
         detail_btn_contacter.setOnClickListener(v -> {
             if (vendeur == null) {
                 Toast.makeText(this, "Un problème s'est produit", Toast.LENGTH_LONG).show();

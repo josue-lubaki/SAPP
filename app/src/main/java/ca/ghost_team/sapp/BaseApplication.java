@@ -32,6 +32,7 @@ public class BaseApplication extends MultiDexApplication {
     public static String NAME_DB = "SappDatabase";
     public static int ID_USER_CURRENT;
     public static String BASE_URL = "https://sapp-server.herokuapp.com/";
+    /*public static String BASE_URL = "http://192.168.0.38/sapp-server/";*/
     public static boolean SAVEDME;
     private SappDatabase db;
     private AnnonceRepo annonceRepo;
