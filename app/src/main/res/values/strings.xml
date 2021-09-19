@@ -55,6 +55,7 @@
     <string name="offerDelete">offer removed from Favorites</string>
     <string name="title_activity_maps">Map</string>
     <string name="market">MarketPlace</string>
+    <string name="aucune_annonce">no announcements</string>
 
 
 </resources>

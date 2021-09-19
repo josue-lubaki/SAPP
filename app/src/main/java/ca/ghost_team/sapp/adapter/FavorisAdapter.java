@@ -3,7 +3,12 @@ package ca.ghost_team.sapp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.ghost_team.sapp.BaseApplication;
+import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -35,10 +41,8 @@ import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisViewHolder> {
 
     // Constantes
-    public static String ANNONCE_IMAGE_REQUEST_FAVORIS = "Annonce_Image";
-    public static String ANNONCE_TITRE_REQUEST_FAVORIS = "Annonce_Titre";
-    public static String ANNONCE_PRICE_REQUEST_FAVORIS = "Annonce_Prix";
-    public static String ANNONCE_DESCRIPTION_REQUEST_FAVORIS = "Annonce_Description";
+    public static String ANNONCE_ID_REQUEST_FAVORIS = "Annonce_Id_Favoris";
+    private MainActivity activity;
     Context context;
     List<Annonce> listeAnnoncesFavoris;
     private SappDatabase db;
@@ -49,6 +53,11 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         this.listeAnnoncesFavoris = new ArrayList<>();
         this.db = Room.databaseBuilder(context, SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries().build();
+        this.activity = (MainActivity) getContext();
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @NonNull
@@ -63,20 +72,31 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
 
-        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
-        if(annonceImage == null){
-            return;
-        }
-        String location = annonceImage.getLocation();
-        String url = BaseApplication.BASE_URL + location;
-
         if(annonce.getAnnonceImage() != 0){
-            Picasso.with(context)
+
+            AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
+
+            String location = annonceImage.getLocation();
+            String url = BaseApplication.BASE_URL + location;
+
+            // decoder l'image
+            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            // convert Bitmap to Drawable
+            Drawable image = new BitmapDrawable(activity.getResources(), decodedByte);
+
+            Glide.with(context)
                     .load(url)
+                    .error(image)
+                    .fitCenter()
                     .into(holder.imageAnnonce);
-//            holder.imageAnnonce.setImageURI(Uri.parse(annonce.getAnnonceImage()));
-        } else
-            holder.imageAnnonce.setImageResource(R.drawable.collection);
+        } else{
+            Glide.with(context)
+                    .load(R.drawable.image)
+                    .fitCenter()
+                    .into(holder.imageAnnonce);
+        }
 
         holder.titre.setText(annonce.getAnnonceTitre());
         holder.description.setText(annonce.getAnnonceDescription());
@@ -86,10 +106,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
         holder.cardViewFavoris.setOnClickListener(v -> {
             // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
             Intent intent = new Intent(context, DetailAnnonce.class);
-            intent.putExtra(ANNONCE_IMAGE_REQUEST_FAVORIS, annonce.getAnnonceImage());
-            intent.putExtra(ANNONCE_TITRE_REQUEST_FAVORIS, annonce.getAnnonceTitre());
-            intent.putExtra(ANNONCE_PRICE_REQUEST_FAVORIS, annonce.getAnnoncePrix());
-            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST_FAVORIS, annonce.getAnnonceDescription());
+            intent.putExtra(ANNONCE_ID_REQUEST_FAVORIS, annonce.getIdAnnonce());
             context.startActivity(intent);
         });
     }

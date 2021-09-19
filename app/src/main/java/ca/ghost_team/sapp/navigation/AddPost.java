@@ -151,7 +151,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 260);
+        activity.startActivityForResult(intent, 260);
 
         // Lorsque toutes les Permissions ont été données
 //        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -206,7 +206,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     private void uploadFile(Uri fileUri){
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), fileUri);
-            reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 90200);
+            reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 2099200);
             binder.addPostCapture.setImageBitmap(bitmap);
             Log.i(TAG, "Je viens de setter l'image Bitmap reducedBitmap");
         } catch (IOException e) {
@@ -216,7 +216,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         // initialize byte stream
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-        // compress Bitmap
+        // compress Bitmap (quality: 100%)
         reducedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
         // Initialize byte array
@@ -291,7 +291,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 Log.i(TAG, "response.body = " + response);
                 // inserer l'annonce dans la base de données locale via le Repository
                 new AnnonceRepo(activity.getApplication()).insertAnnonce(newAnnonce);
-                Toast.makeText(getContext(), Objects.requireNonNull(getContext()).getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), requireContext().getResources().getString(R.string.offerPost), Toast.LENGTH_LONG).show();
                 Log.i(TAG, "Annonce inserted !");
             }
             @Override

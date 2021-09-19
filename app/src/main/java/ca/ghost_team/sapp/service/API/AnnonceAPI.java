@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 public interface AnnonceAPI {
     @FormUrlEncoded
     @POST("createannonce.php")
-    Call<Annonce> createAnnonceViaAPI(
+    Call<Annonce>   createAnnonceViaAPI(
             @Field("photo") String image,
             @Field("titre") String titre,
             @Field("description") String description,

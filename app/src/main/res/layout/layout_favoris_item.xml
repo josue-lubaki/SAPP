@@ -14,8 +14,9 @@
 
             <ImageView
                 android:id="@+id/favoris_image"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="200dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher_background"
                 android:layout_margin="10dp"/>
 

@@ -72,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .snippet(description)
         );
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16), 300, null);
         marker.showInfoWindow();
 
     }

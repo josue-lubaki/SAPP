@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@color/BackgroundAnnonce"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView_list_message_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:background="@color/BackgroundAnnonce"
+            >
+
+            <TextView
+                android:id="@+id/text_list_msg_empty"
+                android:text="Aucun Message"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/yellow"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@color/BackgroundAnnonce"/>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+
+</layout>

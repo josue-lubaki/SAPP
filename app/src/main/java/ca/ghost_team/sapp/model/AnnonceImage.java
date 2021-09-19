@@ -3,18 +3,12 @@ package ca.ghost_team.sapp.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "annonceimagetable",
-        foreignKeys = {
-//                @ForeignKey(entity = Annonce.class,
-//                        parentColumns = "idAnnonce",
-//                        childColumns = "annonceId",
-//                        onDelete = CASCADE)
-        }
-)
+@Entity(tableName = "annonceimagetable")
 public class AnnonceImage {
 
     @PrimaryKey(autoGenerate = true)
@@ -26,15 +20,21 @@ public class AnnonceImage {
     @ColumnInfo(name = "location")
     private String location;
 
+    @ColumnInfo(name = "imagecode")
+    private String imagecode;
+
+    @Ignore
     public AnnonceImage(String title, String location) {
         this.title = title;
         this.location = location;
     }
 
-    public AnnonceImage(int idAnnonceImage, String title, String location) {
+    @Ignore
+    public AnnonceImage(int idAnnonceImage, String title, String location, String imagecode) {
         this.idAnnonceImage = idAnnonceImage;
         this.title = title;
         this.location = location;
+        this.imagecode = imagecode;
     }
 
     public AnnonceImage() {}
@@ -61,5 +61,13 @@ public class AnnonceImage {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getImagecode() {
+        return imagecode;
+    }
+
+    public void setImagecode(String imagecode) {
+        this.imagecode = imagecode;
     }
 }

@@ -1,0 +1,36 @@
+package ca.ghost_team.sapp.navigation.info;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
+import ca.ghost_team.sapp.MainActivity;
+import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.databinding.LayoutListMessageEmptyBinding;
+
+public class ListEmpty extends Fragment {
+    private LayoutListMessageEmptyBinding binding;
+    private MainActivity activity;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.layout_list_message_empty, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setTitle(R.string.message);
+        this.activity = (MainActivity) getActivity();
+    }
+}

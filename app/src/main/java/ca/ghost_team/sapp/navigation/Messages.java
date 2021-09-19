@@ -26,10 +26,9 @@ import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.adapter.ListMessageAdapter;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutMessageBinding;
-import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.model.Utilisateur;
-import ca.ghost_team.sapp.repository.AnnonceRepo;
+import ca.ghost_team.sapp.navigation.info.ListEmpty;
 import ca.ghost_team.sapp.repository.MessageRepo;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
 import ca.ghost_team.sapp.service.API.MessageAPI;
@@ -81,6 +80,8 @@ public class Messages extends Fragment {
         messageViewModel.getAllMessagesReceiver().observe(getViewLifecycleOwner(), conversation -> {
             mMessageAdapter.addConversation(conversation);
             mMessageAdapter.notifyDataSetChanged();
+            if(mMessageAdapter.getItemCount() == 0)
+                activity.showFragment(ListEmpty.class);
             Log.i(TAG, "RecyclerView Messages correct");
         });
 
