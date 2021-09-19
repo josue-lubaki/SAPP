@@ -2,7 +2,13 @@ package ca.ghost_team.sapp.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.ghost_team.sapp.BaseApplication;
+import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
 import ca.ghost_team.sapp.model.AnnonceFavoris;
@@ -42,6 +50,7 @@ import static ca.ghost_team.sapp.BaseApplication.ID_USER_CURRENT;
 public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdapter.AnnonceVendueVH> {
 
     private static final String TAG = AnnonceVendueAdapter.class.getSimpleName();
+    public static String ANNONCE_ID_REQUEST_ANNONCE_VENDUE = "Annonce_Id_AnnonceVendue";
     Context context;
     private List<Annonce> listeAnnonceVendue;
     private SappDatabase db;
@@ -63,23 +72,42 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
     @Override
     public void onBindViewHolder(@NonNull AnnonceVendueVH holder, int position) {
         Annonce annonce = listeAnnonceVendue.get(position);
-        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
-        if( annonceImage == null){
-            return;
-        }
-        String location = annonceImage.getLocation();
-        String url = BaseApplication.BASE_URL + location;
+
         if(annonce.getAnnonceImage() != 0){
-            Picasso.with(context)
+            AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
+
+            String location = annonceImage.getLocation();
+            String url = BaseApplication.BASE_URL + location;
+
+            // decoder l'image
+            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            // convert Bitmap to Drawable
+            Drawable image = new BitmapDrawable(context.getResources(), decodedByte);
+
+            Glide.with(context)
                     .load(url)
+                    .error(image)
+                    .fitCenter()
+                    .into(holder.annonceImage);
+        } else{
+            Glide.with(context)
+                    .load(R.drawable.image)
+                    .fitCenter()
                     .into(holder.annonceImage);
         }
-        else
-            holder.annonceImage.setImageResource(R.drawable.collection);
 
         holder.annonceTitre.setText(annonce.getAnnonceTitre());
         holder.annonceDescription.setText(annonce.getAnnonceDescription());
         holder.annoncePrice.setText("$" + annonce.getAnnoncePrix());
+
+        holder.annonceImage.setOnClickListener(v -> {
+            // Creation de l'intent (Envoyer Toutes les informations nécessaires vers l'Activité)
+            Intent intent = new Intent(context, DetailAnnonce.class);
+            intent.putExtra(ANNONCE_ID_REQUEST_ANNONCE_VENDUE, annonce.getIdAnnonce());
+            context.startActivity(intent);
+        });
 
         // Trash
         holder.annonceTrash.setOnClickListener((v)->{

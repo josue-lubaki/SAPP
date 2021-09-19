@@ -1,8 +1,13 @@
 package ca.ghost_team.sapp.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,8 +26,12 @@ import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MapsActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
+import ca.ghost_team.sapp.adapter.AnnonceVendueAdapter;
+import ca.ghost_team.sapp.adapter.FavorisAdapter;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityDetailAnnonceBinding;
+import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceImage;
 import ca.ghost_team.sapp.model.Utilisateur;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
 import ca.ghost_team.sapp.service.API.UtilisateurAPI;
@@ -63,37 +72,62 @@ public class DetailAnnonce extends AppCompatActivity {
 
         // Create Bundle
         Bundle bundle = getIntent().getExtras();
-        int id_annonce = bundle.getInt(AnnonceAdapter.ANNONCE_ID_REQUEST);
-        String annonce_image = bundle.getString(AnnonceAdapter.ANNONCE_IMAGE_REQUEST); // Ceci correspond à URL (Location)
-        String annonce_titre = bundle.getString(AnnonceAdapter.ANNONCE_TITRE_REQUEST);
-        int annonce_prix = bundle.getInt(AnnonceAdapter.ANNONCE_PRICE_REQUEST);
-        String annonce_description = bundle.getString(AnnonceAdapter.ANNONCE_DESCRIPTION_REQUEST);
-        String annonce_zip = bundle.getString(AnnonceAdapter.ANNONCE_ZIP_REQUEST);
+        final int id_annonce;
+
+        if(bundle.getInt(AnnonceAdapter.ANNONCE_ID_REQUEST) != 0)
+            id_annonce = bundle.getInt(AnnonceAdapter.ANNONCE_ID_REQUEST);
+        else if(bundle.getInt(FavorisAdapter.ANNONCE_ID_REQUEST_FAVORIS) != 0)
+            id_annonce = bundle.getInt(FavorisAdapter.ANNONCE_ID_REQUEST_FAVORIS);
+        else
+            id_annonce = bundle.getInt(AnnonceVendueAdapter.ANNONCE_ID_REQUEST_ANNONCE_VENDUE);
+
 
         SappDatabase db = Room.databaseBuilder(getApplication(), SappDatabase.class, BaseApplication.NAME_DB)
                 .allowMainThreadQueries()
                 .build();
-        int vendeurTrouve = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix).size();
+
+        Annonce uneAnnonce = db.annonceDao().getInfoAnnonce(id_annonce);
+        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
+
+        // information du vendeur
+        int vendeurTrouve = db.annonceDao().infoAnnonceur(uneAnnonce.getAnnonceTitre(), uneAnnonce.getAnnoncePrix()).size();
 
         if (vendeurTrouve == 0){
-            getUtilisateurbyAnnonce(annonce_titre,annonce_prix);
+            getUtilisateurbyAnnonce(uneAnnonce.getAnnonceTitre(),uneAnnonce.getAnnoncePrix());
         }
         // envoyer une requête pour aller chercher le Nom du vendeur
         else
-            vendeur = db.annonceDao().infoAnnonceur(annonce_titre, annonce_prix).get(0);
+            vendeur = db.annonceDao().infoAnnonceur(uneAnnonce.getAnnonceTitre(), uneAnnonce.getAnnoncePrix()).get(0);
 
         if (vendeur != null) {
             // Set Information to Fields
             detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
-            if (!annonce_image.equals("null")){
+
+            // Transformer imageCode to bitmap
+            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            // convert Bitmap to Drawable
+            Drawable imageCode = new BitmapDrawable(getResources(), decodedByte);
+
+            // créer l'URL de l'image
+            String url = BaseApplication.BASE_URL + annonceImage.getLocation();
+
+            if (!url.equals("null")){
                 Glide.with(this)
-                        .load(annonce_image)
+                        .load(url)
+                        .error(imageCode)
                         .into(detail_image_annonce);
-            }else
-                detail_image_annonce.setImageResource(R.drawable.collection);
-            detail_tv_titre.setText(annonce_titre);
-            detail_tv_prix.setText("$" + annonce_prix);
-            detail_tv_description.setText(annonce_description);
+            }else{
+                Glide.with(this)
+                        .load(imageCode)
+                        .error(R.drawable.image)
+                        .into(detail_image_annonce);
+            }
+
+            detail_tv_titre.setText(uneAnnonce.getAnnonceTitre());
+            detail_tv_prix.setText("$" + uneAnnonce.getAnnoncePrix());
+            detail_tv_description.setText(uneAnnonce.getAnnonceDescription());
         }
 
         detail_btn_contacter.setOnClickListener(v -> {
@@ -115,9 +149,9 @@ public class DetailAnnonce extends AppCompatActivity {
 
         btn_maps.setOnClickListener(v -> {
             Intent intent = new Intent(DetailAnnonce.this, MapsActivity.class);
-            intent.putExtra(MAP_TITRE_REQUEST, annonce_titre);
-            intent.putExtra(MAP_ZIP_REQUEST, annonce_zip);
-            intent.putExtra(MAP_DESCRIPTION_REQUEST, annonce_description);
+            intent.putExtra(MAP_TITRE_REQUEST, uneAnnonce.getAnnonceTitre());
+            intent.putExtra(MAP_ZIP_REQUEST, uneAnnonce.getAnnonceZip());
+            intent.putExtra(MAP_DESCRIPTION_REQUEST, uneAnnonce.getAnnonceDescription());
             startActivity(intent);
         });
     }

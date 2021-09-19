@@ -1,7 +1,9 @@
 package ca.ghost_team.sapp.database;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -23,7 +25,10 @@ import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.model.Utilisateur;
 
 @TypeConverters({Utilitaire.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
-@Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class, CategorieAnnonce.class, Message.class, AnnonceImage.class}, version = 1, exportSchema = false)
+@Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class, CategorieAnnonce.class, Message.class, AnnonceImage.class},
+        version = 1,
+        exportSchema = false)
+
 public abstract class SappDatabase extends RoomDatabase {
     public static SappDatabase INSTANCE;
     public abstract AnnonceDao annonceDao();

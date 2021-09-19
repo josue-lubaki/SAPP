@@ -23,6 +23,7 @@ import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.FavorisAdapter;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutFavorisBinding;
+import ca.ghost_team.sapp.navigation.info.FavorisEmpty;
 import ca.ghost_team.sapp.viewmodel.AnnonceFavorisViewModel;
 
 public class Favoris extends Fragment {
@@ -30,6 +31,7 @@ public class Favoris extends Fragment {
     private LayoutFavorisBinding binding;
     private RecyclerView recyclerView;
     private FavorisAdapter adapter;
+    private MainActivity activity;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class Favoris extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ((MainActivity)context).setTitle(R.string.favoris);
+        this.activity = (MainActivity) getActivity();
     }
 
     @Override
@@ -63,6 +66,11 @@ public class Favoris extends Fragment {
         annonceFavorisViewModel.getAllAnnonceFavoriteByUser().observe(getViewLifecycleOwner(), annonces -> {
             adapter.addAnnonceToFavoris(annonces);
             adapter.notifyDataSetChanged();
+
+            if(adapter.getItemCount() == 0){
+                activity.showFragment(FavorisEmpty.class);
+            }
+
             Log.i(TAG, "RecyclerView correct");
         });
 

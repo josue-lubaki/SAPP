@@ -3,7 +3,12 @@ package ca.ghost_team.sapp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -53,7 +59,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     private SappDatabase db;
 
     // Constantes
-    public static final String ANNONCE_IMAGE_REQUEST = "Annonce_Image";
+    public static final String ANNONCE_IMAGEURL_REQUEST = "Annonce_Image";
     public static final String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
     public static final String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
     public static final String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
@@ -95,22 +101,31 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
         this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
         Annonce uneAnnonce = listeAnnonces.get(position);
 
-        // Récuperer l'Id de l'image pour le rechercher sur le net
-        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
+        if(uneAnnonce.getAnnonceImage() != 0){
+            // Récuperer l'Id de l'image pour le rechercher sur le net
+            AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
 
-        if(annonceImage != null && uneAnnonce.getAnnonceImage() != 0){
             String location = annonceImage.getLocation();
             String url = BaseApplication.BASE_URL + location;
+
+            // decoder l'image
+            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            // convert Bitmap to Drawable
+            Drawable image = new BitmapDrawable(activity.getResources(), decodedByte);
+
             Picasso.with(context)
                     .load(url)
-                    .fit()
-                    .error(R.drawable.collection)
+                    .error(image)
                     .into(holder.imageAnnonce);
         }
-        else
-            holder.imageAnnonce.setImageResource(R.drawable.collection);
+        else {
+            Picasso.with(context)
+                    .load(R.drawable.image)
+                    .into(holder.imageAnnonce);
+        }
 
-        // holder.imageAnnonce.setImageURI(Uri.parse(uneAnnonce.getAnnonceImage()));
         holder.titre.setText(uneAnnonce.getAnnonceTitre());
         holder.prix.setText("$" + uneAnnonce.getAnnoncePrix());
         //apelle de la methode de formatage
@@ -150,21 +165,6 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
             Intent intent = new Intent(context, DetailAnnonce.class);
             intent.putExtra(ANNONCE_ID_REQUEST, uneAnnonce.getIdAnnonce());
 
-            String location = annonceImage.getLocation();
-            String url = BaseApplication.BASE_URL + location;
-
-            if(annonceImage != null && uneAnnonce.getAnnonceImage() != 0){
-                intent.putExtra(ANNONCE_IMAGE_REQUEST, url);
-            }
-            else{
-                intent.putExtra(ANNONCE_IMAGE_REQUEST, "null");
-            }
-
-
-            intent.putExtra(ANNONCE_TITRE_REQUEST, uneAnnonce.getAnnonceTitre().trim());
-            intent.putExtra(ANNONCE_PRICE_REQUEST, uneAnnonce.getAnnoncePrix());
-            intent.putExtra(ANNONCE_DESCRIPTION_REQUEST, uneAnnonce.getAnnonceDescription().trim());
-            intent.putExtra(ANNONCE_ZIP_REQUEST, uneAnnonce.getAnnonceZip().trim());
             context.startActivity(intent);
         });
     }

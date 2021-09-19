@@ -212,6 +212,12 @@ public class MainActivity extends AppCompatActivity{
 
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    )
                     .replace(R.id.container, currentFragment, fragment.getName())
                     .commit();
 

@@ -2,6 +2,7 @@ package ca.ghost_team.sapp.model;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
@@ -17,12 +18,10 @@ import static androidx.room.ForeignKey.CASCADE;
                 @ForeignKey(entity = Annonce.class,
                         parentColumns = "idAnnonce",
                         childColumns = "annonceId")
-        })
+        }, indices = {@Index(value = {"annonceId"}, unique = true), @Index(value = {"utilisateurId"}, unique = true)})
 public class AnnonceFavoris {
     public int annonceId;
     public int utilisateurId;
-    //@PrimaryKey(autoGenerate = true)
-    //public int annonceFId;
 
     public AnnonceFavoris(int utilisateurId, int annonceId) {
         this.utilisateurId = utilisateurId;
