@@ -6,7 +6,7 @@
     <string name="message">Message</string>
     <string name="profil">Profile</string>
     <string name="date">date</string>
-    <string name="titreAnnonce">New offer</string>
+    <string name="titreAnnonce">Title\'s offer</string>
     <string name="prixText">$ Price</string>
     <string name="welcome">--- Welcome ---</string>
     <string name="splash_screen">Splash Screen</string>

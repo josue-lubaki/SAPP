@@ -32,6 +32,7 @@ import java.util.List;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
@@ -73,18 +74,14 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
     public void onBindViewHolder(@NonNull AnnonceVendueVH holder, int position) {
         Annonce annonce = listeAnnonceVendue.get(position);
 
-        if(annonce.getAnnonceImage() != 0){
+        if(annonce != null && annonce.getAnnonceImage() != 0){
             AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
 
             String location = annonceImage.getLocation();
             String url = BaseApplication.BASE_URL + location;
 
-            // decoder l'image
-            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            // convert Bitmap to Drawable
-            Drawable image = new BitmapDrawable(context.getResources(), decodedByte);
+            // Préparation image cache
+            Drawable image = Utilitaire.prepareImageCache(context, annonceImage);
 
             Glide.with(context)
                     .load(url)
@@ -134,6 +131,8 @@ public class AnnonceVendueAdapter extends RecyclerView.Adapter<AnnonceVendueAdap
             notifyDataSetChanged();
         });
     }
+
+
 
     /**
      * Methode qui permet de supprimer une annonce

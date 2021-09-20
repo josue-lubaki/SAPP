@@ -1,6 +1,13 @@
 package ca.ghost_team.sapp.Utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.icu.text.SimpleDateFormat;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import androidx.room.TypeConverter;
@@ -9,6 +16,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
+
+import ca.ghost_team.sapp.model.AnnonceImage;
 
 public class Utilitaire {
 
@@ -114,6 +123,37 @@ public class Utilitaire {
         return result.toString();
     }
 
+    /**
+     * Methode qui permet de faire la rotation de l'image de 90 degré
+     * @param bitmap le bitmap dont on veut faire la rotation
+     * @return Bitmap
+     * */
+    public static Bitmap rotateImage(Bitmap bitmap){
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        return Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+    }
+
+    /**
+     * Methode qui permet de préparer l'image
+     * vérifier si la rotation de l'image est nécessaire
+     * @param annonceImage objetc AnnonceImage
+     * @param context le context dans lequel on se trouve (Activity, fragment)
+     * @return Drawable
+     * */
+    public static Drawable prepareImageCache(Context context, AnnonceImage annonceImage){
+        // decoder l'image
+        byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        // vérifier l'orientation de l'image
+        if(decodedByte.getWidth() > decodedByte.getHeight()){
+            decodedByte = Utilitaire.rotateImage(decodedByte);
+        }
+
+        // convert Bitmap to Drawable
+        return new BitmapDrawable(context.getResources(), decodedByte);
+    }
 
 
 }
