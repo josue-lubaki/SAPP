@@ -46,10 +46,14 @@
                     android:id="@+id/annonceTitre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:text="@string/titreAnnonce"
                     android:textColor="@color/white"
                     android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:lines="1"
                     android:textStyle="bold"/>
 
                 <LinearLayout

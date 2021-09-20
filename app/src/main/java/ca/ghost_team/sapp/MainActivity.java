@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity{
             }
 
             // Appel de la methode showFragment()
+            assert fragment != null;
             showFragment(fragment);
 
             for (String permission : requiredPermissions) {
@@ -213,12 +214,13 @@ public class MainActivity extends AppCompatActivity{
             getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(
-                            R.anim.slide_in,  // enter
+                            R.anim.fade_in,  // enter
                             R.anim.fade_out,  // exit
                             R.anim.fade_in,   // popEnter
-                            R.anim.slide_out  // popExit
+                            R.anim.fade_out  // popExit
                     )
                     .replace(R.id.container, currentFragment, fragment.getName())
+                    .disallowAddToBackStack()
                     .commit();
 
         } catch(InstantiationException | IllegalAccessException e){

@@ -34,6 +34,7 @@ import java.util.List;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
@@ -58,13 +59,8 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     private MainActivity app;
     private SappDatabase db;
 
-    // Constantes
-    public static final String ANNONCE_IMAGEURL_REQUEST = "Annonce_Image";
-    public static final String ANNONCE_TITRE_REQUEST = "Annonce_Titre";
-    public static final String ANNONCE_PRICE_REQUEST = "Annonce_Prix";
-    public static final String ANNONCE_DESCRIPTION_REQUEST = "Annonce_Description";
+    // Constante
     public static final String ANNONCE_ID_REQUEST = "Annonce_ID_current_Detail";
-    public static final String ANNONCE_ZIP_REQUEST = "Annonce_ZIP_Code";
 
     public AnnonceAdapter(Context context) {
         this.context = context;
@@ -100,20 +96,16 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.AnnonceV
     public void onBindViewHolder(@NonNull AnnonceVH holder, int position) {
         this.listeAnnonceFavorite = db.annonceFavorisDao().findListAnnonceFavoriteByUser(ID_USER_CURRENT);
         Annonce uneAnnonce = listeAnnonces.get(position);
+        // Récuperer l'Id de l'image pour le rechercher sur le net
+        AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
 
-        if(uneAnnonce.getAnnonceImage() != 0){
-            // Récuperer l'Id de l'image pour le rechercher sur le net
-            AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(uneAnnonce.getAnnonceImage());
+        if(annonceImage != null && uneAnnonce.getAnnonceImage() != 0){
 
-            String location = annonceImage.getLocation();
+            String location = annonceImage.getLocation() != null ? annonceImage.getLocation() : "null";
             String url = BaseApplication.BASE_URL + location;
 
-            // decoder l'image
-            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            // convert Bitmap to Drawable
-            Drawable image = new BitmapDrawable(activity.getResources(), decodedByte);
+            // Préparation image cache
+            Drawable image = Utilitaire.prepareImageCache(activity, annonceImage);
 
             Picasso.with(context)
                     .load(url)

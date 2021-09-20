@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -18,9 +21,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -39,6 +46,7 @@ import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.Utils.ImageResizer;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutAddpostBinding;
 import ca.ghost_team.sapp.model.Annonce;
@@ -67,6 +75,7 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     private EditText description;
     private EditText prix;
     private EditText codePostal;
+    private ImageButton btnRotate;
     private int idCategorie;
     private SappDatabase db;
     private final String TAG = AddPost.class.getSimpleName();
@@ -91,6 +100,9 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         description = binder.addpostDescription;
         prix = binder.addpostPrix;
         codePostal = binder.addpostCodepostal;
+        btnRotate = binder.btnRotate;
+
+        this.activity = (MainActivity) getActivity();
 
         // Create List of categories
         List<String> categories = new ArrayList<>();
@@ -131,12 +143,16 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         ((MainActivity) context).setTitle(R.string.addPost);
     }
 
+    // GetContent creates an ActivityResultLauncher<String> to allow you to pass
+    // in the mime type you'd like to allow the user to select
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            uri -> {
+                // Handle the returned Uri
+                path = uri;
+                uploadFile(path);
+                Log.i(TAG, "Voici le path New Methode : " + path);
+            });
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.activity = (MainActivity) getActivity();
-    }
 
     // Methode Qui permet d'ouvrir la Camera
     private void openCamera(View view) {
@@ -148,26 +164,8 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
             }
         }
 
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        activity.startActivityForResult(intent, 260);
+        mGetContent.launch("image/*");
 
-        // Lorsque toutes les Permissions ont été données
-//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-//        ContentValues values = new ContentValues();
-//
-//        values.put(MediaStore.Images.Media.TITLE, "temp.png");
-//        temp = getActivity().getContentResolver()
-//                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, temp);
-//
-//        if (getContext().getPackageManager()
-//                .resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
-//            startActivityForResult(intent, 260);
-//        } else {
-//            Toast.makeText(getContext(), getContext().getResources().getString(R.string.dontCamera), Toast.LENGTH_LONG).show();
-//        }
     }
 
     @Override
@@ -185,30 +183,21 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK && requestCode == 260 && data != null) {
-//            Glide.with(getContext())
-//                    .load(temp)
-//                    .placeholder(R.drawable.collection)
-//                    .into(binder.addPostCapture);
-
-            path = data.getData();
-            uploadFile(path);
-
-            Log.i(TAG, "Voici le path: " + path);
-        }
-
-    }
-
     private void uploadFile(Uri fileUri){
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), fileUri);
             reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 2099200);
-            binder.addPostCapture.setImageBitmap(bitmap);
+
+            binder.addPostCapture.setImageBitmap(reducedBitmap);
+
+            // Faire la rotation de l'image
+            binder.btnRotate.setOnClickListener(v->{
+                reducedBitmap = Utilitaire.rotateImage(reducedBitmap);
+                binder.addPostCapture.setImageBitmap(reducedBitmap);
+            });
+
             Log.i(TAG, "Je viens de setter l'image Bitmap reducedBitmap");
+            Log.i(TAG, "Voici la dimension de l'image : " + reducedBitmap.getWidth() + " x " + reducedBitmap.getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }

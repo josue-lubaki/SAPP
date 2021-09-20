@@ -25,6 +25,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MapsActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.adapter.AnnonceAdapter;
 import ca.ghost_team.sapp.adapter.AnnonceVendueAdapter;
 import ca.ghost_team.sapp.adapter.FavorisAdapter;
@@ -103,15 +104,11 @@ public class DetailAnnonce extends AppCompatActivity {
             // Set Information to Fields
             detail_tv_vendeur.setText(vendeur.getUtilisateurNom());
 
-            // Transformer imageCode to bitmap
-            byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            // convert Bitmap to Drawable
-            Drawable imageCode = new BitmapDrawable(getResources(), decodedByte);
-
             // créer l'URL de l'image
             String url = BaseApplication.BASE_URL + annonceImage.getLocation();
+
+            // Préparation image cache
+            Drawable imageCode = Utilitaire.prepareImageCache(this, annonceImage);
 
             if (!url.equals("null")){
                 Glide.with(this)

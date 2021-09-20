@@ -72,7 +72,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
     public void onBindViewHolder(@NonNull FavorisViewHolder holder, int position) {
         Annonce annonce = listeAnnoncesFavoris.get(position);
 
-        if(annonce.getAnnonceImage() != 0){
+        if(annonce != null && annonce.getAnnonceImage() != 0){
 
             AnnonceImage annonceImage = db.annonceImageDao().findLocationAnnonceImageByAnnonce(annonce.getAnnonceImage());
 
