@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BackgroundAnnonce">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_group_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/Widget.AppCompat.Toolbar"
+                android:background="@color/black"
+                app:popupTheme="@style/Theme.AppCompat.Light">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_about"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/yellow"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textSize="22sp"
+                            android:text="@string/aboutUs"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_group_about">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/developersText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="28sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow"
+                    android:padding="15dp"
+                    android:textFontWeight="@integer/material_motion_duration_medium_1"
+                    android:text="@string/d_veloppeurs"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDeveloper1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/developersText"
+                    android:layout_marginTop="12dp"
+                    android:elevation="10dp"
+                    android:layout_margin="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:elevation="10dp"
+                        android:background="@color/BackgroundSplash">
+                        <TextView
+                            android:id="@+id/usernameJosue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Josue"
+                            android:textColor="@color/gris"
+                            android:textSize="22sp"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+
+                        <TextView
+                            android:id="@+id/professionJosue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/JosueProfession"
+                            android:layout_below="@id/usernameJosue"
+                            android:textSize="18sp"
+                            android:textColor="@color/gris_clair"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+
+                        <TextView
+                            android:id="@+id/emailJosue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/JosueEmail"
+                            android:layout_below="@id/professionJosue"
+                            android:textStyle="italic"
+                            android:textSize="18sp"
+                            android:textColor="@color/gris_clair"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDeveloper2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardDeveloper1"
+                    android:layout_marginTop="12dp"
+                    android:elevation="10dp"
+                    android:padding="10dp"
+                    android:layout_margin="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:elevation="10dp"
+                        android:background="@color/BackgroundSplash">
+                        <TextView
+                            android:id="@+id/usernameIsmael"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Ismael"
+                            android:textColor="@color/gris"
+                            android:textSize="22sp"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+
+                        <TextView
+                            android:id="@+id/professionIsmael"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/IsmaelProfession"
+                            android:layout_below="@id/usernameIsmael"
+                            android:textColor="@color/gris_clair"
+                            android:textSize="18sp"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+
+                        <TextView
+                            android:id="@+id/emailIsmael"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/IsmaelEmail"
+                            android:layout_below="@id/professionIsmael"
+                            android:textStyle="italic"
+                            android:textSize="18sp"
+                            android:textColor="@color/gris_clair"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDeveloper3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardDeveloper2"
+                    android:layout_marginTop="12dp"
+                    android:elevation="10dp"
+                    android:padding="10dp"
+                    android:layout_margin="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:elevation="10dp"
+                        android:background="@color/BackgroundSplash">
+                        <TextView
+                            android:id="@+id/usernameJonathan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Jonathan"
+                            android:textColor="@color/gris"
+                            android:textSize="22sp"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+
+                        <TextView
+                            android:id="@+id/professionJonathan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/IsmaelProfession"
+                            android:layout_below="@id/usernameJonathan"
+                            android:textSize="18sp"
+                            android:textColor="@color/gris_clair"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="1dp"/>
+
+                        <TextView
+                            android:id="@+id/emailJonathan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/JonathanEmail"
+                            android:layout_below="@id/professionJonathan"
+                            android:textStyle="italic"
+                            android:textSize="18sp"
+                            android:paddingHorizontal="15dp"
+                            android:textColor="@color/gris_clair"
+                            android:paddingVertical="1dp"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </RelativeLayout>
+
+
+</layout>

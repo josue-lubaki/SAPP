@@ -65,7 +65,8 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     private final String[] requiredPermissions = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     LayoutAddpostBinding binder;
     Spinner spinner;
@@ -83,6 +84,16 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
     private Bitmap reducedBitmap;
     private Uri path;
     private String encodeImage;
+
+    // GetContent creates an ActivityResultLauncher<String> to allow you to pass
+    // in the mime type you'd like to allow the user to select
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            uri -> {
+                // Handle the returned Uri
+                path = uri;
+                uploadFile(path);
+                Log.i(TAG, "Voici le path New Methode : " + path);
+            });
 
     @Nullable
     @Override
@@ -143,51 +154,27 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
         ((MainActivity) context).setTitle(R.string.addPost);
     }
 
-    // GetContent creates an ActivityResultLauncher<String> to allow you to pass
-    // in the mime type you'd like to allow the user to select
-    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            uri -> {
-                // Handle the returned Uri
-                path = uri;
-                uploadFile(path);
-                Log.i(TAG, "Voici le path New Methode : " + path);
-            });
-
 
     // Methode Qui permet d'ouvrir la Camera
     private void openCamera(View view) {
         for (String permission : requiredPermissions) {
             if (ContextCompat.checkSelfPermission(getContext(), permission)
                     != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(requiredPermissions, 250);
                 return;
             }
         }
-
         mGetContent.launch("image/*");
-
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 250) {
-            for (int res : grantResults) {
-                if (res != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.dontPermission), Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-            openCamera(null);
-        }
-    }
-
+    /**
+     * Methode qui permet de uploader une photo
+     * */
     private void uploadFile(Uri fileUri){
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), fileUri);
             reducedBitmap = ImageResizer.reduceBitmapSize(bitmap, 2099200);
 
+            // binder l'image dans l'imageView
             binder.addPostCapture.setImageBitmap(reducedBitmap);
 
             // Faire la rotation de l'image
@@ -195,25 +182,12 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 reducedBitmap = Utilitaire.rotateImage(reducedBitmap);
                 binder.addPostCapture.setImageBitmap(reducedBitmap);
             });
-
-            Log.i(TAG, "Je viens de setter l'image Bitmap reducedBitmap");
-            Log.i(TAG, "Voici la dimension de l'image : " + reducedBitmap.getWidth() + " x " + reducedBitmap.getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // initialize byte stream
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-        // compress Bitmap (quality: 100%)
-        reducedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-
-        // Initialize byte array
-        byte[] imageInBytes = stream.toByteArray();
-
         // get base64 encoded string
-        encodeImage = Base64.encodeToString(imageInBytes, Base64.DEFAULT).replace("\n", "").replace("\r","");
-
+        encodeImage = Utilitaire.encodeImageBase64(reducedBitmap);
         Log.i(TAG, "Voici l'image encodée : \n" + encodeImage);
 
     }
@@ -224,6 +198,29 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
      */
     private void publierAnnonce(View view) {
         // Vérifier que tous les champs sont bien remplies
+        if(!checkAllFields()){
+            return;
+        }
+
+        Log.i(TAG,"valeur de String.valueOf(new Date() : " + new Date());
+        Log.i(TAG,"valeur de toTimeStr(new Date() : " + toTimeStr(new Date()));
+        Log.i(TAG,"valeur de new Date() : " + new Date());
+
+        /**
+         * Création de l'Annonce
+         * Le Serveur va sauvergarder l'annonce et l'image de celle-ci
+         * */
+        creationAnnonce();
+
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Methode qui permet de checker tous les champs
+     * @return boolean
+     * */
+    private boolean checkAllFields(){
         if (TextUtils.isEmpty(titre.getText().toString().trim()) ||
                 TextUtils.isEmpty(description.getText().toString().trim()) ||
                 TextUtils.isEmpty(prix.getText().toString().trim()) ||
@@ -246,17 +243,16 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 codePostal.setError("ZIP Postal required");
                 codePostal.requestFocus();
             }
-            return;
+            return false;
         }
+        return true;
+    }
 
-        Log.i(TAG,"valeur de String.valueOf(new Date() : " + new Date());
-        Log.i(TAG,"valeur de toTimeStr(new Date() : " + toTimeStr(new Date()));
-        Log.i(TAG,"valeur de new Date() : " + new Date());
-
-        /**
-         * Création de l'Annonce
-         * Le Serveur va sauvergarder l'annonce et l'image de celle-ci
-         * */
+    /**
+     * Methode qui permet d'envoyer la requête vers le serveur pour la création d'une annonce
+     * @return void
+     * */
+    public void creationAnnonce(){
         SappAPI.getApi().create(AnnonceAPI.class).createAnnonceViaAPI(
                 encodeImage,
                 titre.getText().toString(),
@@ -289,9 +285,6 @@ public class AddPost extends Fragment implements AdapterView.OnItemSelectedListe
                 Log.e(TAG, t.getMessage());
             }
         });
-
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
     }
 
     @Override

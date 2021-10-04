@@ -136,10 +136,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/champsInfo"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="25dp"
                 android:gravity="center"
-                android:background="@color/BackgroundAnnonce">
+                android:background="@drawable/bg_white_rounded_medium">
 
                 <ImageButton
                     android:id="@+id/icon_myAnnonce"
@@ -165,9 +165,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/annonceVendueContainer"
                 android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="25dp"
                 android:gravity="center"
-                android:background="@color/BackgroundAnnonce">
+                android:background="@drawable/bg_white_rounded_medium">
 
 
                 <ImageButton
@@ -188,11 +188,41 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logout_container"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="25dp"
+                android:gravity="center"
+                android:background="@drawable/bg_white_rounded_medium">
+
+
+                <ImageButton
+                    android:id="@+id/aboutUsBtn"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/bg_white_rounded"
+                    android:src="@drawable/ic_help" />
+
+                <TextView
+                    android:layout_toEndOf="@+id/aboutUsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="20dp"
+                    android:text="@string/aboutUs"
+                    android:textColor="@color/yellow"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/copyright"
-                android:layout_below="@id/logout_container"
+                android:layout_below="@id/aboutUs"
                 android:layout_marginTop="40dp"
                 android:gravity="center"
                 android:padding="5dp"

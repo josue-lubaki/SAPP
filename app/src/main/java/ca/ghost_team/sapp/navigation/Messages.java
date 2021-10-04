@@ -28,7 +28,7 @@ import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutMessageBinding;
 import ca.ghost_team.sapp.model.Message;
 import ca.ghost_team.sapp.model.Utilisateur;
-import ca.ghost_team.sapp.navigation.info.ListEmpty;
+import ca.ghost_team.sapp.navigation.empty.ListEmpty;
 import ca.ghost_team.sapp.repository.MessageRepo;
 import ca.ghost_team.sapp.repository.UtilisateurRepo;
 import ca.ghost_team.sapp.service.API.MessageAPI;

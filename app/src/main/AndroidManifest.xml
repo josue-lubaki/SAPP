@@ -11,8 +11,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -58,6 +56,9 @@
             android:theme="@style/generalnotitle" />
         <activity
             android:name=".activity.DetailAnnonce"
+            android:theme="@style/generalnotitle"/>
+        <activity
+            android:name=".activity.AboutUs"
             android:theme="@style/generalnotitle"/>
         <activity
             android:name=".MainActivity"

@@ -20,6 +20,7 @@ import androidx.room.Room;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.activity.AboutUs;
 import ca.ghost_team.sapp.activity.AnnonceVendue;
 import ca.ghost_team.sapp.activity.Login;
 import ca.ghost_team.sapp.database.SappDatabase;
@@ -37,6 +38,7 @@ public class Profil extends Fragment {
     private SappDatabase db;
     private RelativeLayout logOutContainer;
     private RelativeLayout displayAnnonceVendueContainer;
+    private RelativeLayout aboutUsBtn;
     private MainActivity mainActivity;
     private SharedPreferences prefs;
 
@@ -69,6 +71,7 @@ public class Profil extends Fragment {
         infoEmailUser = binding.infoEmailUser;
         logOutContainer = binding.logoutContainer;
         displayAnnonceVendueContainer = binding.annonceVendueContainer;
+        aboutUsBtn = binding.aboutUs;
 
         Utilisateur currentUser = db.utilisateurDao().getInfoUtilisateur(ID_USER_CURRENT);
 
@@ -90,6 +93,13 @@ public class Profil extends Fragment {
         // display my Annonce
         displayAnnonceVendueContainer.setOnClickListener(this::displayAnnonceVendue);
 
+        aboutUsBtn.setOnClickListener(this::displayAboutUs);
+
+    }
+
+    private void displayAboutUs(View view) {
+        Intent intent = new Intent(getContext(), AboutUs.class);
+        startActivity(intent);
     }
 
     private void displayAnnonceVendue(View view) {

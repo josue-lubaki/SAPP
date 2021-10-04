@@ -1,4 +1,4 @@
-package ca.ghost_team.sapp.navigation.info;
+package ca.ghost_team.sapp.navigation.empty;
 
 import android.content.Context;
 import android.os.Bundle;

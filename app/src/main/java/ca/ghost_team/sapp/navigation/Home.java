@@ -38,10 +38,13 @@ import ca.ghost_team.sapp.repository.AnnonceRepo;
 import ca.ghost_team.sapp.service.API.AnnonceAPI;
 import ca.ghost_team.sapp.service.API.AnnonceImageAPI;
 import ca.ghost_team.sapp.service.SappAPI;
+import ca.ghost_team.sapp.viewmodel.AnnonceImageViewModel;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static java.lang.Thread.sleep;
 
 public class Home extends Fragment {
     private LayoutHomeBinding binding;
@@ -125,41 +128,48 @@ public class Home extends Fragment {
             // Supprimer toutes les annonces dans la table
             new AnnonceRepo(activity.getApplication()).deleteAllAnnonce();
 
-            //Recuperation de toutes les annonces
-            SappAPI.getApi().create(AnnonceAPI.class)
-                    .getAllAnnonceViaAPI()
-                    .enqueue(new Callback<List<Annonce>>() {
-                        @Override
-                        public void onResponse(Call<List<Annonce>> call, Response<List<Annonce>> response) {
-                            // Si conncetion Failed
-                            if (!response.isSuccessful()) {
-                                Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
-                                return;
-                            }
-                            List<Annonce> newAnnonce = response.body();
-                            Log.i(TAG, "newAnnonce : " + newAnnonce);
-                            // inserer l'annonce dans la base de données locale via le Repository
-                            assert newAnnonce != null;
-                            Annonce[] tableAnnonce = new Annonce[newAnnonce.size()];
-                            newAnnonce.toArray(tableAnnonce);
-                            new AnnonceRepo(activity.getApplication()).insertAllAnnonce(tableAnnonce);
-
-                            // recupération de toutes les images depuis la base de données
-                            retrieveAllImages();
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<List<Annonce>> call, Throwable t) {
-                            // Si erreur 404
-                            Log.e(TAG, t.getMessage());
-                        }
-                    });
+            // Recupération des annonces et images
+            retrieveAllAnnonces();
 
             swipeHome.setRefreshing(false);
         });
 
 
+    }
+
+    /**
+     * Methode qui permet d'envoyer une requête au serveur, pour la récuperation des annonces depuis la base de données
+     * */
+    private void retrieveAllAnnonces() {
+        //Recuperation de toutes les annonces
+        SappAPI.getApi().create(AnnonceAPI.class)
+                .getAllAnnonceViaAPI()
+                .enqueue(new Callback<List<Annonce>>() {
+                    @Override
+                    public void onResponse(Call<List<Annonce>> call, Response<List<Annonce>> response) {
+                        // Si conncetion Failed
+                        if (!response.isSuccessful()) {
+                            Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                            return;
+                        }
+                        List<Annonce> newAnnonce = response.body();
+                        Log.i(TAG, "newAnnonce : " + newAnnonce);
+                        // inserer l'annonce dans la base de données locale via le Repository
+                        assert newAnnonce != null;
+                        Annonce[] tableAnnonce = new Annonce[newAnnonce.size()];
+                        newAnnonce.toArray(tableAnnonce);
+                        new AnnonceRepo(activity.getApplication()).insertAllAnnonce(tableAnnonce);
+
+                        // recupération de toutes les images depuis la base de données
+                        retrieveAllImages();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Annonce>> call, Throwable t) {
+                        // Si erreur 404
+                        Log.e(TAG, t.getMessage());
+                    }
+                });
     }
 
     /**
