@@ -16,14 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
 import ca.ghost_team.sapp.adapter.FavorisAdapter;
-import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.LayoutFavorisBinding;
-import ca.ghost_team.sapp.navigation.info.FavorisEmpty;
+import ca.ghost_team.sapp.navigation.empty.FavorisEmpty;
 import ca.ghost_team.sapp.viewmodel.AnnonceFavorisViewModel;
 
 public class Favoris extends Fragment {

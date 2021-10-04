@@ -44,8 +44,8 @@ import retrofit2.Response;
 public class DetailAnnonce extends AppCompatActivity {
 
     private ActivityDetailAnnonceBinding binding;
-    public static String ID_ANNONCE_CURRENT = "IdAnnonceCurrent";
-    public static String ID_RECEIVER_CURRENT = "IdUtilisateurCurrent";
+    public static String ID_ANNONCE_CURRENT = "IdAnnonceCurrentDetails";
+    public static String ID_RECEIVER_CURRENT = "IdUtilisateurCurrentDetails";
 
     private Utilisateur vendeur;
     private final String TAG = DetailAnnonce.class.getSimpleName();

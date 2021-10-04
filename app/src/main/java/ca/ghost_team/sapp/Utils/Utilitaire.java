@@ -12,6 +12,7 @@ import android.util.Base64;
 import androidx.annotation.NonNull;
 import androidx.room.TypeConverter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -153,6 +154,24 @@ public class Utilitaire {
 
         // convert Bitmap to Drawable
         return new BitmapDrawable(context.getResources(), decodedByte);
+    }
+
+    /**
+     * Methode qui permet d'Mencoder un Bitmap en String Base64 encodage
+     * @return String
+     * */
+    public static String encodeImageBase64(Bitmap bitmap){
+        // initialize byte stream
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        // compress Bitmap (quality: 100%)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+        // Initialize byte array
+        byte[] imageInBytes = stream.toByteArray();
+
+        // get base64 encoded string
+        return Base64.encodeToString(imageInBytes, Base64.DEFAULT).replace("\n", "").replace("\r","");
     }
 
 

@@ -57,6 +57,16 @@
     <string name="title_activity_maps">Carte</string>
     <string name="market">Marché</string>
     <string name="aucune_annonce">Aucune Annonce</string>
+    <string name="d_veloppeurs">Développeurs</string>
+    <string name="Josue">Josue Lubaki</string>
+    <string name="JosueProfession">Étudiant au Baccalauréat en Informatique, cheminement Logiciel</string>
+    <string name="JosueEmail">josue.lubaki@uqtr.ca</string>
+    <string name="Ismael">Ismael Coulibaly</string>
+    <string name="IsmaelProfession">Étudiant en Baccalaureat Informatique, Cheminement Developpement web et mobile</string>
+    <string name="IsmaelEmail">ismael.coulibaly@uqtr.ca</string>
+    <string name="JonathanEmail">jonathan.kanyinda.muamba@uqtr.ca</string>
+    <string name="Jonathan">Jonathan Kanyinda</string>
+    <string name="aboutUs">À propos de nous</string>
 
 
 </resources>
