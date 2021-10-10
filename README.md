@@ -1,6 +1,6 @@
 <p>
   <h2>Application SAPP </h2>
-  <a href="https://play.google.com/store/apps/details?id=ca.ghost_team.sapp">
+  <a href="https://play.google.com/store/apps/details?id=ca.ghost_team.sapp" target="_blank" rel="noopener noreferrer">
     <img src="https://images.squarespace-cdn.com/content/v1/6089653d9b3d423216d4fc70/1619912777616-MZTU900VIV41A3V2KLMQ/GooglePLay.png" 
          alt="pllayStore logo"
          width="150"
