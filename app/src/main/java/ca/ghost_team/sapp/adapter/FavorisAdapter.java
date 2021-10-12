@@ -30,6 +30,7 @@ import java.util.List;
 import ca.ghost_team.sapp.BaseApplication;
 import ca.ghost_team.sapp.MainActivity;
 import ca.ghost_team.sapp.R;
+import ca.ghost_team.sapp.Utils.Utilitaire;
 import ca.ghost_team.sapp.activity.DetailAnnonce;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.model.Annonce;
@@ -83,8 +84,8 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavorisV
             byte[] decodedString = Base64.decode(annonceImage.getImagecode(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-            // convert Bitmap to Drawable
-            Drawable image = new BitmapDrawable(activity.getResources(), decodedByte);
+            // Préparation image cache
+            Drawable image = Utilitaire.prepareImageCache(activity, annonceImage);
 
             Glide.with(context)
                     .load(url)

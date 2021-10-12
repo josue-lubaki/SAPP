@@ -63,7 +63,6 @@ import static ca.ghost_team.sapp.Utils.Utilitaire.toTimeStr;
 public class AddPost extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private final String[] requiredPermissions = new String[]{
-            Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };

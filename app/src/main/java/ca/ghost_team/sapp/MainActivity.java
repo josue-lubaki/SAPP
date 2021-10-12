@@ -24,21 +24,32 @@ import androidx.room.Room;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
+import java.util.List;
+
 import ca.ghost_team.sapp.activity.MessageActivity;
 import ca.ghost_team.sapp.database.SappDatabase;
 import ca.ghost_team.sapp.databinding.ActivityMainBinding;
 import ca.ghost_team.sapp.model.Annonce;
+import ca.ghost_team.sapp.model.AnnonceImage;
 import ca.ghost_team.sapp.navigation.AddPost;
 import ca.ghost_team.sapp.navigation.Favoris;
 import ca.ghost_team.sapp.navigation.Home;
 import ca.ghost_team.sapp.navigation.Messages;
 import ca.ghost_team.sapp.navigation.Profil;
+import ca.ghost_team.sapp.repository.AnnonceImageRepo;
 import ca.ghost_team.sapp.repository.AnnonceRepo;
+import ca.ghost_team.sapp.service.API.AnnonceAPI;
+import ca.ghost_team.sapp.service.API.AnnonceImageAPI;
+import ca.ghost_team.sapp.service.SappAPI;
 import ca.ghost_team.sapp.viewmodel.AnnonceViewModel;
 import ca.ghost_team.sapp.viewmodel.MessageViewModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity{
 
+    private static final String TAG = "mainActivity";
     private final String LOG_TAG = "mainActivity";
     private AnnonceViewModel annonceViewModel;
     private MessageViewModel messageViewModel;
@@ -47,7 +58,6 @@ public class MainActivity extends AppCompatActivity{
     public static final String ID_RECEIVER_CURRENT_NOTIFICATION = "ca.ghost_team.sapp.MainActivity.ID_RECEIVER_CURRENT_NOTIFICATION";
     private int nombremessgeNoLus = 0;
     private final String[] requiredPermissions = new String[]{
-            Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -73,23 +83,23 @@ public class MainActivity extends AppCompatActivity{
             switch(item.getId()){
                 case 1:
                     fragment = Home.class;
-                    Log.i(LOG_TAG,"show Home.class");
+                    Log.i(TAG,"show Home.class");
                     break;
                 case 2:
                     fragment = Favoris.class;
-                    Log.i(LOG_TAG,"show Home.class");
+                    Log.i(TAG,"show Home.class");
                     break;
                 case 3:
                     fragment = AddPost.class;
-                    Log.i(LOG_TAG,"show AddPost.class");
+                    Log.i(TAG,"show AddPost.class");
                     break;
                 case 4:
                     fragment = Messages.class;
-                    Log.i(LOG_TAG,"show Messages.class");
+                    Log.i(TAG,"show Messages.class");
                     break;
                 case 5:
                     fragment = Profil.class;
-                    Log.i(LOG_TAG,"show Profil.class");
+                    Log.i(TAG,"show Profil.class");
                     break;
             }
 
@@ -192,6 +202,8 @@ public class MainActivity extends AppCompatActivity{
                     Toast.makeText(getApplication(), getApplication().getResources().getString(R.string.dontPermission), Toast.LENGTH_LONG).show();
                     return;
                 }
+                // Recupération des annonces et images
+                retrieveAllAnnonces();
             }
             // methode
 
@@ -225,7 +237,75 @@ public class MainActivity extends AppCompatActivity{
 
         } catch(InstantiationException | IllegalAccessException e){
             e.printStackTrace();
-            Log.d(LOG_TAG,"erreur au moment d'instancier fragment");
+            Log.d(TAG,"erreur au moment d'instancier fragment");
         }
+    }
+
+    /**
+     * Methode qui permet d'envoyer une requête au serveur, pour la récuperation des annonces depuis la base de données
+     * */
+    private void retrieveAllAnnonces() {
+        //Recuperation de toutes les annonces
+        SappAPI.getApi().create(AnnonceAPI.class)
+                .getAllAnnonceViaAPI()
+                .enqueue(new Callback<List<Annonce>>() {
+                    @Override
+                    public void onResponse(Call<List<Annonce>> call, Response<List<Annonce>> response) {
+                        // Si conncetion Failed
+                        if (!response.isSuccessful()) {
+                            Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                            return;
+                        }
+                        List<Annonce> newAnnonce = response.body();
+                        Log.i(TAG, "newAnnonce : " + newAnnonce);
+                        // inserer l'annonce dans la base de données locale via le Repository
+                        assert newAnnonce != null;
+                        Annonce[] tableAnnonce = new Annonce[newAnnonce.size()];
+                        newAnnonce.toArray(tableAnnonce);
+                        new AnnonceRepo(getApplication()).insertAllAnnonce(tableAnnonce);
+
+                        // recupération de toutes les images depuis la base de données
+                        retrieveAllImages();
+                        Toast.makeText(getApplication(), R.string.refreshPage, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Annonce>> call, Throwable t) {
+                        // Si erreur 404
+                        Log.e(TAG, t.getMessage());
+                    }
+                });
+    }
+
+    /**
+     * Methode qui permet d'envoyer une requête au serveur, pour la récuperation des images depuis la base de données
+     * */
+    private void retrieveAllImages() {
+        //Recuperation de toutes les images
+        SappAPI.getApi().create(AnnonceImageAPI.class)
+                .getAllAnnoncesImagesViaAPI()
+                .enqueue(new Callback<List<AnnonceImage>>() {
+                    @Override
+                    public void onResponse(Call<List<AnnonceImage>> call, Response<List<AnnonceImage>> response) {
+                        // Si conncetion Failed
+                        if (!response.isSuccessful()) {
+                            Log.i(TAG, "Connection Failed \nFailedCode : " + response.code());
+                            return;
+                        }
+                        List<AnnonceImage> newAnnonceImage = response.body();
+                        Log.i(TAG, "newAnnonce : " + newAnnonceImage);
+                        // inserer l'annonce dans la base de données locale via le Repository
+                        assert newAnnonceImage != null;
+                        AnnonceImage[] tableAnnonceImage = new AnnonceImage[newAnnonceImage.size()];
+                        newAnnonceImage.toArray(tableAnnonceImage);
+                        new AnnonceImageRepo(getApplication()).insertAllAnnonceImage(tableAnnonceImage);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<AnnonceImage>> call, Throwable t) {
+                        // Si erreur 404
+                        Log.e(TAG, t.getMessage());
+                    }
+                });
     }
 }

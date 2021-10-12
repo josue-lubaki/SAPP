@@ -18,7 +18,7 @@ import static androidx.room.ForeignKey.CASCADE;
                 @ForeignKey(entity = Annonce.class,
                         parentColumns = "idAnnonce",
                         childColumns = "annonceId")
-        }, indices = {@Index(value = {"annonceId"}, unique = true), @Index(value = {"utilisateurId"}, unique = true)})
+        }, indices = {@Index(value = {"annonceId"}), @Index(value = {"utilisateurId"})})
 public class AnnonceFavoris {
     public int annonceId;
     public int utilisateurId;

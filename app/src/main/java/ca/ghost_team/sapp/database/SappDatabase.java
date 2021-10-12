@@ -26,7 +26,7 @@ import ca.ghost_team.sapp.model.Utilisateur;
 
 @TypeConverters({Utilitaire.class})//Pour dire que notre base de donnne fait la covertion de chaque date en long
 @Database(entities = {Annonce.class, Utilisateur.class, AnnonceFavoris.class, CategorieAnnonce.class, Message.class, AnnonceImage.class},
-        version = 1,
+        version = 2,
         exportSchema = false)
 
 public abstract class SappDatabase extends RoomDatabase {
