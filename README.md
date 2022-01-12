@@ -15,9 +15,9 @@
 
 <table border="1">
   <tr>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/splash.png" width=200 height=420 /></td>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/loginPage.png" width=200 height=420 /></td>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/register.png" width=200 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/splash.png" width=220 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/loginPage.png" width=220 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/register.png" width=220 height=420 /></td>
   </tr>
   <tr>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/homePage.png" width=200 height=420 /></td>
