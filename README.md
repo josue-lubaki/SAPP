@@ -20,14 +20,14 @@
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/register.png" width=220 height=420 /></td>
   </tr>
   <tr>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/homePage.png" width=200 height=420 /></td>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/Favoris.png" width=200 height=420 /></td>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/addpost.png" width=200 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/homePage.png" width=220 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/Favoris.png" width=220 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/addpost.png" width=220 height=420 /></td>
   </tr>
   <tr>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/details.png" width=200 height=420 /></td>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/mesannonce.png" width=200 height=420 /></td>
-    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width=200 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/details.png" width=220 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/mesannonce.png" width=220 height=420 /></td>
+    <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/maps.png" width=220 height=420 /></td>
   </tr>
 </table>
 
