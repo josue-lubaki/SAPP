@@ -8,21 +8,50 @@
   </a>
 
 * Langage : Java
-* Dependances : Gradle
+* Dependancies :
+  - Room
+  - RecyclerView
+  - GoogleMap
+  - Retrofit
 * VersionSDK : 9.0 (lollipop)
 * Architecture MVVM
 <!-- * Template : https://github.com/ArthurHub/awesome-android-ui -->
 
 <table border="1">
   <tr>
+    <th> Splash Screen </th>
+    <th> Login Page </th>
+    <th> Register Page </th>
+  </tr>
+  <tr>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/splash.png" width=220 height=420 /></td>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/loginPage.png" width=220 height=420 /></td>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/register.png" width=220 height=420 /></td>
   </tr>
   <tr>
+    <th> </th>
+    <th> </th>
+    <th> </th>
+  </tr>
+  <tr>
+    <th> Home Page </th>
+    <th> Favoris Page </th>
+    <th> Add Annonce Page </th>
+  </tr>
+  <tr>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/homePage.png" width=220 height=420 /></td>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/Favoris.png" width=220 height=420 /></td>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/addpost.png" width=220 height=420 /></td>
+  </tr>
+   <tr>
+    <th> </th>
+    <th> </th>
+    <th> </th>
+  </tr>
+  <tr>
+    <th> Details Page </th>
+    <th> My Annonces Page </th>
+    <th> Maps Page </th>
   </tr>
   <tr>
     <td> <img src="https://github.com/josue-lubaki/SAPP/blob/master/vue/details.png" width=220 height=420 /></td>
