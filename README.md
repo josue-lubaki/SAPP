@@ -4,7 +4,7 @@
     <img src="https://images.squarespace-cdn.com/content/v1/6089653d9b3d423216d4fc70/1619912777616-MZTU900VIV41A3V2KLMQ/GooglePLay.png" 
          alt="pllayStore logo"
          width="150"
-         height="50"/>
+         height="60"/>
   </a>
 
 * Langage : Java
